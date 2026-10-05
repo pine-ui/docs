@@ -6,7 +6,10 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "serve": "docusaurus serve",
-    "docusaurus": "docusaurus"
+    "docusaurus": "docusaurus",
+    "test:agents": "node --test agent-tools/*.test.mjs",
+    "test:docs": "node --test agent-tools/*.test.mjs",
+    "postbuild": "node agent-tools/check-build.mjs"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",
@@ -15,7 +18,12 @@
     "@mdx-js/react": "3.1.1",
     "prism-react-renderer": "2.4.1",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "unified": "11.0.5",
+    "remark-parse": "11.0.0",
+    "remark-mdx": "3.1.1",
+    "remark-stringify": "11.0.0",
+    "remark-gfm": "^4.0.1"
   },
   "engines": {
     "node": ">=20"

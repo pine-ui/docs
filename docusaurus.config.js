@@ -21,6 +21,7 @@ module.exports = {
   onBrokenLinks: 'throw',
   markdown: {hooks: {onBrokenMarkdownLinks: 'throw'}},
   i18n: {defaultLocale: 'en', locales: ['en']},
+  plugins: [require.resolve('./plugins/agent-toolkit')],
   presets: [['classic', {
     docs: {
       sidebarPath: require.resolve('./sidebars.js'),
@@ -50,9 +51,11 @@ module.exports = {
         {type: 'docSidebar', sidebarId: 'api', label: 'API', position: 'left'},
         {type: 'docsVersionDropdown', position: 'right'},
         {href: 'https://github.com/pine-ui/package', label: 'GitHub', position: 'right'},
+        {href: 'https://buymeacoffee.com/kbenim', label: 'Buy me a coffee', position: 'right'},
       ],
     },
     footer: {
+      links: [{title: 'Pine', items: [{label: 'Support Pine', to: '/support'}, {label: 'Buy me a coffee', href: 'https://buymeacoffee.com/kbenim'}, {label: 'Agent documentation', to: '/docs/guides/agents/'}]}],
       copyright: 'Released under the MIT License',
     },
     prism: {theme: lightTheme, darkTheme: themes.vsDark, additionalLanguages: ['csharp', 'json', 'bash']},

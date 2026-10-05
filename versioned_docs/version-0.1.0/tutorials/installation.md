@@ -20,6 +20,18 @@ The tag pins the package to version **0.1.0**. For a local checkout, choose **In
 
 The manifest declares Unity `6000.7.0b2`, uGUI `2.7.0` and Input System `6.7.0`.
 
+## Historical prerequisites
+
+| Package | Declared Unity Editor | Declared uGUI | Declared Input System |
+| --- | --- | --- | --- |
+| Pine 0.1.0 | 6000.7.0b2 | 2.7.0 | 6.7.0 |
+
+These values come from this historical documentation snapshot. Check the installed v0.1.0 manifest and dependency resolution in your Editor before changing the project. Pine 0.2.0's recorded compatibility checks apply to its matching API and do not certify this older package.
+
+Pine 0.1.0 requires a configured TMP default font/settings and an enabled Input System backend, as described below. Run Pine on Unity's main thread and explicitly dispose its mount when the UI lifetime ends. Use this snapshot's `Pine.Pine` facade, `MountHandle` and layout properties.
+
+Use **Copy setup prompt** above or the [version-pinned agent guide](../guides/agents.md) for installation, integration, component and migration prompts.
+
 ## Configure text and input
 
 Enable the Input System backend in PlayerSettings. Configure TMP Essential Resources/settings and a default font before creating text. Pine reads `TMP_Settings.defaultFontAsset` when creation defaults are enabled.

@@ -5,3 +5,8 @@ build/
 .env
 .env.*
 .idea/
+
+# Generated static agent exports
+static/ai/
+static/llms.txt
+static/llms-full.txt

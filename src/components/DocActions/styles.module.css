@@ -1,0 +1,7 @@
+.actions {display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; clear: both; padding: .75rem 0; border-bottom: 1px solid var(--ifm-color-emphasis-200); margin-bottom: .75rem; font-size: .9rem;}
+.actions button {font: inherit; cursor: pointer; color: var(--ifm-font-color-base); background: var(--ifm-background-surface-color); border: 1px solid var(--ifm-color-emphasis-400); border-radius: 4px; padding: .4rem .7rem; min-height: 44px;}
+.actions button:disabled {opacity: .6; cursor: wait;}
+.actions button:focus-visible, .actions a:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 3px;}
+.version {color: var(--ifm-color-emphasis-700); margin-left: auto; white-space: nowrap;}
+.status {font-size: .875rem; margin: 0 0 .75rem;}
+.status:empty {display: none;}
