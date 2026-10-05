@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Exact, flexible and content sizing
 
-This reference documents every public declaration in this part of the working API. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `UI.Size`
 
@@ -777,4 +777,3 @@ Adds or reuses an allocation-free native safe-area follower, with reactive enabl
 ```csharp
 UI.Frame(UI.SafeArea(true), UI.Children(UI.Label("Safe")));
 ```
-

@@ -11,9 +11,8 @@
     "prestart": "npm run assistant:corpus",
     "prebuild": "npm run assistant:corpus",
     "test:assistant": "node --test assistant/*.test.mjs",
-    "postbuild": "node assistant/check-links.mjs && node agent-tools/check-build.mjs",
-    "test:docs": "node --test assistant/*.test.mjs src/components/InteractiveExample/model.test.mjs agent-tools/*.test.mjs",
-    "test:agents": "node --test agent-tools/*.test.mjs"
+    "postbuild": "node assistant/check-links.mjs",
+    "test:docs": "node --test assistant/*.test.mjs src/components/InteractiveExample/model.test.mjs"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",
@@ -25,11 +24,7 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1",
-    "remark-mdx": "3.1.1",
-    "remark-parse": "11.0.0",
-    "remark-stringify": "11.0.0",
-    "unified": "11.0.5"
+    "remark-gfm": "^4.0.1"
   },
   "engines": {
     "node": ">=20"

@@ -16,8 +16,7 @@
         "guides/spring-animation",
         "guides/feature-examples"
       ]
-    },
-    "guides/agents"
+    }
   ],
   "api": [
     "api/core",

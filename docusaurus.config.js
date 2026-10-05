@@ -18,11 +18,10 @@ module.exports = {
   projectName: 'docs',
   trailingSlash: true,
   customFields: {assistantEndpoint: process.env.PINE_ASSISTANT_ENDPOINT || ''},
-  favicon: 'img/mascot/pine-icon.jpg',
+  favicon: 'img/mascot/pine-icon.png',
   onBrokenLinks: 'throw',
   markdown: {hooks: {onBrokenMarkdownLinks: 'throw'}},
   i18n: {defaultLocale: 'en', locales: ['en']},
-  plugins: [require.resolve('./plugins/agent-toolkit')],
   presets: [['classic', {
     docs: {
       sidebarPath: require.resolve('./sidebars.js'),
@@ -41,11 +40,11 @@ module.exports = {
     highlightSearchTermsOnTargetPage: true,
   }]],
   themeConfig: {
-    image: 'img/mascot/pine-wave.jpg',
+    image: 'img/mascot/pine-wave.png',
     colorMode: {defaultMode: 'dark', respectPrefersColorScheme: true},
     navbar: {
       title: 'pine',
-      logo: {alt: 'Pine dinosaur mascot', src: 'img/mascot/pine-icon.jpg', width: 34, height: 34},
+      logo: {alt: 'Pine dinosaur mascot', src: 'img/mascot/pine-icon.png', width: 34, height: 34},
       items: [
         {to: '/', label: 'Home', position: 'left'},
         {type: 'docSidebar', sidebarId: 'tutorials', label: 'Tutorials', position: 'left'},
@@ -56,8 +55,8 @@ module.exports = {
       ],
     },
     footer: {
-      links: [{title: 'Pine', items: [{label: 'Support Pine', to: '/support'}, {label: 'Buy me a coffee', href: 'https://buymeacoffee.com/kbenim'}, {label: 'Agent documentation', to: '/docs/guides/agents/'}]}],
-      copyright: 'Released under the MIT License',
+      links: [{title: 'Pine', items: [{label: 'Support Pine', to: '/support'}, {label: 'Buy me a coffee', href: 'https://buymeacoffee.com/kbenim'}]}],
+      copyright: 'Released under the MIT License. Built with Docusaurus.',
     },
     prism: {theme: lightTheme, darkTheme: themes.vsDark, additionalLanguages: ['csharp', 'json', 'bash']},
   },

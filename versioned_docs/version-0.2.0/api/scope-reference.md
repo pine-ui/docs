@@ -6,9 +6,9 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Scopes and context
 
-This reference documents every public declaration in this part of the working API. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
-## `Scope.Scope`
+## `Scope`
 
 ```text
 Scope
@@ -106,7 +106,7 @@ Ends this owned lifetime idempotently. Dependencies and native event/clock regis
 scope.Dispose();
 ```
 
-## `Context.Context`
+## `Context`
 
 ```text
 Context<T>
@@ -181,4 +181,3 @@ theme.Provide(
     () => UI.Label("Theme", UI.Tint(theme.Value))
 );
 ```
-

@@ -30,7 +30,6 @@ These values come from this historical documentation snapshot. Check the install
 
 Pine 0.1.0 requires a configured TMP default font/settings and an enabled Input System backend, as described below. Run Pine on Unity's main thread and explicitly dispose its mount when the UI lifetime ends. Use this snapshot's `Pine.Pine` facade, `MountHandle` and layout properties.
 
-Use **Copy setup prompt** above or the [version-pinned agent guide](../guides/agents.md) for installation, integration, component and migration prompts.
 
 ## Configure text and input
 

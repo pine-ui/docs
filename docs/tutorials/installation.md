@@ -37,7 +37,6 @@ Before installing:
 
 Unity documents the [C# compiler](https://docs.unity3d.com/6000.3/Documentation/Manual/csharp-compiler.html), [API profiles](https://docs.unity3d.com/6000.3/Documentation/Manual/dotnet-profile-support.html) and [Editor-matched uGUI package](https://docs.unity3d.com/6000.6/Documentation/Manual/com.unity.ugui.html). The version menu keeps Pine 0.1.0's historical prerequisites separate.
 
-For agent-assisted installation, use **Copy setup prompt** above or the [four version-pinned task prompts](../guides/agents.md).
 
 ## What installation configures
 

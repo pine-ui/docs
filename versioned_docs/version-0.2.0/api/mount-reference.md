@@ -6,9 +6,9 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Mounts and canvas options
 
-This reference documents every public declaration in this part of the working API. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
-## `CanvasOptions.CanvasOptions`
+## `CanvasOptions`
 
 ```text
 CanvasOptions
@@ -218,7 +218,7 @@ Mount mount = UI.Mount(() => UI.Label("Hello"));
 mount.Dispose();
 ```
 
-## `UnitySpringSpaces.UnitySpringSpaces`
+## `UnitySpringSpaces`
 
 ```text
 UnitySpringSpaces
@@ -313,4 +313,3 @@ Built-in fixed-lane mapping for Pose. Use the matching space when declaring a sp
 ```csharp
 UI.Spring(() => target.Value, space: UnitySpringSpaces.Pose);
 ```
-

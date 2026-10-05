@@ -6,9 +6,9 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Typed reactive values
 
-This reference documents every public declaration in this part of the working API. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
-## `Value.Value`
+## `Value`
 
 ```text
 Value<T>
@@ -188,7 +188,7 @@ Converts a typed literal, getter or supported reactive value into a literal-or-g
 Value<int> value = UI.Source(0);
 ```
 
-## `ReadOnly.ReadOnly`
+## `ReadOnly`
 
 ```text
 ReadOnly<T>
@@ -234,7 +234,7 @@ Reads the framework-owned snapshot without collecting a dependency.
 int snapshot = index.Peek();
 ```
 
-## `Source.Source`
+## `Source`
 
 ```text
 Source<T>
@@ -309,7 +309,7 @@ items.Peek().Add("New");
 items.Notify();
 ```
 
-## `Derived.Derived`
+## `Derived`
 
 ```text
 Derived<T>

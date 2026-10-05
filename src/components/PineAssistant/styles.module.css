@@ -2,15 +2,14 @@
 .launcher img {object-fit: contain;}
 .panel {--pine-panel-background: var(--ifm-background-surface-color); position: fixed; top: var(--ifm-navbar-height); right: 0; bottom: 0; z-index: 199; width: 420px; margin: 0; padding: 0; max-width: none; max-height: none; display: flex; flex-direction: column; background: var(--pine-panel-background); border: 0; border-left: 1px solid var(--ifm-color-emphasis-200); color: var(--ifm-font-color-base); font-size: 14px;}
 .panel::backdrop {background: transparent;}
-.header, .pageContext, .footer {flex-shrink: 0;}
+.header, .footer {flex-shrink: 0;}
 .header {display: flex; align-items: center; justify-content: space-between; padding: 20px 22px 12px;}
 .header h2 {font-size: 24px; letter-spacing: -.6px; margin: 0;}
 .panel button {font: inherit; cursor: pointer; color: inherit;}
 .panel button:disabled {opacity: .48; cursor: default;}
 .panel button:focus-visible, .panel a:focus-visible, .panel textarea:focus-visible, .panel select:focus-visible, .launcher:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 3px;}
-.icon {border: 0; background: transparent; font-size: 28px !important; width: 40px; height: 40px; border-radius: 8px;}
+.icon {display: grid; place-items: center; padding: 0; line-height: 1; flex-shrink: 0; border: 0; background: transparent; font-size: 28px !important; width: 40px; height: 40px; border-radius: 8px;}
 .icon:hover {background: var(--ifm-color-emphasis-100);}
-.pageContext {font-size: 10px; color: var(--ifm-color-emphasis-700); padding: 6px 22px 0; text-transform: capitalize;}
 .thread {flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 20px 22px; scroll-padding-bottom: 10px;}
 .welcome {text-align: center; max-width: 325px; margin: 4px auto 24px;}
 .welcome img {object-fit: contain; margin-bottom: 10px;}
@@ -30,15 +29,14 @@
 .code pre {padding-top: 35px; font-size: 12px; max-width: 100%; overflow-x: auto;}
 .code button {position: absolute; top: 5px; right: 6px; background: var(--ifm-background-surface-color); border: 1px solid var(--ifm-color-emphasis-300); border-radius: 4px; padding: 2px 7px; font-size: 10px;}
 .sources > p {font-size: 11px; color: var(--ifm-color-emphasis-700); margin: 16px 0 7px;}
-.source {display: block; border: 1px solid var(--ifm-color-emphasis-200); border-left: 3px solid var(--ifm-color-primary); border-radius: 6px; padding: 11px 12px; margin: 7px 0; color: var(--ifm-font-color-base); text-decoration: none;}
+.source {display: block; border: 1px solid var(--ifm-color-emphasis-200); border-left: 3px solid var(--ifm-color-primary); border-radius: 6px; padding: 8px 10px; margin: 6px 0; color: var(--ifm-font-color-base); text-decoration: none;}
 .source:hover {text-decoration: none; background: var(--ifm-color-emphasis-100); color: var(--ifm-font-color-base);}
 .source strong {display: block; font-size: 13px;}
 .source strong span {float: right; color: var(--ifm-color-primary);}
 .source > span {font-size: 11px; color: var(--ifm-color-primary);}
-.source small {display: block; font-size: 11px; line-height: 1.5; margin-top: 7px; color: var(--ifm-color-emphasis-700);}
 .activity {display: flex; align-items: center; gap: 15px; font-size: 12px; color: var(--ifm-color-emphasis-700);}
 .activity img {object-fit: contain;}
-.footer {padding: 12px 22px 10px; border-top: 1px solid var(--ifm-color-emphasis-200); background: var(--pine-panel-background);}
+.footer {padding: 12px 22px 10px; background: var(--pine-panel-background);}
 .suggestions {margin-bottom: 12px;}
 .suggestions > button {display: block; width: 100%; text-align: left; border: 1px solid var(--ifm-color-emphasis-200); border-radius: 7px; padding: 7px 10px; background: transparent; font-size: 12px; margin-top: 5px;}
 .suggestions > button:hover:enabled {border-color: var(--ifm-color-primary); background: var(--ifm-color-emphasis-100);}
@@ -47,7 +45,6 @@
 .form textarea {flex: 1; resize: none; min-width: 0; border: 0; background: transparent; color: inherit; font: inherit; font-size: 13px; padding: 6px; line-height: 20px; height: 32px; box-sizing: border-box; overflow-y: hidden;}
 .form > button {flex-shrink: 0; display: grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: 6px; padding: 0; background: var(--ifm-color-primary); color: var(--pine-panel-background);}
 .stopIcon {width: 12px; height: 12px; background: currentColor; border-radius: 2px;}
-.cooldown {margin: 0 0 8px; font-size: 11px; color: var(--ifm-color-emphasis-700);}
 :global(body.pine-chat-open) {padding-right: 420px; --doc-sidebar-width: 240px;}
 :global(body.pine-chat-open .navbar--fixed-top) {width: 100vw;}
 @media (min-width: 997px) { :global(body.pine-chat-open .col:has(.theme-doc-toc-desktop)) {display: none;} :global(body.pine-chat-open [class*='docItemCol_']) {max-width: 100% !important;} }

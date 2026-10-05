@@ -6,9 +6,9 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Native declarations and bindings
 
-This reference documents every public declaration in this part of the working API. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
-## `IProperty.IProperty`
+## `IProperty`
 
 ```text
 IProperty<in T>
@@ -43,7 +43,7 @@ Applies this compatible property to the supplied native target in the current ow
 UI.Apply(label, UI.Text("Applied"));
 ```
 
-## `GraphicProperty.GraphicProperty`
+## `GraphicProperty`
 
 ```text
 GraphicProperty
@@ -68,7 +68,7 @@ var tint = UI.Tint(UnityEngine.Color.white);
 string name = tint.Identity;
 ```
 
-## `Mount.Mount`
+## `Mount`
 
 ```text
 Mount
@@ -1312,4 +1312,3 @@ Binds the texture of a native RawImage. Literal values apply once; typed reactiv
 ```csharp
 UI.RawImage(UI.Texture(texture));
 ```
-

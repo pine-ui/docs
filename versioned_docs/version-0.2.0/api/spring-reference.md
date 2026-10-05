@@ -6,9 +6,9 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Springs and custom value spaces
 
-This reference documents every public declaration in this part of the working API. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
-## `SpringSpace.SpringSpace`
+## `SpringSpace`
 
 ```text
 SpringSpace<T>
@@ -73,7 +73,7 @@ var space = new SpringSpace<float>(
 UI.Spring(() => 10f, space: space);
 ```
 
-## `SpringSpaces.SpringSpaces`
+## `SpringSpaces`
 
 ```text
 SpringSpaces
@@ -150,7 +150,7 @@ var motion = UI.Spring(() => target.Value, period: 0.4, dampingRatio: 0.8);
 UI.Image(UI.Position(() => new UnityEngine.Vector2(motion.Value, 0)));
 ```
 
-## `Spring.Spring`
+## `Spring`
 
 ```text
 Spring<T>
@@ -209,4 +209,3 @@ Ends this owned lifetime idempotently. Dependencies and native event/clock regis
 ```csharp
 motion.Dispose();
 ```
-

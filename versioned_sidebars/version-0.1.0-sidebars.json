@@ -15,8 +15,7 @@
         "guides/data-binding",
         "guides/spring-animation"
       ]
-    },
-    "guides/agents"
+    }
   ],
   "api": [
     "api/core",
