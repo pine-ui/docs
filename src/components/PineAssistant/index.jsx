@@ -178,17 +178,17 @@ export default function PineAssistant() {
   const Panel = mobile ? 'dialog' : 'aside';
   if (!isDocs || !ready) return null;
   return <>
-    {!open && <button ref={launcher} type="button" className={styles.launcher} onClick={() => setOpen(true)} aria-expanded={open} aria-controls="pine-assistant-panel"><img src="/img/mascot/pine-ai-assistant.png" alt="" width="48" height="53"/>Ask Pine<span aria-hidden="true"> ↗</span></button>}
+    {!open && <button ref={launcher} type="button" className={styles.launcher} onClick={() => setOpen(true)} aria-expanded={open} aria-controls="pine-assistant-panel"><img src="/img/mascot/pine-ai-assistant.jpg" alt="" width="48" height="53"/>Ask Pine<span aria-hidden="true"> ↗</span></button>}
     {open && <Panel ref={panel} id="pine-assistant-panel" className={styles.panel} role={mobile ? 'dialog' : 'complementary'} aria-modal={mobile || undefined} onKeyDownCapture={trapFocus} onCancel={event => { event.preventDefault(); setOpen(false); requestAnimationFrame(() => launcher.current?.focus()); }} aria-label="Pine documentation assistant">
       <header className={styles.header}><div><h2>Ask Pine</h2></div><button type="button" className={styles.icon} onClick={() => { setOpen(false); requestAnimationFrame(() => launcher.current?.focus()); }} aria-label="Close Pine chat">×</button></header>
       <div className={styles.pageContext}>Viewing: {currentTitle}</div>
       <div className={styles.thread}>
-        {!messages.length && <div className={styles.welcome}><img src="/img/mascot/pine-ai-assistant.png" alt="Pine dinosaur with glasses studying a laptop" width="126" height="138"/><h3>A little help building with Pine.</h3><p>Ask about setup, reactive state, controls, or your next Unity UI. Answers use the latest pinned Pine docs unless you ask for another version.</p>{!endpoint && <small>AI is offline · You can still search Pine’s docs.</small>}</div>}
+        {!messages.length && <div className={styles.welcome}><img src="/img/mascot/pine-ai-assistant.jpg" alt="Pine dinosaur with glasses studying a laptop" width="126" height="138"/><h3>A little help building with Pine.</h3><p>Ask about setup, reactive state, controls, or your next Unity UI. Answers use the latest pinned Pine docs unless you ask for another version.</p>{!endpoint && <small>AI is offline · You can still search Pine’s docs.</small>}</div>}
         {messages.map((message, i) => <article key={i} className={message.role === 'user' ? styles.user : styles.answer} aria-label={message.role === 'user' ? 'Your question' : 'Pine response'}>
-          <div className={styles.messageLabel}>{message.role === 'assistant' && <img className={styles.avatar} src={`/img/mascot/pine-${statusImages[message.status] || 'welcome'}.png`} alt="" width="32" height="35"/>}{message.role === 'user' ? 'You' : 'Pine'}<span>{VERSIONS.find(v => v.id === message.version)?.label}{message.role === 'assistant' && message.mode === 'documentation' ? ' · Docs result' : ''}</span></div>
+          <div className={styles.messageLabel}>{message.role === 'assistant' && <img className={styles.avatar} src={`/img/mascot/pine-${statusImages[message.status] || 'welcome'}.jpg`} alt="" width="32" height="35"/>}{message.role === 'user' ? 'You' : 'Pine'}<span>{VERSIONS.find(v => v.id === message.version)?.label}{message.role === 'assistant' && message.mode === 'documentation' ? ' · Docs result' : ''}</span></div>
           {message.role === 'user' ? <p>{message.content}</p> : <><Markdown remarkPlugins={[remarkGfm]} skipHtml components={{pre: CopyCode, img: () => null, a: ({children}) => <span>{children}</span>}}>{message.content}</Markdown><Sources sources={message.sources} onNavigate={navigateSource}/></>}
         </article>)}
-        {busy && <div className={styles.activity} role="status"><img key={stage} src={`/img/mascot/pine-${statusImages[stage]}.png`} alt="" width="64" height="70"/><span>{stageText[stage]}</span></div>}
+        {busy && <div className={styles.activity} role="status"><img key={stage} src={`/img/mascot/pine-${statusImages[stage]}.jpg`} alt="" width="64" height="70"/><span>{stageText[stage]}</span></div>}
         <div ref={end}/>
       </div>
       <footer className={styles.footer}>

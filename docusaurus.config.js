@@ -18,7 +18,7 @@ module.exports = {
   projectName: 'docs',
   trailingSlash: true,
   customFields: {assistantEndpoint: process.env.PINE_ASSISTANT_ENDPOINT || ''},
-  favicon: 'img/mascot/pine-icon.png',
+  favicon: 'img/mascot/pine-icon.jpg',
   onBrokenLinks: 'throw',
   markdown: {hooks: {onBrokenMarkdownLinks: 'throw'}},
   i18n: {defaultLocale: 'en', locales: ['en']},
@@ -41,11 +41,11 @@ module.exports = {
     highlightSearchTermsOnTargetPage: true,
   }]],
   themeConfig: {
-    image: 'img/mascot/pine-wave.png',
+    image: 'img/mascot/pine-wave.jpg',
     colorMode: {defaultMode: 'dark', respectPrefersColorScheme: true},
     navbar: {
       title: 'pine',
-      logo: {alt: 'Pine dinosaur mascot', src: 'img/mascot/pine-icon.png', width: 34, height: 34},
+      logo: {alt: 'Pine dinosaur mascot', src: 'img/mascot/pine-icon.jpg', width: 34, height: 34},
       items: [
         {to: '/', label: 'Home', position: 'left'},
         {type: 'docSidebar', sidebarId: 'tutorials', label: 'Tutorials', position: 'left'},
