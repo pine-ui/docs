@@ -67,5 +67,5 @@
   .pine-guides > div {grid-template-columns: 1fr;}
 }
 
-.footer__title {display: flex; align-items: center; gap: 12px;}
-.footer__title::before {content: ''; display: block; width: 40px; height: 40px; flex-shrink: 0; background: url('/img/mascot/pine-icon.png') center / contain no-repeat;}
+.pine-footer-brand {margin-right: 0; color: inherit;}
+.pine-footer-brand:hover {color: inherit; text-decoration: none;}
