@@ -10,7 +10,7 @@ Return your application tree from `App.Mount()` in **App.cs**. Components in oth
 
 ## Run the example
 
-Download <a href="/examples/0.2.0/App.cs" download="App.cs" target="_self">App.cs</a>, <a href="/examples/0.2.0/Counter.cs" download="Counter.cs" target="_self">Counter.cs</a>, <a href="/examples/0.2.0/Card.cs" download="Card.cs" target="_self">Card.cs</a> and <a href="/examples/0.2.0/Actions.cs" download="Actions.cs" target="_self">Actions.cs</a>. Place these four files under Assets and press Play. The package's **Component composition** sample contains the same files. Keep only one App.cs entry in a project; compose this example into an existing app instead of adding a second entry.
+Download <a href="/examples/1.0.0/App.cs" download="App.cs" target="_self">App.cs</a>, <a href="/examples/1.0.0/Counter.cs" download="Counter.cs" target="_self">Counter.cs</a>, <a href="/examples/1.0.0/Card.cs" download="Card.cs" target="_self">Card.cs</a> and <a href="/examples/1.0.0/Actions.cs" download="Actions.cs" target="_self">Actions.cs</a>. Place these four files under Assets and press Play. The package's **Component composition** sample contains the same files. Keep only one App.cs entry in a project; compose this example into an existing app instead of adding a second entry.
 
 ### App.cs
 

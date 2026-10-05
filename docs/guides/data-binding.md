@@ -12,7 +12,7 @@ Data binding keeps an interface synchronized with explicit state. This example b
 
 Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineBindings()` in its returned tree instead of adding another entry.
 
-<a href="/examples/0.2.0/data-binding/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/0.2.0/data-binding/PineBindings.cs" download="PineBindings.cs" target="_self">Download PineBindings.cs</a>. Sources are MIT licensed.
+<a href="/examples/1.0.0/data-binding/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/1.0.0/data-binding/PineBindings.cs" download="PineBindings.cs" target="_self">Download PineBindings.cs</a>. Sources are MIT licensed.
 
 ```csharp title="App.cs"
 using UnityEngine;

@@ -31,7 +31,7 @@ export default function InteractiveExample({kind, version}) {
   const [state, dispatch] = useReducer((state, action) => transition(kind, state, action), kind, initialState);
   const [resetKey, setResetKey] = useState(0);
   const source = {hud: 'PineHud', binding: 'PineBindings', inventory: 'PineInventory', spring: 'PineSpring'}[kind];
-  if (!source || !['0.2.0'].includes(version)) throw new Error('Interactive example needs a pinned version and known kind');
+  if (!source || !['1.0.0'].includes(version)) throw new Error('Interactive example needs a pinned version and known kind');
   const action = (name, label, disabled = false) => <button type="button" onClick={() => dispatch(name)} disabled={disabled}>{label}</button>;
   return <section className={styles.example} aria-label={`${titles[kind]} interactive browser preview`}>
     <div className={styles.toolbar}><span>Interactive browser preview · Pine {version}</span><button type="button" onClick={() => { dispatch('reset'); setResetKey(key => key + 1); }} aria-label={`Reset ${titles[kind]} demo`}>Reset demo</button></div>

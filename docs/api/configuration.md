@@ -8,7 +8,7 @@ description: Configure typed Pine defaults, fonts, input preservation, canvas sc
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| `UI.Version` | `0.2.0` | Working API base version; package.json identifies the `0.2.0` distribution. |
+| `UI.Version` | `1.0.0` | Working API base version; package.json identifies the `1.0.0` distribution. |
 | `UI.Strict` | `true` | Duplicate named-property diagnostics within groups and duplicate child diagnostics. |
 | `UI.Defaults` | `true` | Native text, graphic and selectable defaults during creation. |
 | `UI.DeferNestedProperties` | `true` | Process nested groups after outer declarations within ordering phases. |

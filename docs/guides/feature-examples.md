@@ -6,7 +6,7 @@ description: Run Pine examples for sources, effects, context, native composition
 
 # Runnable Pine feature examples
 
-[Download PineFeatureExamples.cs](/examples/0.2.0/PineFeatureExamples.cs). Import it into a project containing Pine and run `PineDocs.Examples.PineFeatureExamples.Run()` on the Unity main thread. It creates explicit ownership roots and disposes the resources of every example. It is an execution/reference suite; use App.cs for a lasting application screen.
+[Download PineFeatureExamples.cs](/examples/1.0.0/PineFeatureExamples.cs). Import it into a project containing Pine and run `PineDocs.Examples.PineFeatureExamples.Run()` on the Unity main thread. It creates explicit ownership roots and disposes the resources of every example. It is an execution/reference suite; use App.cs for a lasting application screen.
 
 The suite runs these complete examples:
 

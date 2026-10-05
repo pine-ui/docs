@@ -12,7 +12,7 @@ A HUD reflects gameplay state. This example renders health, a health bar, and a 
 
 Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineHud()` in its returned tree instead of adding another entry.
 
-<a href="/examples/0.2.0/reactive-hud/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/0.2.0/reactive-hud/PineHud.cs" download="PineHud.cs" target="_self">Download PineHud.cs</a>. Sources are MIT licensed.
+<a href="/examples/1.0.0/reactive-hud/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/1.0.0/reactive-hud/PineHud.cs" download="PineHud.cs" target="_self">Download PineHud.cs</a>. Sources are MIT licensed.
 
 ```csharp title="App.cs"
 using UnityEngine;

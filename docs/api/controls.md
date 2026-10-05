@@ -32,7 +32,7 @@ A Source overload is two-way because native user input writes the source. A lite
 
 Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineControls()` in its returned tree instead of adding another entry.
 
-<a href="/examples/0.2.0/controls/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/0.2.0/controls/PineControls.cs" download="PineControls.cs" target="_self">Download PineControls.cs</a>. Sources are MIT licensed.
+<a href="/examples/1.0.0/controls/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/1.0.0/controls/PineControls.cs" download="PineControls.cs" target="_self">Download PineControls.cs</a>. Sources are MIT licensed.
 
 ```csharp title="App.cs"
 using UnityEngine;

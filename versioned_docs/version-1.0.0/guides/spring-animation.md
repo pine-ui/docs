@@ -12,7 +12,7 @@ A spring follows a state-derived target. This example moves an image between two
 
 Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineSpring()` in its returned tree instead of adding another entry.
 
-<a href="/examples/0.2.0/spring-animation/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/0.2.0/spring-animation/PineSpring.cs" download="PineSpring.cs" target="_self">Download PineSpring.cs</a>. Sources are MIT licensed.
+<a href="/examples/1.0.0/spring-animation/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/1.0.0/spring-animation/PineSpring.cs" download="PineSpring.cs" target="_self">Download PineSpring.cs</a>. Sources are MIT licensed.
 
 ```csharp title="App.cs"
 using UnityEngine;

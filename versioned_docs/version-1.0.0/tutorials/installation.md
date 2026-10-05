@@ -13,19 +13,19 @@ Pine creates retained native uGUI from typed C# declarations. Import `Pine` and 
 In Unity Package Manager, select **Install package from Git URL** and enter:
 
 ~~~text
-https://github.com/pine-ui/package.git#v0.2.0
+https://github.com/pine-ui/package.git#v1.0.0
 ~~~
 
-Alternatively, select **Install package from tarball** and use [com.kbenim.pine-0.2.0.tgz](/packages/com.kbenim.pine-0.2.0.tgz), checking [its SHA256 checksum](/packages/com.kbenim.pine-0.2.0.tgz.sha256). Package identifier: com.kbenim.pine. Match your installed package to the selected documentation version.
+Alternatively, select **Install package from tarball** and use [com.kbenim.pine-1.0.0.tgz](/packages/com.kbenim.pine-1.0.0.tgz), checking [its SHA256 checksum](/packages/com.kbenim.pine-1.0.0.tgz.sha256). Package identifier: com.kbenim.pine. Match your installed package to the selected documentation version.
 
 ## Supported versions and prerequisites
 
 | Package / API | Unity Editor | uGUI | Input System | Evidence |
 | --- | --- | --- | --- | --- |
-| Pine 0.2.0 | 6000.3.25f1 (Unity 6.3 LTS) | 2.0.0 | 1.20.1 | macOS Editor checks: native controls, automatic startup, behaviour composition, setup and cleanup |
-| Pine 0.2.0 | 6000.6.4f1 (Unity 6.6) | 2.6.0 | 1.20.1 | macOS Editor checks: native controls, automatic startup, behaviour composition, setup and cleanup |
+| Pine 1.0.0 | 6000.3.25f1 (Unity 6.3 LTS) | 2.0.0 | 1.20.1 | macOS Editor checks: native controls, automatic startup, behaviour composition, setup and cleanup |
+| Pine 1.0.0 | 6000.6.4f1 (Unity 6.6) | 2.6.0 | 1.20.1 | macOS Editor checks: native controls, automatic startup, behaviour composition, setup and cleanup |
 
-The package declares **Unity 6000.3 as its minimum**. The rows above are the exact recorded test tuples; they establish support within those checks. A stripped macOS Mono player was also measured on an Apple M4 Pro. See the [compatibility summary](https://pine-ui.com/compatibility/0.2.0.md) for the verified scope.
+The package declares **Unity 6000.3 as its minimum**. The rows above are the exact recorded test tuples; they establish support within those checks. A stripped macOS Mono player was also measured on an Apple M4 Pro. See the [compatibility summary](https://pine-ui.com/compatibility/1.0.0.md) for the verified scope.
 
 Before installing:
 

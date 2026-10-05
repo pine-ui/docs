@@ -12,7 +12,7 @@ Inventory records need stable identity when their quantity or position changes. 
 
 Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineInventory()` in its returned tree instead of adding another entry.
 
-<a href="/examples/0.2.0/dynamic-lists/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/0.2.0/dynamic-lists/PineInventory.cs" download="PineInventory.cs" target="_self">Download PineInventory.cs</a>. Sources are MIT licensed.
+<a href="/examples/1.0.0/dynamic-lists/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/1.0.0/dynamic-lists/PineInventory.cs" download="PineInventory.cs" target="_self">Download PineInventory.cs</a>. Sources are MIT licensed.
 
 ```csharp title="App.cs"
 using UnityEngine;
