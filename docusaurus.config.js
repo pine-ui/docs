@@ -3,8 +3,8 @@ const {themes} = require('prism-react-renderer');
 module.exports = {
   title: 'Pine',
   tagline: 'Reactive UI for Unity. Built in code.',
-  url: 'https://pine-ui.github.io',
-  baseUrl: '/pine-ui-docs/',
+  url: 'https://pine-ui.com',
+  baseUrl: '/',
   organizationName: 'pine-ui',
   projectName: 'docs',
   trailingSlash: true,
