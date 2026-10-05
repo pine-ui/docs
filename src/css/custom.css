@@ -1,24 +1,24 @@
 :root {
   --ifm-background-color: #fff;
-  --ifm-color-primary: #516d35;
-  --ifm-color-primary-dark: #496230;
-  --ifm-color-primary-darker: #455d2d;
-  --ifm-color-primary-darkest: #394c25;
-  --ifm-color-primary-light: #59783a;
-  --ifm-color-primary-lighter: #5d7d3d;
-  --ifm-color-primary-lightest: #698e45;
+  --ifm-color-primary: #167849;
+  --ifm-color-primary-dark: #146c42;
+  --ifm-color-primary-darker: #13663e;
+  --ifm-color-primary-darkest: #0f5433;
+  --ifm-color-primary-light: #188450;
+  --ifm-color-primary-lighter: #198a54;
+  --ifm-color-primary-lightest: #1d9c5f;
   --ifm-font-family-base: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
   --ifm-code-font-size: 90%;
   --ifm-navbar-shadow: none;
 }
 [data-theme='dark'] {
-  --ifm-color-primary: #91ae68;
-  --ifm-color-primary-dark: #82a354;
-  --ifm-color-primary-darker: #7b9a4f;
-  --ifm-color-primary-darkest: #657f41;
-  --ifm-color-primary-light: #9cb678;
-  --ifm-color-primary-lighter: #a2bb80;
-  --ifm-color-primary-lightest: #b3c798;
+  --ifm-color-primary: #59ce96;
+  --ifm-color-primary-dark: #3cc581;
+  --ifm-color-primary-darker: #32ba76;
+  --ifm-color-primary-darkest: #289960;
+  --ifm-color-primary-light: #76d7ab;
+  --ifm-color-primary-lighter: #84dcb5;
+  --ifm-color-primary-lightest: #afe9d2;
   --ifm-background-color: #17191c;
   --ifm-background-surface-color: #202328;
   --ifm-footer-background-color: #17191c;
