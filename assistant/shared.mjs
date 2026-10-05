@@ -62,6 +62,8 @@ export function retrieve(corpus, question, version, page = '', history = [], cou
   const n = docs.length || 1;
   return docs.map(c => {
     let score = 0, hits = 0;
+    const api = /^UI\.(\w+)$/.exec(c.section)?.[1].toLowerCase();
+    if (api && query.includes(api)) score += 20;
     const headingTerms = new Set(tokens(`${c.title} ${c.section}`));
     for (const term of new Set(expanded)) {
       const tf = c.terms[term] || 0;
@@ -100,6 +102,8 @@ export function validateModelAnswer(raw, chunks, version) {
   if (urls(value.answer).some(url => !evidenceUrls.has(url))) return null;
   if (version === '0.1.0' && /using Pine;/.test(value.answer) && !/using UI = Pine\.Pine;/.test(value.answer)) return null;
   if (version === '0.2.0' && /Pine\.Pine/.test(value.answer)) return null;
+  const documentedApis = new Set(chunks.flatMap(c => [...c.text.matchAll(/\bUI\.(\w+)/g)].map(m => m[1])));
+  if ([...value.answer.matchAll(/\bUI\.(\w+)/g)].some(m => !documentedApis.has(m[1]))) return null;
   const allowed = new Set(value.citations);
   if ([...value.answer.matchAll(/\[([a-f0-9]{14})\]/g)].some(m => !allowed.has(m[1]))) return null;
   return {status: 'answered', answer: value.answer.replace(/\[([a-f0-9]{14})\]/g, ''), sources: sourceCards([...new Map(chosen.map(c => [c.id, c])).values()]), mode: 'assistant'};

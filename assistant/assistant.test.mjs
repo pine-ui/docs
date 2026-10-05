@@ -54,3 +54,10 @@ test('answers must cite real same-version sources; code indexing and generic C# 
   assert.equal(validateModelAnswer(JSON.stringify({...answer, answer: '```csharp\nusing Pine;\nvar state = UI.Source(0);\n```', citations: [release[0].id]}), release, '0.1.0'), null);
   assert.equal(validateModelAnswer('{invalid json', chunks, '0.2.0'), null);
 });
+
+test('named slider questions retrieve its documented API; fabricated UI methods are rejected', () => {
+  const chunks = retrieve(corpus, 'How do I bind a slider to state?', '0.2.0');
+  assert.ok(chunks.some(c => c.section === 'UI.Slider'));
+  const answer = {status: 'answered', answer: 'Use UI.Slider(value, UI.Min(0f), UI.Max(1f));', citations: [chunks[0].id]};
+  assert.equal(validateModelAnswer(JSON.stringify(answer), chunks, '0.2.0'), null);
+});
