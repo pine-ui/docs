@@ -3,6 +3,10 @@ const lightTheme = {...themes.github, styles: [...themes.github.styles,
   {types: ['namespace'], style: {opacity: 1}},
   {types: ['function'], style: {color: '#a11f2b'}},
   {types: ['string', 'interpolation-string'], style: {color: '#b10e50'}},
+  {types: ['entity', 'url', 'symbol', 'number', 'boolean', 'variable', 'constant', 'property', 'regex', 'inserted'], style: {color: '#087876'}},
+  {types: ['comment', 'prolog', 'doctype', 'cdata'], style: {color: '#657164'}},
+  {types: ['attr-value'], style: {color: '#b10e50'}},
+  {types: ['atrule', 'attr-name'], style: {color: '#006789'}},
 ]};
 
 module.exports = {

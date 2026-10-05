@@ -24,6 +24,7 @@
 }
 .navbar {border-bottom: 1px solid var(--ifm-color-emphasis-200);}
 .navbar__brand {font-size: 1.35rem; letter-spacing: -.04em; margin-right: 2rem;}
+.theme-doc-markdown img {height: auto;}
 .pine-home {width: 100%; min-width: 0; max-width: 1180px; margin: 0 auto; padding: 0 32px;}
 .pine-hero {text-align: center; padding: 88px 0 76px;}
 .pine-hero-title {display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 28px;}
