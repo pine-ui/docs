@@ -20,9 +20,9 @@ The site URL is https://pine-ui.com. GitHub Pages builds and deploys the documen
 
 `docs/` is the working copy. `versioned_docs/version-0.1.0` is the 0.1.0 snapshot selected by Docusaurus. Both contain matching tutorials and API reference. Sidebars and `versions.json` select this version.
 
-The tutorials cover installation, a counter, reactive state, native composition, dynamic UI and springs. The reference covers core lifetimes, utilities, native creation/bindings, dynamic scopes, animation and configuration.
+The tutorials cover installation, a counter, reactive state, native composition, dynamic UI and springs. Four practical guides include downloadable C# examples and real Unity screenshots for a HUD, keyed inventory lists, state-to-UI bindings and spring motion. The reference covers core lifetimes, utilities, native creation/bindings, dynamic scopes, animation and configuration.
 
-[Package source](https://github.com/pine-ui/package/tree/v0.1.0) · [Docs source](https://github.com/pine-ui/docs/tree/v0.1.0)
+[Live documentation](https://pine-ui.com) · [Package source](https://github.com/pine-ui/package/tree/v0.1.0) · [Docs source](https://github.com/pine-ui/docs/tree/v0.1.0)
 
 ## License
 

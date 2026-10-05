@@ -1,8 +1,10 @@
 ---
-title: Creation
+title: Unity UI creation and bindings API
+sidebar_label: Creation
+description: Reference for Pine Mount, native component builders, reactive properties, events, and two-way Unity control bindings.
 ---
 
-# Creation
+# Unity UI creation and bindings API
 
 ## Mounts and native components
 

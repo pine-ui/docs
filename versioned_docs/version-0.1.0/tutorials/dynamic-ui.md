@@ -1,8 +1,10 @@
 ---
-title: Conditional UI and lists
+title: Conditional Unity UI and dynamic lists
+sidebar_label: Conditional UI and lists
+description: Build conditional Unity interfaces and dynamic lists with Pine Show, Indexes, Values, stable row identity, and retained exit transitions.
 ---
 
-# Conditional UI and lists
+# Conditional Unity UI and dynamic lists
 
 Dynamic helpers return retained component results. Bind them as children under a stable mount/root.
 
@@ -49,3 +51,5 @@ Presence becomes false on departure. The branch remains for `0.35` seconds; reen
 Row scopes own their resources. Failed cleanup does not leave removed results published; other removals are attempted before aggregate errors are reported. Dispose the parent owner to release all rows.
 
 Continue with [animation](animation.md).
+
+Build a [dynamic inventory list with stable IDs](../guides/dynamic-lists.md).

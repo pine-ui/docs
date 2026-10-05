@@ -1,8 +1,10 @@
 ---
-title: Sources and derived state
+title: Reactive state and data binding in Unity
+sidebar_label: Sources and derived state
+description: Use Pine sources, derived state, effects, and batching to keep Unity UI synchronized with explicit typed C# state.
 ---
 
-# Sources and derived state
+# Reactive state and data binding in Unity
 
 Sources hold mutable state; derived values cache reusable calculations.
 
@@ -48,3 +50,5 @@ Use `.Peek()` or `UI.Untrack(...)` for non-tracking reads. Prefer explicit immut
 Create UI, effects and derived values under `Root` or `Mount`. Roots are independent, including nested roots; dispose each. Dynamic branches/context providers are parent-owned. `Scope.Run` reenters an existing live scope. Operations run synchronously on Unity's main thread.
 
 Continue with [components](components.md).
+
+Try [state-to-UI bindings](../guides/data-binding.md) in a complete Unity component.

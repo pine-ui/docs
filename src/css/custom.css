@@ -24,7 +24,7 @@
 }
 .navbar {border-bottom: 1px solid var(--ifm-color-emphasis-200);}
 .navbar__brand {font-size: 1.35rem; letter-spacing: -.04em; margin-right: 2rem;}
-.pine-home {max-width: 1180px; margin: 0 auto; padding: 0 32px;}
+.pine-home {width: 100%; min-width: 0; max-width: 1180px; margin: 0 auto; padding: 0 32px;}
 .pine-hero {text-align: center; padding: 88px 0 76px;}
 .pine-hero-title {display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 28px;}
 .pine-hero-title img {width: clamp(48px, 8vw, 88px); height: auto; flex-shrink: 0;}
@@ -37,6 +37,9 @@
 .pine-code-section h2 {font-size: 2rem; letter-spacing: -.04em; line-height: 1.2; margin-top: 18px;}
 .pine-code-section p {color: var(--ifm-color-emphasis-700);}
 .pine-code-section pre {margin-bottom: 0;}
+.pine-code-section > * {min-width: 0;}
+.pine-guides {border-top: 1px solid var(--ifm-color-emphasis-200); padding: 32px 0 64px;}
+.pine-guides > div {display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 32px;}
 .pine-features {display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; padding: 32px 0 68px;}
 .pine-features div {border-top: 2px solid var(--ifm-color-primary); padding-top: 20px;}
 .pine-features h3 {font-size: 1.05rem;}
@@ -48,4 +51,5 @@
   .pine-hero h1 {font-size: clamp(1.5rem, 5.8vw, 2.8rem);}
   .pine-code-section {grid-template-columns: 1fr; gap: 24px;}
   .pine-features {grid-template-columns: 1fr; gap: 16px;}
+  .pine-guides > div {grid-template-columns: 1fr;}
 }

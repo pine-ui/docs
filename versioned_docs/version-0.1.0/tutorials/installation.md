@@ -1,9 +1,10 @@
 ---
-title: Installation
-description: Install Pine 0.1.0 and create reactive Unity UI in code.
+title: Install Pine for Unity
+sidebar_label: Installation
+description: Install Pine 0.1.0 through Unity Package Manager, configure text and input, and start building reactive Unity UI in C#.
 ---
 
-# Installation
+# Install Pine for Unity
 
 Pine **0.1.0** builds retained uGUI in C# with native Unity components and explicit typed reactive state.
 

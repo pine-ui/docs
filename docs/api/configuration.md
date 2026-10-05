@@ -1,8 +1,10 @@
 ---
-title: Configuration
+title: Pine configuration and Unity setup
+sidebar_label: Configuration
+description: Configure Pine defaults, strict diagnostics, property grouping, native layout, TextMeshPro resources, and Unity input dependencies.
 ---
 
-# Configuration
+# Pine configuration and Unity setup
 
 | Property | Default | Meaning |
 | --- | --- | --- |

@@ -1,8 +1,10 @@
 ---
-title: Utility
+title: Batching, contexts and reactive inputs API
+sidebar_label: Utility
+description: Reference for Pine Batch, Untrack, Read, Context, and Value APIs used to compose typed reactive state and scoped Unity UI.
 ---
 
-# Utility
+# Batching, contexts and reactive inputs API
 
 | API | Behavior |
 | --- | --- |

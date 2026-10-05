@@ -1,9 +1,10 @@
 ---
-title: Your first counter
-description: Build and dispose a reactive counter with native Unity UI.
+title: Build your first reactive Unity UI
+sidebar_label: Your first counter
+description: Create a Unity UI counter in C# with Pine sources, reactive text, button callbacks, and a mount that owns cleanup.
 ---
 
-# Your first counter
+# Build your first reactive Unity UI
 
 Sources hold state. A getter binding reads state, and a button callback changes it.
 
@@ -48,3 +49,5 @@ Mounts create their hierarchy, overlay Canvas and input host in code. Configure 
 `Label` and `Enabled` accept direct getter lambdas. Literal text such as `"Increment"` is fixed. `new Value<T>(() => ...)` remains valid when you want an explicit wrapper.
 
 Continue with [reactivity](reactivity.md).
+
+Build a [reactive game HUD](../guides/reactive-hud.md) using the same source and mount pattern.

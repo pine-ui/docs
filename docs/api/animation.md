@@ -1,8 +1,10 @@
 ---
-title: Animation
+title: Spring animation API for Unity UI
+sidebar_label: Animation
+description: Reference for Pine Spring, SpringSpace, Control, and Step APIs, reactive animation parameters, Unity value types, and clock behavior.
 ---
 
-# Animation
+# Spring animation API for Unity UI
 
 `Spring<T>(Func<T> target, Value<double>? period = null, Value<double>? dampingRatio = null, SpringSpace<T> space = null)` creates a spring in a stable scope. Defaults are period `1` second and damping ratio `1`.
 

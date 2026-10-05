@@ -1,4 +1,9 @@
 const {themes} = require('prism-react-renderer');
+const lightTheme = {...themes.github, styles: [...themes.github.styles,
+  {types: ['namespace'], style: {opacity: 1}},
+  {types: ['function'], style: {color: '#a11f2b'}},
+  {types: ['string', 'interpolation-string'], style: {color: '#b10e50'}},
+]};
 
 module.exports = {
   title: 'Pine',
@@ -22,6 +27,7 @@ module.exports = {
       editCurrentVersion: false,
     },
     blog: false,
+    sitemap: {ignorePatterns: ['/search', '/search/**']},
     theme: {customCss: require.resolve('./src/css/custom.css')},
   }]],
   themes: [['@easyops-cn/docusaurus-search-local', {
@@ -29,10 +35,11 @@ module.exports = {
     highlightSearchTermsOnTargetPage: true,
   }]],
   themeConfig: {
+    image: 'img/pine-social.png',
     colorMode: {defaultMode: 'dark', respectPrefersColorScheme: true},
     navbar: {
       title: 'pine',
-      logo: {alt: 'Pine tree', src: 'img/pine-icon.svg'},
+      logo: {alt: 'Pine tree', src: 'img/pine-icon.svg', width: 27, height: 32},
       items: [
         {to: '/', label: 'Home', position: 'left'},
         {type: 'docSidebar', sidebarId: 'tutorials', label: 'Tutorials', position: 'left'},
@@ -44,6 +51,6 @@ module.exports = {
     footer: {
       copyright: 'Released under the MIT License',
     },
-    prism: {theme: themes.github, darkTheme: themes.vsDark, additionalLanguages: ['csharp', 'json', 'bash']},
+    prism: {theme: lightTheme, darkTheme: themes.vsDark, additionalLanguages: ['csharp', 'json', 'bash']},
   },
 };

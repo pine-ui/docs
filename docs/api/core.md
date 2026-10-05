@@ -1,9 +1,10 @@
 ---
-title: Core
-description: Pine sources, derived values, effects, and lifetime scopes.
+title: Reactive state and lifetime scopes API
+sidebar_label: Core
+description: Reference for Pine Source, Derived, Effect, Scope, and Root APIs, including dependency tracking, ownership, and disposal.
 ---
 
-# Core
+# Reactive state and lifetime scopes API
 
 Examples use `using Pine;` and `using UI = Pine.Pine;`. This documents Pine **0.1.0**.
 

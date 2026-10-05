@@ -1,8 +1,10 @@
 ---
-title: Components and properties
+title: Compose Unity UI components in C#
+sidebar_label: Components and properties
+description: Compose native Unity uGUI and TextMeshPro components with Pine builders, typed setters, scoped events, and reactive properties.
 ---
 
-# Components and properties
+# Compose Unity UI components in C#
 
 A component is an ordinary C# function returning a Unity component.
 

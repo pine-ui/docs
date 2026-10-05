@@ -1,8 +1,10 @@
 ---
-title: Dynamic scopes
+title: Conditional UI and keyed lists API
+sidebar_label: Dynamic scopes
+description: Reference for Pine Show, Switch, Indexes, Values, and Branch APIs for conditional Unity UI, keyed lists, and retained exits.
 ---
 
-# Dynamic scopes
+# Conditional UI and keyed lists API
 
 All operators need a stable owner and return `Source<TResult[]>`. Treat result arrays and callback signals as operator-owned state. Bind results with `Children(() => output.Value)`.
 

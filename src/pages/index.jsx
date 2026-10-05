@@ -3,6 +3,15 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import CodeBlock from '@theme/CodeBlock';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Head from '@docusaurus/Head';
+
+const identity = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {'@type': 'Organization', '@id': 'https://pine-ui.com/#pine', name: 'Pine', url: 'https://pine-ui.com/', logo: 'https://pine-ui.com/img/pine-icon.svg', sameAs: ['https://github.com/pine-ui']},
+    {'@type': 'WebSite', '@id': 'https://pine-ui.com/#website', name: 'Pine', alternateName: 'Pine UI for Unity', url: 'https://pine-ui.com/', publisher: {'@id': 'https://pine-ui.com/#pine'}},
+  ],
+};
 
 const example = `using Pine;
 using UI = Pine.Pine;
@@ -16,13 +25,14 @@ using var mount = UI.Mount(() => UI.Column(
 
 export default function Home() {
   return (
-    <Layout title="Reactive UI for Unity" description="Pine is a reactive C# UI library for Unity uGUI. Build interfaces in code with typed state and automatic updates.">
+    <Layout title="Reactive UI for Unity in C#" description="Pine is a reactive C# UI library for Unity uGUI. Build interfaces in code with typed state, data binding, dynamic lists, and spring animations.">
+      <Head><script type="application/ld+json">{JSON.stringify(identity)}</script></Head>
       <main className="pine-home">
         <section className="pine-hero">
           <div>
             <div className="pine-hero-title">
-              <img src={useBaseUrl('/img/pine-icon.svg')} alt=""/>
-              <h1>Interfaces in code.<br/><span>State in sync.</span></h1>
+              <img src={useBaseUrl('/img/pine-icon.svg')} alt="" width="40" height="48"/>
+              <h1>Reactive Unity UI.<br/><span>Built in C#.</span></h1>
             </div>
             <p>A reactive UI library for Unity. Compose native uGUI components, bind them to typed state, and let Pine handle updates and cleanup.</p>
             <div className="pine-actions">
@@ -39,6 +49,15 @@ export default function Home() {
           <div><h3>Typed reactivity</h3><p>Sources, derived values, effects, batching, and contexts. Explicit typed state and scoped bindings.</p></div>
           <div><h3>Native Unity UI</h3><p>Compose uGUI and TextMeshPro components. Create the Canvas and input host from code.</p></div>
           <div><h3>Owned lifetimes</h3><p>Scopes own bindings, callbacks, branches, and animations. Dispose a mount to release its UI.</p></div>
+        </section>
+        <section className="pine-guides">
+          <h2>Build something with Pine</h2>
+          <div>
+            <Link to="/docs/guides/reactive-hud">Build a reactive game HUD</Link>
+            <Link to="/docs/guides/dynamic-lists">Create dynamic Unity UI lists</Link>
+            <Link to="/docs/guides/data-binding">Bind Unity UI to C# state</Link>
+            <Link to="/docs/guides/spring-animation">Animate Unity UI with springs</Link>
+          </div>
         </section>
       </main>
     </Layout>
