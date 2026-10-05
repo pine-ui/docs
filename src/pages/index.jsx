@@ -14,14 +14,24 @@ const identity = {
 };
 
 const example = `using Pine;
-using UI = Pine.Pine;
+using UnityEngine;
 
-var count = UI.Source(0);
+public sealed class Counter : MonoBehaviour
+{
+    private readonly Source<int> _count = UI.Source(0);
 
-using var mount = UI.Mount(() => UI.Column(
-    UI.Label(() => $"Count: {count.Value}"),
-    UI.Button("Increment", () => count.Value++)
-));`;
+    private void Start() => UI.Mount(Build);
+
+    private Component Build()
+    {
+        return UI.Column(
+            UI.Children(
+                UI.Label(() => $"Count: {_count.Value}"),
+                UI.Button("Increment", () => _count.Value++)
+            )
+        );
+    }
+}`;
 
 export default function Home() {
   return (
@@ -48,7 +58,7 @@ export default function Home() {
         <section className="pine-features">
           <div><h3>Typed reactivity</h3><p>Sources, derived values, effects, batching, and contexts. Explicit typed state and scoped bindings.</p></div>
           <div><h3>Native Unity UI</h3><p>Compose uGUI and TextMeshPro components. Create the Canvas and input host from code.</p></div>
-          <div><h3>Owned lifetimes</h3><p>Scopes own bindings, callbacks, branches, and animations. Dispose a mount to release its UI.</p></div>
+          <div><h3>Owned lifetimes</h3><p>Scopes own bindings, callbacks, branches, and animations. Mount the whole tree once; scene/root destruction ends its scope.</p></div>
         </section>
         <section className="pine-guides">
           <h2>Build something with Pine</h2>

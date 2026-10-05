@@ -6,7 +6,7 @@ description: Reference for Pine Show, Switch, Indexes, Values, and Branch APIs f
 
 # Conditional UI and keyed lists API
 
-All operators need a stable owner and return `Source<TResult[]>`. Treat result arrays and callback signals as operator-owned state. Bind results with `Children(() => output.Value)`.
+All operators need a stable owner and return `ReadOnly<IReadOnlyList<TResult>>`. Treat result lists and read-only callback values as operator-owned state. Bind results with `Children(() => output.Value)`.
 
 | Operator | Identity and constructor inputs |
 | --- | --- |

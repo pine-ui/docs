@@ -6,7 +6,7 @@ description: Reference for Pine Source, Derived, Effect, Scope, and Root APIs, i
 
 # Reactive state and lifetime scopes API
 
-Examples use `using Pine;` and `using UI = Pine.Pine;`. This documents Pine **0.1.0**.
+Examples use only `using Pine;`, then call `UI.Source`, `UI.Mount` and the other PascalCase methods. These pages document the current working source.
 
 | API | Behavior |
 | --- | --- |
@@ -41,3 +41,11 @@ Equal value types, strings and nulls suppress notifications by default. Assignin
 The scheduler attempts independent queued calculations and effects after an observer fails, then throws `AggregateException`. Clock callbacks follow the same policy. Creation-time failures propagate to the caller. Feedback-loop guards detect work that fails to settle.
 
 If an effect's cleanup fails, its previous subscriptions remain available for retry on a later dependency change. Cleanup resources are attempted once; a retry reruns the effect rather than repeating already-attempted cleanup.
+
+## Typed inputs and framework-owned values
+
+`Value<T>` holds a typed literal or tracked getter. `Source<T>`, `Derived<T>`, `Spring<T>` and `ReadOnly<T>` convert implicitly; use `new Value<T>(() => ...)` for direct getter input when a factory does not provide a dedicated getter overload. `Value<T>.Read()` and `UI.Read(...)` retain normal tracking.
+
+`ReadOnly<T>` exposes `.Value` and `.Peek()` without a public setter. Dynamic results, row values, indices and presence use it because their ownership belongs to the operator. Update the controlling source collection/selector instead.
+
+`UI.Mount(build)` creates the entire tree once in its own scope. Call it from `Start()` for scene-lived UI and ignore its optional return value. Scene unload or root destruction disposes native objects, bindings and handlers. Disabling the creating component does not remove or remount the interface. Retain the returned `Mount` only for early disposal; a helper named `Build()` is optional. [The counter](../tutorials/counter.md) shows a complete owner created without Inspector wiring.

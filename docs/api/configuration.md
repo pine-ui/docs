@@ -1,30 +1,50 @@
 ---
 title: Pine configuration and Unity setup
 sidebar_label: Configuration
-description: Configure Pine defaults, strict diagnostics, property grouping, native layout, TextMeshPro resources, and Unity input dependencies.
+description: Configure typed Pine defaults, fonts, input preservation, canvas scaling, safe areas and reduced motion in code.
 ---
 
 # Pine configuration and Unity setup
 
-| Property | Default | Meaning |
+| Setting | Default | Meaning |
 | --- | --- | --- |
-| `Pine.Version` | `0.1.0` | Package version. |
-| `Pine.Strict` | `true` | Duplicate-property and duplicate-child diagnostics. |
-| `Pine.Defaults` | `true` | Native defaults applied by component creation. |
-| `Pine.DeferNestedProperties` | `true` | Process nested groups after outer properties within ordering phases. |
+| `UI.Version` | `0.2.0` | Working API base version; package.json identifies the `0.2.0` distribution. |
+| `UI.Strict` | `true` | Duplicate named-property diagnostics within groups and duplicate child diagnostics. |
+| `UI.Defaults` | `true` | Native text, graphic and selectable defaults during creation. |
+| `UI.DeferNestedProperties` | `true` | Process nested groups after outer declarations within ordering phases. |
+| `UI.DefaultFont` | `null` | Code-supplied default font; null selects the bundled Latin fallback. |
+| `UI.ReducedMotion.Value` | `false` | Snap spring targets and remove native control/dropdown fades. |
 
-Unity subsystem initialization restores these flags. Configure them before constructing your UI. Ownership, derived-write, unique-key, cycle and numeric-input guards validate reactive operations.
+Configure defaults before creating UI. Unity subsystem initialization restores creation flags, the default font and reduced-motion preference. Restore application preferences in your startup code. `Font(...)` can bind a font on an existing label; changing DefaultFont affects subsequent text construction.
 
-## Package environment
+## Fonts and localization
 
-The package manifest declares Unity **6000.7.0b2**, uGUI **2.7.0** and Input System **6.7.0**. Text uses TextMeshPro settings and `TMP_Settings.defaultFontAsset`. Enable the Input System backend in project settings.
+The bundled Liberation Sans SDF includes 567 glyphs, covering accented Latin and common punctuation. Its SIL Open Font License is included separately from Pine's MIT source license. Code-configured fonts can supply additional glyph sets and fallbacks through native TMP font assets.
 
-## Defaults and layout
+```csharp
+UI.DefaultFont = applicationFont;
+var locale = UI.Source("en");
+UI.Label(
+    () => translations[locale.Value]["welcome"],
+    UI.Font(() => fonts[locale.Value]),
+    UI.FontSize(28)
+);
+```
 
-Creation sets a RectTransform size of `(160,40)`. TMP text uses the configured default font, size `24`, white color and a disabled text raycast target. Buttons use an Image target graphic. Set `Defaults = false` to configure native creation explicitly.
+Translations are ordinary typed reactive text inputs. Native TMP font fallback tables can be configured by application code. Existing project TMP settings are preserved; missing-only setup supplies settings and line-breaking/style resources. See [installation](../tutorials/installation.md) for exact ownership and input behavior.
 
-`DeferNestedProperties` controls group traversal; actions retain their priority ordering and parenting follows ordinary properties. Strict mode detects repeated named properties within a group and repeated child transforms.
+## Native defaults
 
-## Versioned documentation
+Created RectTransforms start at 160×40. Labels use Pine's resolved font, size 24, white text and decorative raycasts disabled. Selectables have a background target graphic, automatic navigation and distinct native focus/pressed/disabled colors. Complete control factories supply required child components.
 
-These API pages and tutorials document Pine **0.1.0**. Install the tagged package with `https://github.com/pine-ui/package.git#v0.1.0`.
+`Defaults = false` disables these creation defaults. Supply required text fonts and control configuration yourself when using low-level Create; standard application declarations should retain the default.
+
+## Group ordering and diagnostics
+
+Actions run first, sorted by numeric priority with stable declaration order for ties. Ordinary properties follow; parenting runs afterward. Nested groups follow `DeferNestedProperties`. Strict mode catches repeated named operations within a group and repeated child transforms. Compile-time compatibility remains enforced independently of Strict. Independent bindings to the same native field can compete; give each field one controlling declaration.
+
+## Canvas options
+
+`CanvasOptions` contains typed reactive Name, ReferenceResolution, SortOrder, RenderMode, Camera, Scale, SafeArea, WorldPosition, WorldRotation and WorldSize inputs. A parentless mount owns and configures its canvas. A supplied parent preserves its existing canvas and external input ownership. The [complete mount reference](mount-reference.md) documents each field and lifetime member.
+
+The version menu preserves the immutable [0.1.0 documentation](/docs/0.1.0/tutorials/installation/) and its matching downloads.

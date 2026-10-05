@@ -11,8 +11,9 @@ A spring follows a reactive getter. Bind its output directly where the value typ
 ```csharp
 var target = UI.Source(0f);
 var spring = UI.Spring(() => target.Value, period: 0.5);
-var frame = UI.Frame(UI.Position(() =>
-    new UnityEngine.Vector2(spring.Value, 0)));
+var frame = UI.Frame(
+    UI.Position(() => new UnityEngine.Vector2(spring.Value, 0))
+);
 target.Value = 200f;
 ```
 
@@ -23,8 +24,11 @@ For reactive tuning:
 ```csharp
 var period = UI.Source(0.5);
 var damping = UI.Source(1.0);
-var spring = UI.Spring(() => target.Value,
-    period: period, dampingRatio: damping);
+var spring = UI.Spring(
+    () => target.Value,
+    period: period,
+    dampingRatio: damping
+);
 ```
 
 `Control(position: ..., velocity: ..., impulse: ...)` changes motion state for the next clock update. Assigning `spring.Value` publishes an immediate jump and clears velocity; the existing target remains active.

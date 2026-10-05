@@ -26,23 +26,29 @@ The selected branch is retained while its identity stays the same. Switching ide
 var names = UI.Source<string[]>(new[] { "Ada", "Grace" });
 var rows = UI.Values<string, TMPro.TextMeshProUGUI>(
     () => names.Value,
-    (name, index) => UI.Label(() => $"{index.Value + 1}. {name}"));
+    (name, index) => UI.Label(() => $"{index.Value + 1}. {name}")
+);
 var list = UI.Column(UI.Children(() => rows.Value));
 ```
 
-Membership/order changes publish new output arrays. Existing row signals can update without rebuilding those arrays. These lists retain and reconcile UI by identity.
+Membership/order changes publish new immutable output lists. Existing row signals can update without replacing those lists. These lists retain and reconcile UI by identity.
 
 ## Retained exits
 
-Advanced constructors receive a presence source and return `Branch<T>`. For a fading branch:
+Advanced constructors receive a read-only presence value and return `Branch<T>`. For a fading branch:
 
 ```csharp
-var fading = UI.Show<UnityEngine.Component>(() => visible.Value, present =>
-{
-    var alpha = UI.Spring(() => present.Value ? 1f : 0f, period: 0.18);
-    return new Branch<UnityEngine.Component>(
-        UI.Label("Hello", UI.Opacity(alpha)), 0.35);
-});
+var fading = UI.Show<UnityEngine.Component>(
+    () => visible.Value,
+    present =>
+    {
+        var alpha = UI.Spring(() => present.Value ? 1f : 0f, period: 0.18);
+        return new Branch<UnityEngine.Component>(
+            UI.Label("Hello", UI.Opacity(alpha)),
+            0.35
+        );
+    }
+);
 var host = UI.Column(UI.Children(() => fading.Value));
 ```
 
@@ -53,3 +59,5 @@ Row scopes own their resources. Failed cleanup does not leave removed results pu
 Continue with [animation](animation.md).
 
 Build a [dynamic inventory list with stable IDs](../guides/dynamic-lists.md).
+
+The operator output, row value, index and presence are `ReadOnly<T>` values: `.Value` tracks reads and `.Peek()` does not. Update the controlling source rather than assigning framework-owned results.

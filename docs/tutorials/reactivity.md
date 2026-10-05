@@ -10,7 +10,6 @@ Sources hold mutable state; derived values cache reusable calculations.
 
 ```csharp
 using Pine;
-using UI = Pine.Pine;
 
 var count = UI.Source(0);
 using var scope = UI.Root(() =>
