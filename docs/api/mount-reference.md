@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Mounts and canvas options
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `CanvasOptions`
 
@@ -18,13 +18,25 @@ Typed reactive configuration for a Pine-owned canvas. Fields accept literals, so
 
 ```csharp
 UI.Mount(
-    () => UI.Label("Overlay"),
+    () => UI.Label(text: "Overlay"),
     options: new CanvasOptions
     {
-        ReferenceResolution = new UnityEngine.Vector2(1280, 720),
+        ReferenceResolution = new UnityEngine.Vector2(x: 1280, y: 720),
         SafeArea = true,
     }
 );
+```
+
+## `CanvasOptions.Persistent`
+
+```text
+bool Persistent
+```
+
+Whether a Pine-owned canvas survives scene changes. Defaults to true and is read once when mounting. Set false for scene-lived UI. Persistence never takes ownership of an external parent or canvas; explicitly requesting it with an external parent is rejected.
+
+```csharp
+var options = new CanvasOptions { Persistent = false };
 ```
 
 ## `CanvasOptions.Name`
@@ -50,7 +62,7 @@ Reactive positive reference resolution for native canvas scaling; defaults to 19
 ```csharp
 var options = new CanvasOptions
 {
-    ReferenceResolution = new UnityEngine.Vector2(1280, 720),
+    ReferenceResolution = new UnityEngine.Vector2(x: 1280, y: 720),
 };
 ```
 
@@ -128,7 +140,7 @@ Reactive world canvas position, applied in WorldSpace mode. Defaults to world ze
 ```csharp
 var options = new CanvasOptions
 {
-    WorldPosition = new UnityEngine.Vector3(0, 1, 2),
+    WorldPosition = new UnityEngine.Vector3(x: 0, y: 1, z: 2),
 };
 ```
 
@@ -158,7 +170,7 @@ Reactive finite non-negative world canvas dimensions before its scale multiplier
 ```csharp
 var options = new CanvasOptions
 {
-    WorldSize = new UnityEngine.Vector2(200, 100),
+    WorldSize = new UnityEngine.Vector2(x: 200, y: 100),
 };
 ```
 
@@ -180,7 +192,7 @@ UI.DefaultFont = localizedFont;
 public static Mount Mount(Func<Component> component, Transform parent = null, CanvasOptions options = null)
 ```
 
-An explicit mounted interface lifetime. Scope owns bindings and created native objects; Root identifies the returned interface and Canvas identifies its containing canvas. Dispose removes the interface; destroying Root also disposes its scope. Mount the whole tree once at startup. The returned Mount may be ignored for a scene-lived interface: root destruction or scene unload disposes its scope. Retain it only for early disposal or explicit persistence; disabling the creating component does not remove or rebuild UI.
+An explicit mounted interface lifetime. Scope owns bindings and created native objects; Root identifies the returned interface and Canvas identifies its containing canvas. Dispose removes the interface; destroying Root also disposes its scope. App.Mount returns the whole tree once at startup; generated startup calls this method automatically. Pine-owned canvases persist across scenes by default. CanvasOptions.Persistent=false opts into scene lifetime. Destroying the root or disposing the result ends its scope; disabling a caller does not rebuild UI.
 
 | Parameter | Meaning |
 | --- | --- |
@@ -188,12 +200,12 @@ An explicit mounted interface lifetime. Scope owns bindings and created native o
 | `parent` | Optional external native parent; null creates a Pine-owned canvas. |
 | `options` | Code-configured typed reactive canvas options, used only for Pine-owned canvases. |
 
-**Returns:** The mounted tree’s scope, native root and containing canvas. Ignore this optional result for scene-lived UI; retain it for early disposal or explicit persistence.
+**Returns:** The mounted tree’s scope, native root and containing canvas. Keep this optional result only for explicit early disposal. Persistence is configured with CanvasOptions.
 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-Mount mount = UI.Mount(() => UI.Label("Hello"));
+Mount mount = UI.Mount(component: () => UI.Label(text: "Hello"));
 mount.Dispose();
 ```
 
@@ -201,7 +213,7 @@ mount.Dispose();
 public static Mount Mount(Func<GameObject> component, Transform parent = null, CanvasOptions options = null)
 ```
 
-An explicit mounted interface lifetime. Scope owns bindings and created native objects; Root identifies the returned interface and Canvas identifies its containing canvas. Dispose removes the interface; destroying Root also disposes its scope. Mount the whole tree once at startup. The returned Mount may be ignored for a scene-lived interface: root destruction or scene unload disposes its scope. Retain it only for early disposal or explicit persistence; disabling the creating component does not remove or rebuild UI.
+An explicit mounted interface lifetime. Scope owns bindings and created native objects; Root identifies the returned interface and Canvas identifies its containing canvas. Dispose removes the interface; destroying Root also disposes its scope. App.Mount returns the whole tree once at startup; generated startup calls this method automatically. Pine-owned canvases persist across scenes by default. CanvasOptions.Persistent=false opts into scene lifetime. Destroying the root or disposing the result ends its scope; disabling a caller does not rebuild UI.
 
 | Parameter | Meaning |
 | --- | --- |
@@ -209,12 +221,12 @@ An explicit mounted interface lifetime. Scope owns bindings and created native o
 | `parent` | Optional external native parent; null creates a Pine-owned canvas. |
 | `options` | Code-configured typed reactive canvas options, used only for Pine-owned canvases. |
 
-**Returns:** The mounted tree’s scope, native root and containing canvas. Ignore this optional result for scene-lived UI; retain it for early disposal or explicit persistence.
+**Returns:** The mounted tree’s scope, native root and containing canvas. Keep this optional result only for explicit early disposal. Persistence is configured with CanvasOptions.
 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-Mount mount = UI.Mount(() => UI.Label("Hello"));
+Mount mount = UI.Mount(component: () => UI.Label(text: "Hello"));
 mount.Dispose();
 ```
 

@@ -1,54 +1,43 @@
 ---
 title: Build your first reactive Unity UI
 sidebar_label: Your first counter
-description: Build a typed reactive counter with a single tree mount and exact sizing.
+description: Build a typed reactive counter in App.cs with automatic startup, named inputs and retained bindings.
 ---
 
 # Build your first reactive Unity UI
 
-A source holds state. A text getter follows it; a native button callback changes it. `UI.Mount` owns the generated hierarchy and removes bindings when its root is destroyed.
+Create **App.cs**. This is the entire application: the source holds state, labels read it, and buttons change it.
 
-```csharp
+```csharp title="App.cs"
 using Pine;
 using UnityEngine;
 
-public sealed class Counter : MonoBehaviour
+public static class App
 {
-    private readonly Source<int> _count = UI.Source(0);
-
-    [RuntimeInitializeOnLoadMethod]
-    private static void StartUI()
+    public static RectTransform Mount()
     {
-        new GameObject("Counter owner").AddComponent<Counter>();
-    }
+        var count = UI.Source(value: 0);
 
-    private void Start() => UI.Mount(Build);
-
-    private Component Build()
-    {
         return UI.Column(
-            UI.Name("Counter"),
-            UI.Size(360, 180),
-            UI.Vertical(12),
-            UI.Children(
-                UI.Label(() => $"Count: {_count.Value}", UI.Size(360, 48)),
-                UI.Button("Increment", () => _count.Value++, UI.Size(360, 48)),
-                UI.Button(
-                    "Reset",
-                    () => _count.Value = 0,
-                    UI.Enabled(() => _count.Value > 0),
-                    UI.Size(360, 48)
-                )
+            gap: 12,
+            UI.Label(text: () => $"Count: {count.Value}"),
+            UI.Button(text: "Increment", click: () => count.Value++),
+            UI.Button(
+                text: "Reset",
+                click: () => count.Value = 0,
+                UI.Enabled(enabled: () => count.Value > 0)
             )
         );
     }
 }
 ```
 
-`using Pine;` exposes the `UI` class, reactive types and mount configuration. `UI.Children(...)` separates native children from typed property operations. `UI.Size` requests exact rect/layout dimensions; `UI.FillWidth()` and `UI.AutoHeight()` express flexible/content sizing separately.
+Pine calls `App.Mount()` once and mounts its returned native tree automatically. `count` is local to this application construction and remains captured by the bindings and button callbacks. Assigning `count.Value` updates the existing text and reset button; it does not rerun `Mount()` or recreate the controls.
 
-`Start()` calls `UI.Mount(Build)` once. Changes to `_count` update the retained TMP text and enabled-state binding; the interface is not rebuilt. Disabling or re-enabling the creating component does not affect this independent UI tree. Scene unload or root destruction disposes bindings and native handlers automatically. Retain the returned `Mount` only when you need early disposal.
+`using Pine;` exposes `UI`, reactive types and canvas configuration. Named parameters show what each value means. `gap: 12` selects the compact column overload; children stay in their argument order. Use `UI.Children(...)` with the property overload when you need explicit styling or reactive membership.
 
-The startup method creates the owner without Inspector setup. If a scene already instantiates the component, omit the startup method to avoid two owners. Keep application ownership explicit: scene objects disappear with their scene; For persistent UI, retain the mount and apply `DontDestroyOnLoad(mount.Canvas.gameObject)` to its owned canvas; persisting only the creating component does not persist the separate UI tree.
+The default canvas persists across scenes. Destroying its root ends the tree's bindings and handlers. An optional `App.Options` property returning `new CanvasOptions { Persistent = false }` makes it scene-lived. You need a `Mount` variable only for explicit early disposal, not ordinary startup.
 
-Continue with [reactivity](reactivity.md) and [typed composition](components.md).
+Use `UI.Size(width: 360, height: 48)` for exact dimensions, `UI.FillWidth()` for available width, and `UI.AutoHeight()` for content height. Exact children may overflow a small parent; clipping and scrolling are explicit.
+
+Continue with [reactivity](reactivity.md) and [reusable components](components.md).

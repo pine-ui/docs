@@ -6,7 +6,7 @@ description: Reference for Pine Source, Derived, Effect, Scope, and Root APIs, i
 
 # Reactive state and lifetime scopes API
 
-Examples use only `using Pine;`, then call `UI.Source`, `UI.Mount` and the other PascalCase methods. These pages document **Pine 0.2.0**. Install its matching v0.2.0 package.
+Examples use only `using Pine;`, then call `UI.Source`, `UI.Mount` and the other PascalCase methods. These pages document the current working source.
 
 | API | Behavior |
 | --- | --- |
@@ -48,4 +48,4 @@ If an effect's cleanup fails, its previous subscriptions remain available for re
 
 `ReadOnly<T>` exposes `.Value` and `.Peek()` without a public setter. Dynamic results, row values, indices and presence use it because their ownership belongs to the operator. Update the controlling source collection/selector instead.
 
-`UI.Mount(build)` creates the entire tree once in its own scope. Call it from `Start()` for scene-lived UI and ignore its optional return value. Scene unload or root destruction disposes native objects, bindings and handlers. Disabling the creating component does not remove or remount the interface. Retain the returned `Mount` only for early disposal; a helper named `Build()` is optional. [The counter](../tutorials/counter.md) shows a complete owner created without Inspector wiring.
+`App.Mount()` in App.cs returns the entire tree once. Pine's bundled generator mounts it automatically and generates typed factories for MonoBehaviour components with public instance `Create(...)` methods. The default canvas persists across scenes; set `CanvasOptions.Persistent = false` through optional `App.Options` for scene lifetime. Destroying the root releases the interface. Explicit `UI.Mount(component: ...)` remains available for advanced ownership and early disposal. [The counter](../tutorials/counter.md) shows the complete minimal app.

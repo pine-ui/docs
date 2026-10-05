@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Native declarations and bindings
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `IProperty`
 
@@ -21,8 +21,8 @@ A contravariant declaration operation restricted to compatible native component 
 | `T` | Typed value, native result or identity contract; see the summary for its role. |
 
 ```csharp
-IProperty<TMPro.TMP_Text> text = UI.Text("Hello");
-UI.Label("Initial", text);
+IProperty<TMPro.TMP_Text> text = UI.Text(text: "Hello");
+UI.Label(text: "Initial", text);
 ```
 
 ## `IProperty.Apply`
@@ -40,7 +40,7 @@ Applies this compatible property to the supplied native target in the current ow
 **Returns:** The typed result described above; reactive reads participate in the active observer.
 
 ```csharp
-UI.Apply(label, UI.Text("Applied"));
+UI.Apply(target: label, UI.Text(text: "Applied"));
 ```
 
 ## `GraphicProperty`
@@ -52,7 +52,11 @@ GraphicProperty
 A color binding shared by native Graphics and Selectables. On a Selectable it configures targetGraphic rather than requiring the control itself to inherit Graphic. The factory uses this intersection contract to keep Tint available on text, images and controls while rejecting plain frames.
 
 ```csharp
-UI.Button("Save", () => { }, UI.Tint(UnityEngine.Color.green));
+UI.Button(
+    text: "Save",
+    click: () => { },
+    UI.Tint(color: UnityEngine.Color.green)
+);
 ```
 
 ## `GraphicProperty.Identity`
@@ -64,7 +68,7 @@ string Identity
 The named native operation used by strict duplicate diagnostics. Obtain instances from UI.Tint; the operation is shared across graphic and selectable targets.
 
 ```csharp
-var tint = UI.Tint(UnityEngine.Color.white);
+var tint = UI.Tint(color: UnityEngine.Color.white);
 string name = tint.Identity;
 ```
 
@@ -74,10 +78,10 @@ string name = tint.Identity;
 Mount
 ```
 
-An explicit mounted interface lifetime. Scope owns bindings and created native objects; Root identifies the returned interface and Canvas identifies its containing canvas. Dispose removes the interface; destroying Root also disposes its scope. The result is optional for scene-lived UI; scene unload or root destruction ends the scope. Retain it for early disposal. Disabling the creating component does not remove or remount the tree.
+An explicit mounted interface lifetime. Scope owns bindings and created native objects; Root identifies the returned interface and Canvas identifies its containing canvas. Dispose removes the interface; destroying Root also disposes its scope. Pine-owned canvases persist by default; CanvasOptions.Persistent=false selects scene lifetime. The result is optional; retain it for early disposal. Destroying Root ends its scope.
 
 ```csharp
-Mount mount = UI.Mount(() => UI.Label("Hello"));
+Mount mount = UI.Mount(component: () => UI.Label(text: "Hello"));
 mount.Dispose();
 ```
 
@@ -90,7 +94,7 @@ Scope Scope
 The scope owning this mounted interface, including bindings and native objects. Enter it with Run to apply further declarations after construction.
 
 ```csharp
-mount.Scope.Run(() => UI.Apply(label, UI.Text("Updated")));
+mount.Scope.Run(() => UI.Apply(target: label, UI.Text(text: "Updated")));
 ```
 
 ## `Mount.Root`
@@ -123,7 +127,7 @@ UnityEngine.Canvas canvas = mount.Canvas;
 public void Dispose()
 ```
 
-Ends this owned lifetime idempotently. Dependencies and native event/clock registrations are released; Scope/Mount cleanup attempts all resources and aggregates failures. Application code disposes a mount when its owner ends.
+Ends this owned lifetime idempotently. Dependencies and native event/clock registrations are released; Scope/Mount cleanup attempts all resources and aggregates failures. Explicit owners may dispose their mount early; automatic applications end when their root is destroyed.
 
 ```csharp
 mount.Dispose();
@@ -144,7 +148,7 @@ Registers a callback, disposable or Unity object with the active scope. Cleanup 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Cleanup(() => UnityEngine.Debug.Log("Interface removed"));
+UI.Cleanup(cleanup: () => UnityEngine.Debug.Log("Interface removed"));
 ```
 
 ## `UI.Create`
@@ -169,8 +173,8 @@ Creates and owns a GameObject, RectTransform and the native component T, then ap
 
 ```csharp
 var label = UI.Create<TMPro.TextMeshProUGUI>(
-    UI.Text("Created"),
-    UI.Size(240, 48)
+    UI.Text(text: "Created"),
+    UI.Size(width: 240, height: 48)
 );
 ```
 
@@ -196,7 +200,7 @@ Owns a native clone of the supplied component's GameObject, preserves its serial
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var copy = UI.Clone(label, UI.Text("Copy"));
+var copy = UI.Clone(template: label, UI.Text(text: "Copy"));
 ```
 
 ## `UI.Apply`
@@ -221,7 +225,7 @@ Applies compatible declarations to an existing native component in the active sc
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Apply(label, UI.Text(() => count.Value.ToString()));
+UI.Apply(target: label, UI.Text(text: () => count.Value.ToString()));
 ```
 
 ## `UI.Group`
@@ -245,8 +249,11 @@ Composes reusable properties for one explicit native target type. Contravariance
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var textStyle = UI.Group<TMPro.TMP_Text>(UI.FontSize(24), UI.Text("Styled"));
-UI.Label("Initial", textStyle);
+var textStyle = UI.Group<TMPro.TMP_Text>(
+    UI.FontSize(size: 24),
+    UI.Text(text: "Styled")
+);
+UI.Label(text: "Initial", textStyle);
 ```
 
 ## `UI.Action`
@@ -273,7 +280,7 @@ Runs a one-time typed action before ordinary properties and parenting. Lower num
 ```csharp
 UI.Frame(
     UI.Action<UnityEngine.RectTransform>(
-        frame => frame.name = "Action",
+        action: frame => frame.name = "Action",
         priority: 0
     )
 );
@@ -301,8 +308,8 @@ Runs a one-time typed native configuration in the ordinary-property phase. T is 
 
 ```csharp
 UI.Label(
-    "Centered",
-    UI.Configure<TMPro.TextMeshProUGUI>(label =>
+    text: "Centered",
+    UI.Configure<TMPro.TextMeshProUGUI>(configure: label =>
         label.alignment = TMPro.TextAlignmentOptions.Center
     )
 );
@@ -333,11 +340,11 @@ Declares a named typed native assignment. Literals assign once; reactive values/
 
 ```csharp
 UI.Label(
-    "Value",
+    text: "Value",
     UI.Set<TMPro.TMP_Text, float>(
-        "Spacing",
-        (label, value) => label.characterSpacing = value,
-        2f
+        name: "Spacing",
+        set: (label, value) => label.characterSpacing = value,
+        value: 2f
     )
 );
 ```
@@ -365,11 +372,11 @@ Declares a named typed native assignment. Literals assign once; reactive values/
 
 ```csharp
 UI.Label(
-    "Value",
+    text: "Value",
     UI.Set<TMPro.TMP_Text, float>(
-        "Spacing",
-        (label, value) => label.characterSpacing = value,
-        2f
+        name: "Spacing",
+        set: (label, value) => label.characterSpacing = value,
+        value: 2f
     )
 );
 ```
@@ -421,7 +428,7 @@ Binds the native GameObject name. Literal values apply once; typed reactive valu
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Name("Panel"));
+UI.Frame(UI.Name(name: "Panel"));
 ```
 
 ```text
@@ -439,7 +446,7 @@ Binds the native GameObject name. Literal values apply once; typed reactive valu
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Name("Panel"));
+UI.Frame(UI.Name(name: "Panel"));
 ```
 
 ## `UI.Active`
@@ -459,7 +466,7 @@ Binds GameObject activeSelf; disabling a native object does not dispose its cons
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Active(() => visible.Value));
+UI.Frame(UI.Active(active: () => visible.Value));
 ```
 
 ```text
@@ -477,7 +484,7 @@ Binds GameObject activeSelf; disabling a native object does not dispose its cons
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Active(() => visible.Value));
+UI.Frame(UI.Active(active: () => visible.Value));
 ```
 
 ## `UI.Parent`
@@ -497,7 +504,7 @@ Binds the native parent Transform while preserving local UI transforms. Parentin
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Parent(canvas.transform));
+UI.Frame(UI.Parent(parent: canvas.transform));
 ```
 
 ```text
@@ -515,7 +522,7 @@ Binds the native parent Transform while preserving local UI transforms. Parentin
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Parent(canvas.transform));
+UI.Frame(UI.Parent(parent: canvas.transform));
 ```
 
 ## `UI.Children`
@@ -535,7 +542,7 @@ Composes native child components explicitly. Fixed children attach once; getter 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Column(UI.Children(UI.Label("One"), UI.Label("Two")));
+UI.Column(UI.Children(UI.Label(text: "One"), UI.Label(text: "Two")));
 ```
 
 ```text
@@ -553,7 +560,7 @@ Composes native child components explicitly. Fixed children attach once; getter 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Column(UI.Children(UI.Label("One"), UI.Label("Two")));
+UI.Column(UI.Children(UI.Label(text: "One"), UI.Label(text: "Two")));
 ```
 
 ```text
@@ -571,7 +578,7 @@ Composes native child components explicitly. Fixed children attach once; getter 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Column(UI.Children(UI.Label("One"), UI.Label("Two")));
+UI.Column(UI.Children(UI.Label(text: "One"), UI.Label(text: "Two")));
 ```
 
 ## `UI.On`
@@ -597,11 +604,11 @@ Registers a native UnityEvent handler for the compatible target type and removes
 
 ```csharp
 UI.Button(
-    "Save",
-    () => { },
+    text: "Save",
+    click: () => { },
     UI.On<UnityEngine.UI.Button>(
-        b => b.onClick,
-        () => UnityEngine.Debug.Log("Clicked")
+        select: b => b.onClick,
+        action: () => UnityEngine.Debug.Log("Clicked")
     )
 );
 ```
@@ -628,11 +635,11 @@ Registers a native UnityEvent handler for the compatible target type and removes
 
 ```csharp
 UI.Button(
-    "Save",
-    () => { },
+    text: "Save",
+    click: () => { },
     UI.On<UnityEngine.UI.Button>(
-        b => b.onClick,
-        () => UnityEngine.Debug.Log("Clicked")
+        select: b => b.onClick,
+        action: () => UnityEngine.Debug.Log("Clicked")
     )
 );
 ```
@@ -654,7 +661,7 @@ Registers an owned Button click handler. The callback batches writes, retains co
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Button("Save", () => UnityEngine.Debug.Log("Saved"));
+UI.Button(text: "Save", click: () => UnityEngine.Debug.Log("Saved"));
 ```
 
 ## `UI.Changed`
@@ -684,9 +691,9 @@ Observes a native value, calls the callback initially, and reports distinct chan
 ```csharp
 UI.Create<UnityEngine.UI.Toggle>(
     UI.Changed<UnityEngine.UI.Toggle, bool>(
-        t => t.isOn,
-        value => UnityEngine.Debug.Log(value),
-        t => t.onValueChanged
+        read: t => t.isOn,
+        changed: value => UnityEngine.Debug.Log(value),
+        events: t => t.onValueChanged
     )
 );
 ```
@@ -708,7 +715,7 @@ Installs a two-way binding between Source&lt;bool&gt; and native Toggle.isOn. So
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Toggle(isEnabled, "Enabled");
+UI.Toggle(value: isEnabled, text: "Enabled");
 ```
 
 ## `UI.SliderValue`
@@ -728,7 +735,7 @@ Installs a two-way slider binding and normalizes the source to the native slider
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Slider(volume, 0f, 1f);
+UI.Slider(value: volume, minimum: 0f, maximum: 1f);
 ```
 
 ## `UI.InputValue`
@@ -748,7 +755,7 @@ Installs a two-way binding between a string source and TMP_InputField.text. Sour
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.TextField(playerName, "Player name");
+UI.TextField(value: playerName, placeholder: "Player name");
 ```
 
 ## `UI.Text`
@@ -768,7 +775,7 @@ Binds TMP text while retaining the existing text component. Literal values apply
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Label("Initial", UI.Text(() => count.Value.ToString()));
+UI.Label(text: "Initial", UI.Text(text: () => count.Value.ToString()));
 ```
 
 ```text
@@ -786,7 +793,7 @@ Binds TMP text while retaining the existing text component. Literal values apply
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Label("Initial", UI.Text(() => count.Value.ToString()));
+UI.Label(text: "Initial", UI.Text(text: () => count.Value.ToString()));
 ```
 
 ## `UI.FontSize`
@@ -806,7 +813,7 @@ Binds TMP font size in canvas units. Literal values apply once; typed reactive v
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Label("Heading", UI.FontSize(32));
+UI.Label(text: "Heading", UI.FontSize(size: 32));
 ```
 
 ```text
@@ -824,7 +831,7 @@ Binds TMP font size in canvas units. Literal values apply once; typed reactive v
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Label("Heading", UI.FontSize(32));
+UI.Label(text: "Heading", UI.FontSize(size: 32));
 ```
 
 ## `UI.Font`
@@ -844,7 +851,7 @@ Binds a code-supplied TMP font asset; null resolves the Pine default/fallback. L
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Label("Localized", UI.Font(fontAsset));
+UI.Label(text: "Localized", UI.Font(font: fontAsset));
 ```
 
 ```text
@@ -862,7 +869,7 @@ Binds a code-supplied TMP font asset; null resolves the Pine default/fallback. L
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Label("Localized", UI.Font(fontAsset));
+UI.Label(text: "Localized", UI.Font(font: fontAsset));
 ```
 
 ## `UI.Tint`
@@ -882,7 +889,7 @@ Binds Graphic.color or a Selectable targetGraphic color through a compile-safe s
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Image(UI.Tint(UnityEngine.Color.green));
+UI.Image(UI.Tint(color: UnityEngine.Color.green));
 ```
 
 ```text
@@ -900,7 +907,7 @@ Binds Graphic.color or a Selectable targetGraphic color through a compile-safe s
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Image(UI.Tint(UnityEngine.Color.green));
+UI.Image(UI.Tint(color: UnityEngine.Color.green));
 ```
 
 ## `UI.Enabled`
@@ -920,7 +927,11 @@ Binds Selectable.interactable; disabled controls retain their native objects and
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Button("Save", () => { }, UI.Enabled(() => canSave.Value));
+UI.Button(
+    text: "Save",
+    click: () => { },
+    UI.Enabled(enabled: () => canSave.Value)
+);
 ```
 
 ```text
@@ -938,7 +949,11 @@ Binds Selectable.interactable; disabled controls retain their native objects and
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Button("Save", () => { }, UI.Enabled(() => canSave.Value));
+UI.Button(
+    text: "Save",
+    click: () => { },
+    UI.Enabled(enabled: () => canSave.Value)
+);
 ```
 
 ## `UI.Navigation`
@@ -959,10 +974,10 @@ Binds the native Selectable navigation configuration, including explicit directi
 
 ```csharp
 UI.Button(
-    "Next",
-    () => { },
+    text: "Next",
+    click: () => { },
     UI.Navigation(
-        new UnityEngine.UI.Navigation
+        navigation: new UnityEngine.UI.Navigation
         {
             mode = UnityEngine.UI.Navigation.Mode.Automatic,
         }
@@ -986,10 +1001,10 @@ Binds the native Selectable navigation configuration, including explicit directi
 
 ```csharp
 UI.Button(
-    "Next",
-    () => { },
+    text: "Next",
+    click: () => { },
     UI.Navigation(
-        new UnityEngine.UI.Navigation
+        navigation: new UnityEngine.UI.Navigation
         {
             mode = UnityEngine.UI.Navigation.Mode.Automatic,
         }
@@ -1010,7 +1025,7 @@ Selects the native control through the active EventSystem; native navigation mai
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Button("Start", () => { }, UI.Focus());
+UI.Button(text: "Start", click: () => { }, UI.Focus());
 ```
 
 ## `UI.Opacity`
@@ -1030,7 +1045,7 @@ Adds or reuses CanvasGroup and binds alpha clamped to the range zero through one
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Opacity(0.5f));
+UI.Frame(UI.Opacity(opacity: 0.5f));
 ```
 
 ```text
@@ -1048,7 +1063,7 @@ Adds or reuses CanvasGroup and binds alpha clamped to the range zero through one
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Opacity(0.5f));
+UI.Frame(UI.Opacity(opacity: 0.5f));
 ```
 
 ## `UI.Frame`
@@ -1068,7 +1083,10 @@ Creates an owned plain RectTransform for child composition and positioning. Over
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Size(300, 100), UI.Children(UI.Label("Panel")));
+UI.Frame(
+    UI.Size(width: 300, height: 100),
+    UI.Children(UI.Label(text: "Panel"))
+);
 ```
 
 ## `UI.Column`
@@ -1088,7 +1106,10 @@ Creates an owned frame with native vertical layout and an eight-unit default gap
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Column(UI.Vertical(12), UI.Children(UI.Label("First"), UI.Label("Second")));
+UI.Column(
+    UI.Vertical(12),
+    UI.Children(UI.Label(text: "First"), UI.Label(text: "Second"))
+);
 ```
 
 ```text
@@ -1107,13 +1128,13 @@ Creates an owned vertical container with the supplied fixed gap and ordered nati
 **Ownership:** Call inside UI.Mount, a dynamic branch builder or a live Scope.Run. Hiding keeps the instance; removing a Pine-owned branch ends its bindings. Supply state from outside a removable branch to preserve it across reconstruction.
 
 ```csharp
-UI.Mount(() =>
+UI.Mount(component: () =>
 {
-    var count = UI.Source(0);
+    var count = UI.Source(value: 0);
     return UI.Column(
-        12,
-        UI.Label(() => $"Count: {count.Value}"),
-        UI.Button("Increment", () => count.Value++)
+        gap: 12,
+        UI.Label(text: () => $"Count: {count.Value}"),
+        UI.Button(text: "Increment", click: () => count.Value++)
     );
 });
 ```
@@ -1135,7 +1156,10 @@ Creates an owned frame with native horizontal layout and an eight-unit default g
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Row(UI.Horizontal(12), UI.Children(UI.Label("Left"), UI.Label("Right")));
+UI.Row(
+    UI.Horizontal(12),
+    UI.Children(UI.Label(text: "Left"), UI.Label(text: "Right"))
+);
 ```
 
 ```text
@@ -1154,7 +1178,11 @@ Creates an owned horizontal container with the supplied fixed gap and ordered na
 **Ownership:** Call inside UI.Mount, a dynamic branch builder or a live Scope.Run. Retained children update through their bindings; ordinary state changes do not rebuild the complete factory.
 
 ```csharp
-UI.Row(8, UI.Button("Save", () => Save()), UI.Button("Cancel", () => Cancel()));
+UI.Row(
+    gap: 8,
+    UI.Button(text: "Save", click: () => Save()),
+    UI.Button(text: "Cancel", click: () => Cancel())
+);
 ```
 
 ## `UI.Label`
@@ -1175,7 +1203,11 @@ Creates owned TextMeshProUGUI with typed literal or reactive text, bundled/defau
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Label(() => count.Value.ToString(), UI.FontSize(24), UI.Size(240, 48));
+UI.Label(
+    text: () => count.Value.ToString(),
+    UI.FontSize(size: 24),
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -1194,7 +1226,11 @@ Creates owned TextMeshProUGUI with typed literal or reactive text, bundled/defau
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Label(() => count.Value.ToString(), UI.FontSize(24), UI.Size(240, 48));
+UI.Label(
+    text: () => count.Value.ToString(),
+    UI.FontSize(size: 24),
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ## `UI.Image`
@@ -1214,7 +1250,7 @@ Creates an owned native Image with nonblocking decorative raycasts and typed spr
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Image(UI.Sprite(icon), UI.Size(48, 48));
+UI.Image(UI.Sprite(sprite: icon), UI.Size(width: 48, height: 48));
 ```
 
 ## `UI.RawImage`
@@ -1234,7 +1270,7 @@ Creates an owned native RawImage with typed texture/color properties. Supply a c
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.RawImage(UI.Texture(texture), UI.Size(320, 180));
+UI.RawImage(UI.Texture(texture: texture), UI.Size(width: 320, height: 180));
 ```
 
 ## `UI.Sprite`
@@ -1254,7 +1290,7 @@ Binds the sprite of a native Image. Literal values apply once; typed reactive va
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Image(UI.Sprite(icon));
+UI.Image(UI.Sprite(sprite: icon));
 ```
 
 ```text
@@ -1272,7 +1308,7 @@ Binds the sprite of a native Image. Literal values apply once; typed reactive va
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Image(UI.Sprite(icon));
+UI.Image(UI.Sprite(sprite: icon));
 ```
 
 ## `UI.Texture`
@@ -1292,7 +1328,7 @@ Binds the texture of a native RawImage. Literal values apply once; typed reactiv
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.RawImage(UI.Texture(texture));
+UI.RawImage(UI.Texture(texture: texture));
 ```
 
 ```text
@@ -1310,5 +1346,5 @@ Binds the texture of a native RawImage. Literal values apply once; typed reactiv
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.RawImage(UI.Texture(texture));
+UI.RawImage(UI.Texture(texture: texture));
 ```

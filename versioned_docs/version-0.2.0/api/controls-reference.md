@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Complete native controls
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `UI.Button`
 
@@ -27,7 +27,11 @@ Creates a complete native Button with a background target graphic, centered TMP 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Button("Increment", () => count.Value++, UI.Size(240, 48));
+UI.Button(
+    text: "Increment",
+    click: () => count.Value++,
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -47,7 +51,11 @@ Creates a complete native Button with a background target graphic, centered TMP 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Button("Increment", () => count.Value++, UI.Size(240, 48));
+UI.Button(
+    text: "Increment",
+    click: () => count.Value++,
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ## `UI.Toggle`
@@ -68,8 +76,8 @@ Creates a complete native Toggle with background, checkmark and centered label. 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var enabled = UI.Source(false);
-UI.Toggle(enabled, "Enabled", UI.Size(240, 48));
+var enabled = UI.Source(value: false);
+UI.Toggle(value: enabled, text: "Enabled", UI.Size(width: 240, height: 48));
 ```
 
 ```text
@@ -89,8 +97,8 @@ Creates a complete native Toggle with background, checkmark and centered label. 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var enabled = UI.Source(false);
-UI.Toggle(enabled, "Enabled", UI.Size(240, 48));
+var enabled = UI.Source(value: false);
+UI.Toggle(value: enabled, text: "Enabled", UI.Size(width: 240, height: 48));
 ```
 
 ```text
@@ -109,8 +117,8 @@ Creates a complete native Toggle with background, checkmark and centered label. 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var enabled = UI.Source(false);
-UI.Toggle(enabled, "Enabled", UI.Size(240, 48));
+var enabled = UI.Source(value: false);
+UI.Toggle(value: enabled, text: "Enabled", UI.Size(width: 240, height: 48));
 ```
 
 ```text
@@ -130,8 +138,8 @@ Creates a complete native Toggle with background, checkmark and centered label. 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var enabled = UI.Source(false);
-UI.Toggle(enabled, "Enabled", UI.Size(240, 48));
+var enabled = UI.Source(value: false);
+UI.Toggle(value: enabled, text: "Enabled", UI.Size(width: 240, height: 48));
 ```
 
 ## `UI.Slider`
@@ -152,8 +160,13 @@ Creates a complete native Slider with background, fill and handle. A Source&lt;f
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var volume = UI.Source(0.5f);
-UI.Slider(volume, 0f, 1f, UI.Size(240, 48));
+var volume = UI.Source(value: 0.5f);
+UI.Slider(
+    value: volume,
+    minimum: 0f,
+    maximum: 1f,
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -174,8 +187,13 @@ Creates a complete native Slider with background, fill and handle. A Source&lt;f
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var volume = UI.Source(0.5f);
-UI.Slider(volume, 0f, 1f, UI.Size(240, 48));
+var volume = UI.Source(value: 0.5f);
+UI.Slider(
+    value: volume,
+    minimum: 0f,
+    maximum: 1f,
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -194,8 +212,13 @@ Creates a complete native Slider with background, fill and handle. A Source&lt;f
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var volume = UI.Source(0.5f);
-UI.Slider(volume, 0f, 1f, UI.Size(240, 48));
+var volume = UI.Source(value: 0.5f);
+UI.Slider(
+    value: volume,
+    minimum: 0f,
+    maximum: 1f,
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -216,8 +239,13 @@ Creates a complete native Slider with background, fill and handle. A Source&lt;f
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var volume = UI.Source(0.5f);
-UI.Slider(volume, 0f, 1f, UI.Size(240, 48));
+var volume = UI.Source(value: 0.5f);
+UI.Slider(
+    value: volume,
+    minimum: 0f,
+    maximum: 1f,
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ## `UI.Scrollbar`
@@ -238,8 +266,8 @@ Creates a complete native Scrollbar with a wired handle and target graphic. Sour
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var position = UI.Source(0f);
-UI.Scrollbar(position, UI.Size(240, 24));
+var position = UI.Source(value: 0f);
+UI.Scrollbar(value: position, UI.Size(width: 240, height: 24));
 ```
 
 ```text
@@ -259,8 +287,8 @@ Creates a complete native Scrollbar with a wired handle and target graphic. Sour
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var position = UI.Source(0f);
-UI.Scrollbar(position, UI.Size(240, 24));
+var position = UI.Source(value: 0f);
+UI.Scrollbar(value: position, UI.Size(width: 240, height: 24));
 ```
 
 ```text
@@ -279,8 +307,8 @@ Creates a complete native Scrollbar with a wired handle and target graphic. Sour
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var position = UI.Source(0f);
-UI.Scrollbar(position, UI.Size(240, 24));
+var position = UI.Source(value: 0f);
+UI.Scrollbar(value: position, UI.Size(width: 240, height: 24));
 ```
 
 ```text
@@ -300,8 +328,8 @@ Creates a complete native Scrollbar with a wired handle and target graphic. Sour
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var position = UI.Source(0f);
-UI.Scrollbar(position, UI.Size(240, 24));
+var position = UI.Source(value: 0f);
+UI.Scrollbar(value: position, UI.Size(width: 240, height: 24));
 ```
 
 ## `UI.TextField`
@@ -322,8 +350,13 @@ Creates a complete TMP_InputField with a clipped text viewport, text component, 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var playerName = UI.Source("");
-UI.TextField(playerName, "Name", UI.CharacterLimit(24), UI.Size(240, 48));
+var playerName = UI.Source(value: "");
+UI.TextField(
+    value: playerName,
+    placeholder: "Name",
+    UI.CharacterLimit(limit: 24),
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -343,8 +376,13 @@ Creates a complete TMP_InputField with a clipped text viewport, text component, 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var playerName = UI.Source("");
-UI.TextField(playerName, "Name", UI.CharacterLimit(24), UI.Size(240, 48));
+var playerName = UI.Source(value: "");
+UI.TextField(
+    value: playerName,
+    placeholder: "Name",
+    UI.CharacterLimit(limit: 24),
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -363,8 +401,13 @@ Creates a complete TMP_InputField with a clipped text viewport, text component, 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var playerName = UI.Source("");
-UI.TextField(playerName, "Name", UI.CharacterLimit(24), UI.Size(240, 48));
+var playerName = UI.Source(value: "");
+UI.TextField(
+    value: playerName,
+    placeholder: "Name",
+    UI.CharacterLimit(limit: 24),
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -384,8 +427,13 @@ Creates a complete TMP_InputField with a clipped text viewport, text component, 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var playerName = UI.Source("");
-UI.TextField(playerName, "Name", UI.CharacterLimit(24), UI.Size(240, 48));
+var playerName = UI.Source(value: "");
+UI.TextField(
+    value: playerName,
+    placeholder: "Name",
+    UI.CharacterLimit(limit: 24),
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ## `UI.Dropdown`
@@ -407,8 +455,12 @@ Creates a complete TMP_Dropdown with caption, inactive scrollable template, item
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var selection = UI.Source(0);
-UI.Dropdown(selection, new[] { "Low", "High" }, UI.Size(240, 48));
+var selection = UI.Source(value: 0);
+UI.Dropdown(
+    selected: selection,
+    options: new[] { "Low", "High" },
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ```text
@@ -428,8 +480,12 @@ Creates a complete TMP_Dropdown with caption, inactive scrollable template, item
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var selection = UI.Source(0);
-UI.Dropdown(selection, new[] { "Low", "High" }, UI.Size(240, 48));
+var selection = UI.Source(value: 0);
+UI.Dropdown(
+    selected: selection,
+    options: new[] { "Low", "High" },
+    UI.Size(width: 240, height: 48)
+);
 ```
 
 ## `UI.ScrollView`
@@ -451,8 +507,8 @@ Creates a complete native ScrollRect with a clipped viewport and drag-receiving 
 
 ```csharp
 UI.ScrollView(
-    UI.Column(UI.AutoHeight(), UI.Children(UI.Label("Content"))),
-    UI.Size(300, 120)
+    content: UI.Column(UI.AutoHeight(), UI.Children(UI.Label(text: "Content"))),
+    UI.Size(width: 300, height: 120)
 );
 ```
 
@@ -473,8 +529,8 @@ Creates a complete native ScrollRect with a clipped viewport and drag-receiving 
 
 ```csharp
 UI.ScrollView(
-    UI.Column(UI.AutoHeight(), UI.Children(UI.Label("Content"))),
-    UI.Size(300, 120)
+    content: UI.Column(UI.AutoHeight(), UI.Children(UI.Label(text: "Content"))),
+    UI.Size(width: 300, height: 120)
 );
 ```
 
@@ -496,7 +552,7 @@ Creates a native horizontal filled Image backed by a generated white sprite. Pro
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Progress(() => health.Value / 100f, UI.Size(300, 20));
+UI.Progress(value: () => health.Value / 100f, UI.Size(width: 300, height: 20));
 ```
 
 ```text
@@ -515,7 +571,7 @@ Creates a native horizontal filled Image backed by a generated white sprite. Pro
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Progress(() => health.Value / 100f, UI.Size(300, 20));
+UI.Progress(value: () => health.Value / 100f, UI.Size(width: 300, height: 20));
 ```
 
 ## `UI.Placeholder`
@@ -535,7 +591,7 @@ Binds the text of a completely wired TMP_InputField placeholder. Literal values 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.TextField(playerName, UI.Placeholder("Name"));
+UI.TextField(value: playerName, UI.Placeholder(text: "Name"));
 ```
 
 ```text
@@ -553,7 +609,7 @@ Binds the text of a completely wired TMP_InputField placeholder. Literal values 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.TextField(playerName, UI.Placeholder("Name"));
+UI.TextField(value: playerName, UI.Placeholder(text: "Name"));
 ```
 
 ## `UI.CharacterLimit`
@@ -573,7 +629,7 @@ Binds the native text-field character limit; zero means unlimited and negative l
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.TextField(playerName, UI.CharacterLimit(24));
+UI.TextField(value: playerName, UI.CharacterLimit(limit: 24));
 ```
 
 ## `UI.SliderDirection`
@@ -594,8 +650,8 @@ Binds the native slider direction. Literal values apply once; typed reactive val
 
 ```csharp
 UI.Slider(
-    volume,
-    UI.SliderDirection(UnityEngine.UI.Slider.Direction.BottomToTop)
+    value: volume,
+    UI.SliderDirection(direction: UnityEngine.UI.Slider.Direction.BottomToTop)
 );
 ```
 
@@ -616,7 +672,12 @@ Binds whether the native slider rounds values to whole numbers. Literal values a
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Slider(count, 0f, 10f, UI.WholeNumbers(true));
+UI.Slider(
+    value: count,
+    minimum: 0f,
+    maximum: 10f,
+    UI.WholeNumbers(enabled: true)
+);
 ```
 
 ## `UI.ScrollbarDirection`
@@ -637,8 +698,10 @@ Binds the native scrollbar direction. Literal values apply once; typed reactive 
 
 ```csharp
 UI.Scrollbar(
-    position,
-    UI.ScrollbarDirection(UnityEngine.UI.Scrollbar.Direction.BottomToTop)
+    value: position,
+    UI.ScrollbarDirection(
+        direction: UnityEngine.UI.Scrollbar.Direction.BottomToTop
+    )
 );
 ```
 
@@ -660,7 +723,10 @@ Binds horizontal and vertical scroll-axis enablement. Literal values apply once;
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.ScrollView(content, UI.ScrollAxes(false, true));
+UI.ScrollView(
+    content: content,
+    UI.ScrollAxes(horizontal: false, vertical: true)
+);
 ```
 
 ## `UI.ScrollPosition`
@@ -680,5 +746,8 @@ Binds native normalized scroll position; layout and movement settings remain nat
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.ScrollView(content, UI.ScrollPosition(new UnityEngine.Vector2(0, 1)));
+UI.ScrollView(
+    content: content,
+    UI.ScrollPosition(position: new UnityEngine.Vector2(x: 0, y: 1))
+);
 ```

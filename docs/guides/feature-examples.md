@@ -6,7 +6,7 @@ description: Run Pine examples for sources, effects, context, native composition
 
 # Runnable Pine feature examples
 
-[Download PineFeatureExamples.cs](/examples/PineFeatureExamples.cs). Import it into a project containing Pine and run `PineDocs.Examples.PineFeatureExamples.Run()` on the Unity main thread. It creates explicit ownership roots and disposes the resources of every example. It is an execution/reference suite; use MonoBehaviour for a lasting application screen.
+[Download PineFeatureExamples.cs](/examples/0.2.0/PineFeatureExamples.cs). Import it into a project containing Pine and run `PineDocs.Examples.PineFeatureExamples.Run()` on the Unity main thread. It creates explicit ownership roots and disposes the resources of every example. It is an execution/reference suite; use App.cs for a lasting application screen.
 
 The suite runs these complete examples:
 
@@ -28,6 +28,6 @@ The suite runs these complete examples:
 | `SpringsAndSpaces` | Reactive spring settings, manual stepping, controls, custom spaces and Unity value spaces. |
 | `CreationFlags` | Strict diagnostics, defaults and nested group ordering. |
 
-The [settings screen](../api/controls.md) demonstrates every standard control and MonoBehaviour ownership. The complete reference includes an example for every public/protected declaration, including [explicit mount options](../api/mount-reference.md), [exact/fill/content layout](../api/layout-reference.md) and [read-only operator values](../api/signal-reference.md).
+The [settings screen](../api/controls.md) demonstrates every standard control and generated MonoBehaviour components. The complete reference includes an example for every public/protected declaration, including [explicit mount options](../api/mount-reference.md), [exact/fill/content layout](../api/layout-reference.md) and [read-only operator values](../api/signal-reference.md).
 
 Each method is an ordinary C# function. Keep the portions needed by your application; running the suite switches to manual clock advancement through UI.Step, so run it in a dedicated test session rather than during an automatically animated game.

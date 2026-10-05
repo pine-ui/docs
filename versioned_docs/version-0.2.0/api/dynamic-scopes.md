@@ -21,9 +21,12 @@ All operators need a stable owner and return `ReadOnly<IReadOnlyList<TResult>>`.
 Advanced constructors return `Branch<TResult>(result, exitDelaySeconds = 0)`; a plain result converts implicitly to a zero-delay branch. Convenience overloads return `TResult` directly: `Show(condition, () => result)`, `Switch(select, key => result)`, positional `Indexes(read, (index,value) => result)` and `Values(read, (value,index) => result)`.
 
 ```csharp
-var visible = UI.Source(true);
-var output = UI.Show(() => visible.Value, () => UI.Label("Hello"));
-var host = UI.Column(UI.Children(() => output.Value));
+var visible = UI.Source(value: true);
+var output = UI.Show(
+    condition: () => visible.Value,
+    build: () => UI.Label(text: "Hello")
+);
+var host = UI.Column(UI.Children(read: () => output.Value));
 ```
 
 ## Retained exits

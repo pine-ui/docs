@@ -20,11 +20,11 @@ description: Reference for Pine Batch, Untrack, Read, Context, and Value APIs us
 ```csharp
 using Pine;
 
-var theme = UI.Context("forest");
-using var scope = UI.Root(() =>
+var theme = UI.Context(fallback: "forest");
+using var scope = UI.Root(build: () =>
     theme.Provide(
         "night",
-        () => UI.Effect(() => UnityEngine.Debug.Log(theme.Value))
+        () => UI.Effect(action: () => UnityEngine.Debug.Log(theme.Value))
     )
 );
 ```
@@ -38,10 +38,10 @@ Observers retain their provider context during later reevaluation. Independent r
 Common property helpers also provide `Func<T>` overloads, so direct lambdas work:
 
 ```csharp
-var count = UI.Source(0);
-using var scope = UI.Root(() =>
+var count = UI.Source(value: 0);
+using var scope = UI.Root(build: () =>
 {
-    var label = UI.Label(() => $"Count: {count.Value}");
+    var label = UI.Label(text: () => $"Count: {count.Value}");
 });
 ```
 

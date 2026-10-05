@@ -6,7 +6,7 @@ description: Install the working Pine package with bundled Latin text, automatic
 
 # Install Pine for Unity
 
-Pine creates retained native uGUI from typed C# declarations. Import `Pine`, call `UI`, and keep durable state on a `MonoBehaviour` owner. No Inspector wiring is required for Pine's standard controls.
+Pine creates retained native uGUI from typed C# declarations. Import `Pine` and return your interface from `App.Mount()` in `App.cs`. No Inspector wiring is required for Pine's standard controls.
 
 ## Install the matching package
 
@@ -22,8 +22,8 @@ Alternatively, select **Install package from tarball** and use [com.kbenim.pine-
 
 | Package / API | Unity Editor | uGUI | Input System | Evidence |
 | --- | --- | --- | --- | --- |
-| Pine 0.2.0 | 6000.3.25f1 (Unity 6.3 LTS) | 2.0.0 | 1.20.1 | macOS Editor checks: native controls, composition, setup and cleanup |
-| Pine 0.2.0 | 6000.6.4f1 (Unity 6.6) | 2.6.0 | 1.20.1 | macOS Editor checks: native controls, composition, setup and cleanup |
+| Pine 0.2.0 | 6000.3.25f1 (Unity 6.3 LTS) | 2.0.0 | 1.20.1 | macOS Editor checks: native controls, automatic startup, behaviour composition, setup and cleanup |
+| Pine 0.2.0 | 6000.6.4f1 (Unity 6.6) | 2.6.0 | 1.20.1 | macOS Editor checks: native controls, automatic startup, behaviour composition, setup and cleanup |
 
 The package declares **Unity 6000.3 as its minimum**. The rows above are the exact recorded test tuples; they establish support within those checks. A stripped macOS Mono player was also measured on an Apple M4 Pro. See the [compatibility summary](https://pine-ui.com/compatibility/0.2.0.md) for the verified scope.
 
@@ -35,7 +35,7 @@ Before installing:
 - Build and update Pine UI on Unity's main thread. Supply the camera in code for camera-space/world-space mounts.
 - The bundled font covers accented Latin. Supply additional TMP fonts and fallback tables in code for other glyph sets.
 
-Unity documents the [C# compiler](https://docs.unity3d.com/6000.3/Documentation/Manual/csharp-compiler.html), [API profiles](https://docs.unity3d.com/6000.3/Documentation/Manual/dotnet-profile-support.html) and [Editor-matched uGUI package](https://docs.unity3d.com/6000.6/Documentation/Manual/com.unity.ugui.html). The version menu keeps Pine 0.1.0's historical prerequisites separate.
+Unity documents the [C# compiler](https://docs.unity3d.com/6000.3/Documentation/Manual/csharp-compiler.html), [API profiles](https://docs.unity3d.com/6000.3/Documentation/Manual/dotnet-profile-support.html) and [Editor-matched uGUI package](https://docs.unity3d.com/6000.6/Documentation/Manual/com.unity.ugui.html).
 
 
 ## What installation configures
@@ -50,29 +50,35 @@ Pine reuses compatible enabled external EventSystems without replacing their act
 
 ## Start without touching the Inspector
 
-Put this code in `Welcome.cs`:
+Create **App.cs** under Assets with a public static `App` class and a parameterless `Mount()` method:
 
-```csharp
+```csharp title="App.cs"
 using Pine;
 using UnityEngine;
 
-public sealed class Welcome : MonoBehaviour
+public static class App
 {
-    [RuntimeInitializeOnLoadMethod]
-    private static void StartUI()
-    {
-        new GameObject("Welcome owner").AddComponent<Welcome>();
-    }
-
-    private void Start() => UI.Mount(Build);
-
-    private Component Build()
-    {
-        return UI.Label("Hello from Pine", UI.Size(320, 48));
-    }
+    public static RectTransform Mount() =>
+        UI.Column(
+            gap: 12,
+            UI.Label(text: "Hello from Pine"),
+            UI.Button(text: "Continue", click: () => Debug.Log("Clicked"))
+        );
 }
 ```
 
-The startup method creates the component in code. Its `Start()` mounts the tree once; `Build()` is just an ordinary helper method, which can also be inlined into the mount callback. Bindings update the retained tree. Scene unload or root destruction cleans up the mount. Disabling or destroying the creating component alone does not remove this separate tree. Keep the returned `Mount` when you need early disposal or an explicitly persistent canvas.
+Press Play. Pine's bundled source generator creates the startup call and mounts the returned tree after the initial scene loads. You do not attach a script, create an owner, declare an attribute, write `Start()`, or call `UI.Mount` in this entry. No separate .NET SDK or generator installation is required.
+
+Declare exactly one application entry per project. `App.cs` may live in a namespace or a runtime assembly definition referencing Pine. Compiler diagnostics report invalid entries; duplicate entries across runtime assemblies are rejected before Play or a player build. An existing unrelated `App` class in a differently named file is not an entry.
+
+The Pine-owned canvas persists across scenes by default. For scene-lived UI, optionally add this property to `App`:
+
+```csharp
+public static CanvasOptions Options => new CanvasOptions { Persistent = false };
+```
+
+`App.Options` also accepts code-configured scaling, safe areas and rendering modes; see [canvas options](../api/mount-reference.md). A native tree is the simple default. An advanced `App.Mount()` may instead return a `Mount` created with `UI.Mount` when it needs an external parent or explicit ownership; pass options to that mount instead of declaring `App.Options`. External parents remain owned by your project.
+
+Reusable components return native UI and never start themselves. Plain component functions are sufficient for UI-only code. Components needing Unity callbacks declare an instance `Create(...)` method on a `MonoBehaviour`; Pine generates typed `Components.Name(...)` calls that create and clean up those instances. See [components](components.md).
 
 Continue with [the counter](counter.md), or browse the [complete API reference](../api/native-reference.md).

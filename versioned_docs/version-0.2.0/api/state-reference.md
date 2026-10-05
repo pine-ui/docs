@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # State and configuration
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `UI`
 
@@ -17,8 +17,8 @@ UI
 Creates retained Unity UI and reactive state in typed C# declarations. Import the Pine namespace and call its static members. Construct owned UI inside UI.Mount or UI.Root; mutable bindings update native components without rebuilding the declaration.
 
 ```csharp
-var count = UI.Source(0);
-UI.Mount(() => UI.Label(() => count.Value.ToString()));
+var count = UI.Source(value: 0);
+UI.Mount(component: () => UI.Label(text: () => count.Value.ToString()));
 ```
 
 ## `UI.Version`
@@ -101,7 +101,7 @@ Creates mutable typed state, usable outside any ownership scope. Value reads tra
 **Returns:** A new mutable typed source; sources can be stored independently of a UI scope.
 
 ```csharp
-var count = UI.Source(0);
+var count = UI.Source(value: 0);
 count.Value++;
 ```
 
@@ -249,7 +249,7 @@ Creates an owned eager cached calculation. Dependencies are discovered from read
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var total = UI.Derive(() => count.Value * 2);
+var total = UI.Derive(compute: () => count.Value * 2);
 ```
 
 ## `UI.Effect`
@@ -269,7 +269,7 @@ Runs an owned side effect immediately and again after its tracked inputs change.
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Effect(() => UnityEngine.Debug.Log(count.Value));
+UI.Effect(action: () => UnityEngine.Debug.Log(count.Value));
 ```
 
 ```text
@@ -292,7 +292,7 @@ Runs an owned side effect immediately and again after its tracked inputs change.
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Effect(() => UnityEngine.Debug.Log(count.Value));
+UI.Effect(action: () => UnityEngine.Debug.Log(count.Value));
 ```
 
 ## `UI.Root`
@@ -312,8 +312,8 @@ Constructs an independent ownership scope and runs its builder without dependenc
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-using var root = UI.Root(() =>
-    UI.Effect(() => UnityEngine.Debug.Log("Active"))
+using var root = UI.Root(build: () =>
+    UI.Effect(action: () => UnityEngine.Debug.Log("Active"))
 );
 ```
 
@@ -332,8 +332,8 @@ Constructs an independent ownership scope and runs its builder without dependenc
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-using var root = UI.Root(() =>
-    UI.Effect(() => UnityEngine.Debug.Log("Active"))
+using var root = UI.Root(build: () =>
+    UI.Effect(action: () => UnityEngine.Debug.Log("Active"))
 );
 ```
 
@@ -356,8 +356,8 @@ Constructs an independent ownership scope and runs its builder without dependenc
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-using var root = UI.Root(() =>
-    UI.Effect(() => UnityEngine.Debug.Log("Active"))
+using var root = UI.Root(build: () =>
+    UI.Effect(action: () => UnityEngine.Debug.Log("Active"))
 );
 ```
 
@@ -380,10 +380,10 @@ A scoped typed dependency with a fallback outside providers. Provide creates a p
 **Returns:** A typed context key with its fallback value; providers resolve through the active scope.
 
 ```csharp
-var theme = UI.Context(UnityEngine.Color.white);
+var theme = UI.Context(fallback: UnityEngine.Color.white);
 theme.Provide(
     UnityEngine.Color.green,
-    () => UI.Label("Theme", UI.Tint(theme.Value))
+    () => UI.Label(text: "Theme", UI.Tint(color: theme.Value))
 );
 ```
 
@@ -402,7 +402,7 @@ Registers a callback, disposable or Unity object with the active scope. Cleanup 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Cleanup(() => UnityEngine.Debug.Log("Interface removed"));
+UI.Cleanup(cleanup: () => UnityEngine.Debug.Log("Interface removed"));
 ```
 
 ```text
@@ -418,7 +418,7 @@ Registers a callback, disposable or Unity object with the active scope. Cleanup 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Cleanup(() => UnityEngine.Debug.Log("Interface removed"));
+UI.Cleanup(cleanup: () => UnityEngine.Debug.Log("Interface removed"));
 ```
 
 ## `UI.Batch`
@@ -434,7 +434,7 @@ Runs several writes as one synchronous update transaction. Derived calculations 
 | `action` | Callback/action executed in the documented phase or event scope. |
 
 ```csharp
-UI.Batch(() =>
+UI.Batch(action: () =>
 {
     count.Value++;
     score.Value = 0;
@@ -490,5 +490,5 @@ Advances the shared spring/polling/exit-delay clock manually by a finite non-neg
 | `deltaTime` | Finite non-negative seconds by which to advance the shared clock manually. |
 
 ```csharp
-UI.Step(1.0 / 60.0);
+UI.Step(deltaTime: 1.0 / 60.0);
 ```

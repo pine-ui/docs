@@ -10,9 +10,21 @@ Inventory records need stable identity when their quantity or position changes. 
 
 ## Run the example
 
-Install the matching Pine package, then save the script with the filename shown. Create its owner in code with `new GameObject("Example owner").AddComponent<PineInventory>()`, or use your existing component-instantiation flow. Pine creates the Canvas and controls automatically.
+Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineInventory()` in its returned tree instead of adding another entry.
 
-<a href="/examples/PineInventory.cs" download="PineInventory.cs" target="_self">Download PineInventory.cs</a>. The source is MIT licensed, like Pine.
+<a href="/examples/0.2.0/dynamic-lists/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/0.2.0/dynamic-lists/PineInventory.cs" download="PineInventory.cs" target="_self">Download PineInventory.cs</a>. Sources are MIT licensed.
+
+```csharp title="App.cs"
+using UnityEngine;
+
+namespace PineDocs.Examples
+{
+    public static class App
+    {
+        public static Component Mount() => Components.PineInventory();
+    }
+}
+```
 
 ```csharp title="PineInventory.cs"
 using System.Collections.Generic;
@@ -41,48 +53,66 @@ namespace PineDocs.Examples
         }
 
         public readonly Source<Item[]> Items = UI.Source(
-            new[] { new Item(101, "Potion", 3), new Item(102, "Key", 1) }
+            value: new[] { new Item(101, "Potion", 3), new Item(102, "Key", 1) }
         );
 
-        private void Start() => UI.Mount(Build);
-
-        private Component Build()
+        public Component Create()
         {
             var rows = UI.Indexes<int, Item, TextMeshProUGUI>(
-                () =>
+                read: () =>
                     Items.Value.Select(item => new KeyValuePair<int, Item>(
                         item.Id,
                         item
                     )),
-                (id, item, present) =>
+                build: (id, item, present) =>
                     new Branch<TextMeshProUGUI>(
                         UI.Label(
-                            () => $"{item.Value.Name} x{item.Value.Quantity}",
-                            UI.Name($"Item {id}"),
-                            UI.Size(472, 40)
+                            text: () =>
+                                $"{item.Value.Name} x{item.Value.Quantity}",
+                            UI.Name(name: $"Item {id}"),
+                            UI.Size(width: 472, height: 40)
                         )
                     )
             );
             return UI.Column(
-                UI.Name("Inventory"),
-                UI.Size(520, 360),
-                UI.Padding(new RectOffset(24, 24, 20, 20)),
+                UI.Name(name: "Inventory"),
+                UI.Size(width: 520, height: 360),
+                UI.Padding(
+                    padding: new RectOffset(
+                        left: 24,
+                        right: 24,
+                        top: 20,
+                        bottom: 20
+                    )
+                ),
                 UI.Children(
-                    UI.Label("Inventory", UI.FontSize(32), UI.Size(472, 48)),
-                    UI.Column(
-                        UI.Name("Item rows"),
-                        UI.Size(472, 120),
-                        UI.Children(() => rows.Value)
+                    UI.Label(
+                        text: "Inventory",
+                        UI.FontSize(size: 32),
+                        UI.Size(width: 472, height: 48)
                     ),
-                    UI.Button("Add a potion", AddPotion, UI.Size(472, 48)),
-                    UI.Button("Reverse rows", ReverseRows, UI.Size(472, 48)),
+                    UI.Column(
+                        UI.Name(name: "Item rows"),
+                        UI.Size(width: 472, height: 120),
+                        UI.Children(read: () => rows.Value)
+                    ),
                     UI.Button(
-                        "Remove the key",
-                        RemoveKey,
-                        UI.Enabled(() =>
+                        text: "Add a potion",
+                        click: AddPotion,
+                        UI.Size(width: 472, height: 48)
+                    ),
+                    UI.Button(
+                        text: "Reverse rows",
+                        click: ReverseRows,
+                        UI.Size(width: 472, height: 48)
+                    ),
+                    UI.Button(
+                        text: "Remove the key",
+                        click: RemoveKey,
+                        UI.Enabled(enabled: () =>
                             Items.Value.Any(item => item.Id == 102)
                         ),
-                        UI.Size(472, 48)
+                        UI.Size(width: 472, height: 48)
                     )
                 )
             );

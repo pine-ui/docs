@@ -6,23 +6,31 @@ description: Build and bind retained native Unity UI through typed factories, ne
 
 # Native Unity UI declarations and lifetime
 
-Call `UI.Mount(App.Create)` once at startup for the complete interface. Nested component functions inherit the active scope and return native components without separate mounts. The returned `Mount` is optional for early disposal. Scene unload or mounted-root destruction ends its scope; disabling the starting script keeps the tree mounted. See [component composition](../tutorials/components.md).
+Return the complete interface from `App.Mount()` in App.cs. Pine generates startup and mounts it automatically. Nested factories compose native results directly; generated MonoBehaviour factories add owned behaviour scopes. The canvas persists by default; `CanvasOptions.Persistent = false` opts into scene lifetime. Destroying the app root ends the complete scope. Explicit `UI.Mount` remains available for external parents and early disposal. See [components](../tutorials/components.md).
 
 ```csharp
 using Pine;
 using UnityEngine;
 
-var size = UI.Source(new Vector2(360, 180));
-Mount mount = UI.Mount(() =>
+var size = UI.Source(value: new Vector2(x: 360, y: 180));
+Mount mount = UI.Mount(component: () =>
 {
-    var frame = UI.Frame(UI.Name("Panel"));
-    var label = UI.Label("Hello", UI.Size(360, 48));
-    return UI.Apply(frame, UI.Size(size), UI.Vertical(), UI.Children(label));
+    var frame = UI.Frame(UI.Name(name: "Panel"));
+    var label = UI.Label(text: "Hello", UI.Size(width: 360, height: 48));
+    return UI.Apply(
+        target: frame,
+        UI.Size(size: size),
+        UI.Vertical(),
+        UI.Children(label)
+    );
 });
 
-size.Value = new Vector2(480, 240);
+size.Value = new Vector2(x: 480, y: 240);
 mount.Scope.Run(() =>
-    UI.Apply(mount.Root.GetComponent<RectTransform>(), UI.Name("Updated"))
+    UI.Apply(
+        target: mount.Root.GetComponent<RectTransform>(),
+        UI.Name(name: "Updated")
+    )
 );
 mount.Dispose();
 ```
@@ -57,12 +65,12 @@ The builder runs once. Sources update individual bindings on retained components
 
 ```csharp
 UI.Mount(
-    () => UI.Label("Camera UI"),
+    () => UI.Label(text: "Camera UI"),
     options: new CanvasOptions
     {
         RenderMode = RenderMode.ScreenSpaceCamera,
         Camera = camera,
-        ReferenceResolution = new Vector2(1280, 720),
+        ReferenceResolution = new Vector2(x: 1280, y: 720),
         Scale = 1.25f,
         SafeArea = true,
     }

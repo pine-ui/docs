@@ -9,10 +9,10 @@ description: Animate Unity UI from reactive state with Pine springs. Bind positi
 A spring follows a reactive getter. Bind its output directly where the value type matches, or transform it with a getter.
 
 ```csharp
-var target = UI.Source(0f);
-var spring = UI.Spring(() => target.Value, period: 0.5);
+var target = UI.Source(value: 0f);
+var spring = UI.Spring(target: () => target.Value, period: 0.5);
 var frame = UI.Frame(
-    UI.Position(() => new UnityEngine.Vector2(spring.Value, 0))
+    UI.Position(position: () => new UnityEngine.Vector2(x: spring.Value, y: 0))
 );
 target.Value = 200f;
 ```
@@ -22,10 +22,10 @@ Build this in a stable root/mount. The runtime host advances unscaled time autom
 For reactive tuning:
 
 ```csharp
-var period = UI.Source(0.5);
-var damping = UI.Source(1.0);
+var period = UI.Source(value: 0.5);
+var damping = UI.Source(value: 1.0);
 var spring = UI.Spring(
-    () => target.Value,
+    target: () => target.Value,
     period: period,
     dampingRatio: damping
 );

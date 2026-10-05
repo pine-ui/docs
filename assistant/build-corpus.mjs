@@ -51,7 +51,7 @@ export async function buildCorpus() {
       // Matching downloads enrich retrieval while citing their owning public guide.
       for (const match of text.matchAll(/href="(\/examples\/[^"?#]+\.cs)"/g)) {
         const download = match[1];
-        if (!new RegExp(`^/examples/${version.replaceAll('.', '\\.')}/[a-zA-Z0-9_.-]+\\.cs$`).test(download)) throw new Error(`Example version mismatch or outside public whitelist: ${file}`);
+        if (!new RegExp(`^/examples/${version.replaceAll('.', '\\.')}/(?:[a-zA-Z0-9_-]+/)*[a-zA-Z0-9_-]+\\.cs$`).test(download)) throw new Error(`Example version mismatch or outside public whitelist: ${file}`);
         const body = await readFile(path.join(root, 'static', download), 'utf8');
         const list = tokens(`${title} ${body}`), terms = {};
         for (const token of list) terms[token] = (terms[token] || 0) + 1;

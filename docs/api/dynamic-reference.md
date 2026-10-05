@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Dynamic branches and lists
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `Branch`
 
@@ -22,9 +22,9 @@ A constructed dynamic result and its optional exit retention delay in seconds. P
 
 ```csharp
 UI.Show(
-    () => true,
-    present => new Branch<UnityEngine.Component>(
-        UI.Label(() => present.Value ? "Present" : "Leaving"),
+    condition: () => true,
+    build: present => new Branch<UnityEngine.Component>(
+        UI.Label(text: () => present.Value ? "Present" : "Leaving"),
         0.2
     )
 );
@@ -69,9 +69,9 @@ Constructs this value with the supplied typed arguments. A constructed dynamic r
 
 ```csharp
 UI.Show(
-    () => true,
-    present => new Branch<UnityEngine.Component>(
-        UI.Label(() => present.Value ? "Present" : "Leaving"),
+    condition: () => true,
+    build: present => new Branch<UnityEngine.Component>(
+        UI.Label(text: () => present.Value ? "Present" : "Leaving"),
         0.2
     )
 );
@@ -118,8 +118,11 @@ Constructs an owned conditional branch while its condition is true, with an opti
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var result = UI.Show(() => visible.Value, () => UI.Label("Visible"));
-UI.Frame(UI.Children(() => result.Value));
+var result = UI.Show(
+    condition: () => visible.Value,
+    build: () => UI.Label(text: "Visible")
+);
+UI.Frame(UI.Children(read: () => result.Value));
 ```
 
 ## `UI.Switch`
@@ -146,8 +149,11 @@ Retains the selected keyed branch and optionally its exiting predecessor. Select
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var result = UI.Switch(() => page.Value, key => UI.Label(key));
-UI.Frame(UI.Children(() => result.Value));
+var result = UI.Switch(
+    select: () => page.Value,
+    build: key => UI.Label(text: key)
+);
+UI.Frame(UI.Children(read: () => result.Value));
 ```
 
 ## `UI.Indexes`
@@ -174,10 +180,10 @@ Retains rows by index or explicit dictionary key, updating each row's read-only 
 
 ```csharp
 var rows = UI.Indexes(
-    () => items.Value,
-    (index, item) => UI.Label(() => item.Value)
+    read: () => items.Value,
+    build: (index, item) => UI.Label(text: () => item.Value)
 );
-UI.Column(UI.Children(() => rows.Value));
+UI.Column(UI.Children(read: () => rows.Value));
 ```
 
 ## `UI.Values`
@@ -205,10 +211,10 @@ Retains rows by value identity and exposes each current index as a read-only rea
 
 ```csharp
 var rows = UI.Values(
-    () => items.Value,
-    (item, index) => UI.Label(() => $"{index.Value}: {item}")
+    read: () => items.Value,
+    build: (item, index) => UI.Label(text: () => $"{index.Value}: {item}")
 );
-UI.Column(UI.Children(() => rows.Value));
+UI.Column(UI.Children(read: () => rows.Value));
 ```
 
 ## `UI.Switch`
@@ -235,8 +241,11 @@ Retains the selected keyed branch and optionally its exiting predecessor. Select
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var result = UI.Switch(() => page.Value, key => UI.Label(key));
-UI.Frame(UI.Children(() => result.Value));
+var result = UI.Switch(
+    select: () => page.Value,
+    build: key => UI.Label(text: key)
+);
+UI.Frame(UI.Children(read: () => result.Value));
 ```
 
 ```text
@@ -261,8 +270,11 @@ Retains the selected keyed branch and optionally its exiting predecessor. Select
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var result = UI.Switch(() => page.Value, key => UI.Label(key));
-UI.Frame(UI.Children(() => result.Value));
+var result = UI.Switch(
+    select: () => page.Value,
+    build: key => UI.Label(text: key)
+);
+UI.Frame(UI.Children(read: () => result.Value));
 ```
 
 ## `UI.Show`
@@ -288,8 +300,11 @@ Constructs an owned conditional branch while its condition is true, with an opti
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var result = UI.Show(() => visible.Value, () => UI.Label("Visible"));
-UI.Frame(UI.Children(() => result.Value));
+var result = UI.Show(
+    condition: () => visible.Value,
+    build: () => UI.Label(text: "Visible")
+);
+UI.Frame(UI.Children(read: () => result.Value));
 ```
 
 ```text
@@ -315,8 +330,11 @@ Constructs an owned conditional branch while its condition is true, with an opti
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var result = UI.Show(() => visible.Value, () => UI.Label("Visible"));
-UI.Frame(UI.Children(() => result.Value));
+var result = UI.Show(
+    condition: () => visible.Value,
+    build: () => UI.Label(text: "Visible")
+);
+UI.Frame(UI.Children(read: () => result.Value));
 ```
 
 ## `UI.Indexes`
@@ -345,10 +363,10 @@ Retains rows by index or explicit dictionary key, updating each row's read-only 
 
 ```csharp
 var rows = UI.Indexes(
-    () => items.Value,
-    (index, item) => UI.Label(() => item.Value)
+    read: () => items.Value,
+    build: (index, item) => UI.Label(text: () => item.Value)
 );
-UI.Column(UI.Children(() => rows.Value));
+UI.Column(UI.Children(read: () => rows.Value));
 ```
 
 ```text
@@ -373,10 +391,10 @@ Retains rows by index or explicit dictionary key, updating each row's read-only 
 
 ```csharp
 var rows = UI.Indexes(
-    () => items.Value,
-    (index, item) => UI.Label(() => item.Value)
+    read: () => items.Value,
+    build: (index, item) => UI.Label(text: () => item.Value)
 );
-UI.Column(UI.Children(() => rows.Value));
+UI.Column(UI.Children(read: () => rows.Value));
 ```
 
 ## `UI.Values`
@@ -404,8 +422,8 @@ Retains rows by value identity and exposes each current index as a read-only rea
 
 ```csharp
 var rows = UI.Values(
-    () => items.Value,
-    (item, index) => UI.Label(() => $"{index.Value}: {item}")
+    read: () => items.Value,
+    build: (item, index) => UI.Label(text: () => $"{index.Value}: {item}")
 );
-UI.Column(UI.Children(() => rows.Value));
+UI.Column(UI.Children(read: () => rows.Value));
 ```

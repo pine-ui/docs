@@ -24,48 +24,66 @@ namespace PineDocs.Examples
         }
 
         public readonly Source<Item[]> Items = UI.Source(
-            new[] { new Item(101, "Potion", 3), new Item(102, "Key", 1) }
+            value: new[] { new Item(101, "Potion", 3), new Item(102, "Key", 1) }
         );
 
-        private void Start() => UI.Mount(Build);
-
-        private Component Build()
+        public Component Create()
         {
             var rows = UI.Indexes<int, Item, TextMeshProUGUI>(
-                () =>
+                read: () =>
                     Items.Value.Select(item => new KeyValuePair<int, Item>(
                         item.Id,
                         item
                     )),
-                (id, item, present) =>
+                build: (id, item, present) =>
                     new Branch<TextMeshProUGUI>(
                         UI.Label(
-                            () => $"{item.Value.Name} x{item.Value.Quantity}",
-                            UI.Name($"Item {id}"),
-                            UI.Size(472, 40)
+                            text: () =>
+                                $"{item.Value.Name} x{item.Value.Quantity}",
+                            UI.Name(name: $"Item {id}"),
+                            UI.Size(width: 472, height: 40)
                         )
                     )
             );
             return UI.Column(
-                UI.Name("Inventory"),
-                UI.Size(520, 360),
-                UI.Padding(new RectOffset(24, 24, 20, 20)),
+                UI.Name(name: "Inventory"),
+                UI.Size(width: 520, height: 360),
+                UI.Padding(
+                    padding: new RectOffset(
+                        left: 24,
+                        right: 24,
+                        top: 20,
+                        bottom: 20
+                    )
+                ),
                 UI.Children(
-                    UI.Label("Inventory", UI.FontSize(32), UI.Size(472, 48)),
-                    UI.Column(
-                        UI.Name("Item rows"),
-                        UI.Size(472, 120),
-                        UI.Children(() => rows.Value)
+                    UI.Label(
+                        text: "Inventory",
+                        UI.FontSize(size: 32),
+                        UI.Size(width: 472, height: 48)
                     ),
-                    UI.Button("Add a potion", AddPotion, UI.Size(472, 48)),
-                    UI.Button("Reverse rows", ReverseRows, UI.Size(472, 48)),
+                    UI.Column(
+                        UI.Name(name: "Item rows"),
+                        UI.Size(width: 472, height: 120),
+                        UI.Children(read: () => rows.Value)
+                    ),
                     UI.Button(
-                        "Remove the key",
-                        RemoveKey,
-                        UI.Enabled(() =>
+                        text: "Add a potion",
+                        click: AddPotion,
+                        UI.Size(width: 472, height: 48)
+                    ),
+                    UI.Button(
+                        text: "Reverse rows",
+                        click: ReverseRows,
+                        UI.Size(width: 472, height: 48)
+                    ),
+                    UI.Button(
+                        text: "Remove the key",
+                        click: RemoveKey,
+                        UI.Enabled(enabled: () =>
                             Items.Value.Any(item => item.Id == 102)
                         ),
-                        UI.Size(472, 48)
+                        UI.Size(width: 472, height: 48)
                     )
                 )
             );

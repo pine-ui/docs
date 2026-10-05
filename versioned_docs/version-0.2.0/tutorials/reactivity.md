@@ -11,11 +11,11 @@ Sources hold mutable state; derived values cache reusable calculations.
 ```csharp
 using Pine;
 
-var count = UI.Source(0);
-using var scope = UI.Root(() =>
+var count = UI.Source(value: 0);
+using var scope = UI.Root(build: () =>
 {
-    var doubled = UI.Derive(() => count.Value * 2);
-    UI.Effect(() => UnityEngine.Debug.Log(doubled.Value));
+    var doubled = UI.Derive(compute: () => count.Value * 2);
+    UI.Effect(action: () => UnityEngine.Debug.Log(doubled.Value));
 });
 count.Value = 3;
 ```
@@ -27,9 +27,9 @@ Effects run immediately and after dependencies change. Cleanup inside an effect 
 ## Batch related changes
 
 ```csharp
-var firstName = UI.Source("");
-var lastName = UI.Source("");
-UI.Batch(() =>
+var firstName = UI.Source(value: "");
+var lastName = UI.Source(value: "");
+UI.Batch(action: () =>
 {
     firstName.Value = "Ada";
     lastName.Value = "Lovelace";

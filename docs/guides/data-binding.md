@@ -10,9 +10,21 @@ Data binding keeps an interface synchronized with explicit state. This example b
 
 ## Run the example
 
-Install the matching Pine package, then save the script with the filename shown. Create its owner in code with `new GameObject("Example owner").AddComponent<PineBindings>()`, or use your existing component-instantiation flow. Pine creates the Canvas and controls automatically.
+Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineBindings()` in its returned tree instead of adding another entry.
 
-<a href="/examples/PineBindings.cs" download="PineBindings.cs" target="_self">Download PineBindings.cs</a>. The source is MIT licensed, like Pine.
+<a href="/examples/0.2.0/data-binding/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/0.2.0/data-binding/PineBindings.cs" download="PineBindings.cs" target="_self">Download PineBindings.cs</a>. Sources are MIT licensed.
+
+```csharp title="App.cs"
+using UnityEngine;
+
+namespace PineDocs.Examples
+{
+    public static class App
+    {
+        public static Component Mount() => Components.PineBindings();
+    }
+}
+```
 
 ```csharp title="PineBindings.cs"
 using Pine;
@@ -24,46 +36,66 @@ namespace PineDocs.Examples
 {
     public sealed class PineBindings : MonoBehaviour
     {
-        public readonly Source<int> Score = UI.Source(0);
-        public readonly Source<int> Level = UI.Source(1);
+        public readonly Source<int> Score = UI.Source(value: 0);
+        public readonly Source<int> Level = UI.Source(value: 1);
 
-        private void Start() => UI.Mount(Build);
-
-        private Component Build()
+        public Component Create()
         {
-            var rank = UI.Derive(() =>
+            var rank = UI.Derive(compute: () =>
                 Score.Value >= 30 ? "Explorer" : "Beginner"
             );
             return UI.Column(
-                UI.Name("Data binding"),
-                UI.Size(520, 380),
-                UI.Padding(new RectOffset(24, 24, 20, 20)),
+                UI.Name(name: "Data binding"),
+                UI.Size(width: 520, height: 380),
+                UI.Padding(
+                    padding: new RectOffset(
+                        left: 24,
+                        right: 24,
+                        top: 20,
+                        bottom: 20
+                    )
+                ),
                 UI.Children(
-                    UI.Label("Data binding", UI.FontSize(32), UI.Size(472, 48)),
                     UI.Label(
-                        () => $"Level {Level.Value} | Score {Score.Value}",
-                        UI.Size(472, 40)
+                        text: "Data binding",
+                        UI.FontSize(size: 32),
+                        UI.Size(width: 472, height: 48)
                     ),
                     UI.Label(
-                        rank,
-                        UI.Name("Rank"),
-                        UI.Size(472, 40),
+                        text: () =>
+                            $"Level {Level.Value} | Score {Score.Value}",
+                        UI.Size(width: 472, height: 40)
+                    ),
+                    UI.Label(
+                        text: rank,
+                        UI.Name(name: "Rank"),
+                        UI.Size(width: 472, height: 40),
                         UI.Set<TextMeshProUGUI, Color>(
-                            "Rank color",
-                            (label, color) => label.color = color,
-                            () =>
+                            name: "Rank color",
+                            set: (label, color) => label.color = color,
+                            read: () =>
                                 Score.Value >= 30
-                                    ? new Color(0.35f, 0.81f, 0.59f)
+                                    ? new Color(r: 0.35f, g: 0.81f, b: 0.59f)
                                     : Color.white
                         )
                     ),
-                    UI.Button("Gain 10 points", GainPoints, UI.Size(472, 48)),
-                    UI.Button("Advance level", AdvanceLevel, UI.Size(472, 48)),
                     UI.Button(
-                        "Reset",
-                        ResetProgress,
-                        UI.Enabled(() => Score.Value != 0 || Level.Value != 1),
-                        UI.Size(472, 48)
+                        text: "Gain 10 points",
+                        click: GainPoints,
+                        UI.Size(width: 472, height: 48)
+                    ),
+                    UI.Button(
+                        text: "Advance level",
+                        click: AdvanceLevel,
+                        UI.Size(width: 472, height: 48)
+                    ),
+                    UI.Button(
+                        text: "Reset",
+                        click: ResetProgress,
+                        UI.Enabled(enabled: () =>
+                            Score.Value != 0 || Level.Value != 1
+                        ),
+                        UI.Size(width: 472, height: 48)
                     )
                 )
             );
@@ -72,14 +104,14 @@ namespace PineDocs.Examples
         public void GainPoints() => Score.Value += 10;
 
         public void AdvanceLevel() =>
-            UI.Batch(() =>
+            UI.Batch(action: () =>
             {
                 Level.Value++;
                 Score.Value = 0;
             });
 
         public void ResetProgress() =>
-            UI.Batch(() =>
+            UI.Batch(action: () =>
             {
                 Level.Value = 1;
                 Score.Value = 0;
@@ -102,7 +134,7 @@ Each getter collects the sources it actually reads. A later assignment reruns th
 
 **Advance level** updates the level and resets the score inside one `UI.Batch`. Scheduled observers run after the batch completes, so bindings see the combined result. **Reset** uses the same pattern. Derived reads inside a batch can still obtain current values; batching defers scheduled observer execution.
 
-Create derived values and bindings under the mount so their lifetime matches the screen. The tree remains mounted until its root or scene is destroyed. Keep the optional returned Mount only when you need explicit early disposal.
+Create derived values and bindings under the mount so their lifetime matches the screen. The tree remains mounted until its root is destroyed. The application persists across scenes by default; configure `CanvasOptions.Persistent = false` for scene lifetime. Explicit mounts remain available for early disposal.
 
 Use `Toggle`, `Slider` and `TextField` with a source for complete two-way controls. `ToggleValue`, `SliderValue` and `InputValue` also bind already-configured external controls. See [standard controls](../api/controls.md).
 

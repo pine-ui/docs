@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Springs and custom value spaces
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `SpringSpace`
 
@@ -145,9 +145,15 @@ An owned reactive analytic spring whose output moves toward a tracked target. Pe
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-var target = UI.Source(0f);
-var motion = UI.Spring(() => target.Value, period: 0.4, dampingRatio: 0.8);
-UI.Image(UI.Position(() => new UnityEngine.Vector2(motion.Value, 0)));
+var target = UI.Source(value: 0f);
+var motion = UI.Spring(
+    target: () => target.Value,
+    period: 0.4,
+    dampingRatio: 0.8
+);
+UI.Image(
+    UI.Position(position: () => new UnityEngine.Vector2(x: motion.Value, y: 0))
+);
 ```
 
 ## `Spring`
@@ -163,9 +169,15 @@ An owned reactive analytic spring whose output moves toward a tracked target. Pe
 | `T` | Typed value, native result or identity contract; see the summary for its role. |
 
 ```csharp
-var target = UI.Source(0f);
-var motion = UI.Spring(() => target.Value, period: 0.4, dampingRatio: 0.8);
-UI.Image(UI.Position(() => new UnityEngine.Vector2(motion.Value, 0)));
+var target = UI.Source(value: 0f);
+var motion = UI.Spring(
+    target: () => target.Value,
+    period: 0.4,
+    dampingRatio: 0.8
+);
+UI.Image(
+    UI.Position(position: () => new UnityEngine.Vector2(x: motion.Value, y: 0))
+);
 ```
 
 ## `Spring.Value`
@@ -204,7 +216,7 @@ motion.Control(impulse: new Value<float>(10f));
 public void Dispose()
 ```
 
-Ends this owned lifetime idempotently. Dependencies and native event/clock registrations are released; Scope/Mount cleanup attempts all resources and aggregates failures. Application code disposes a mount when its owner ends.
+Ends this owned lifetime idempotently. Dependencies and native event/clock registrations are released; Scope/Mount cleanup attempts all resources and aggregates failures. Explicit owners may dispose their mount early; automatic applications end when their root is destroyed.
 
 ```csharp
 motion.Dispose();

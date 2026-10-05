@@ -9,9 +9,12 @@ description: Build conditional Unity interfaces and dynamic lists with Pine Show
 Dynamic helpers return retained component results. Bind them as children under a stable mount/root.
 
 ```csharp
-var visible = UI.Source(true);
-var message = UI.Show(() => visible.Value, () => UI.Label("Hello"));
-var container = UI.Column(UI.Children(() => message.Value));
+var visible = UI.Source(value: true);
+var message = UI.Show(
+    condition: () => visible.Value,
+    build: () => UI.Label(text: "Hello")
+);
+var container = UI.Column(UI.Children(read: () => message.Value));
 ```
 
 The selected branch is retained while its identity stays the same. Switching identity removes the old branch immediately unless an advanced constructor supplies an exit delay.
@@ -23,12 +26,12 @@ The selected branch is retained while its identity stays the same. Switching ide
 `Values` preserves values and exposes reactive indices. Values must be unique and non-null under the chosen comparer.
 
 ```csharp
-var names = UI.Source<string[]>(new[] { "Ada", "Grace" });
+var names = UI.Source<string[]>(value: new[] { "Ada", "Grace" });
 var rows = UI.Values<string, TMPro.TextMeshProUGUI>(
-    () => names.Value,
-    (name, index) => UI.Label(() => $"{index.Value + 1}. {name}")
+    read: () => names.Value,
+    build: (name, index) => UI.Label(text: () => $"{index.Value + 1}. {name}")
 );
-var list = UI.Column(UI.Children(() => rows.Value));
+var list = UI.Column(UI.Children(read: () => rows.Value));
 ```
 
 Membership/order changes publish new immutable output lists. Existing row signals can update without replacing those lists. These lists retain and reconcile UI by identity.
@@ -39,17 +42,20 @@ Advanced constructors receive a read-only presence value and return `Branch<T>`.
 
 ```csharp
 var fading = UI.Show<UnityEngine.Component>(
-    () => visible.Value,
-    present =>
+    condition: () => visible.Value,
+    build: present =>
     {
-        var alpha = UI.Spring(() => present.Value ? 1f : 0f, period: 0.18);
+        var alpha = UI.Spring(
+            target: () => present.Value ? 1f : 0f,
+            period: 0.18
+        );
         return new Branch<UnityEngine.Component>(
-            UI.Label("Hello", UI.Opacity(alpha)),
+            UI.Label(text: "Hello", UI.Opacity(opacity: alpha)),
             0.35
         );
     }
 );
-var host = UI.Column(UI.Children(() => fading.Value));
+var host = UI.Column(UI.Children(read: () => fading.Value));
 ```
 
 Presence becomes false on departure. The branch remains for `0.35` seconds; reentry cancels removal and reuses it. Departing `Values` rows receive index `-1`, so format indices with exit state in mind. Active rows appear before exiting rows.

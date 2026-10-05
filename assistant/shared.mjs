@@ -1,5 +1,5 @@
 export const REFUSAL = 'I can help with Pine and its Unity UI documentation. I can’t answer questions outside that scope.';
-export const VERSIONS = [{id: '0.2.0', label: '0.2.0', prefix: '/docs/'}, {id: '0.1.0', label: '0.1.0', prefix: '/docs/0.1.0/'}];
+export const VERSIONS = [{id: '0.2.0', label: '0.2.0', prefix: '/docs/'}];
 export const LATEST_VERSION = VERSIONS[0].id;
 export const QUESTIONS = [
   'How do I install Pine in Unity?', 'How do I build my first counter?',
@@ -16,7 +16,7 @@ export const QUESTIONS = [
   'What happens when an effect throws?', 'How do I keep state when a view is disabled?',
 ];
 export function questionsForVersion(version) {
-  return version === '0.1.0' ? [...QUESTIONS.slice(0, -1), 'How do I manage mount lifetime with a MonoBehaviour?'] : QUESTIONS;
+  return QUESTIONS;
 }
 export function suggestions(random = Math.random, exclude = [], version = LATEST_VERSION) {
   const pool = questionsForVersion(version).filter(q => !exclude.includes(q));
@@ -100,7 +100,6 @@ export function validateModelAnswer(raw, chunks, version) {
   const urls = text => [...text.matchAll(/https?:\/\/[^\s"'`<>]+/g)].map(m => m[0].replace(/[.,;!?\])}]+$/, ''));
   const evidenceUrls = new Set(chunks.flatMap(c => urls(c.text)));
   if (urls(value.answer).some(url => !evidenceUrls.has(url))) return null;
-  if (version === '0.1.0' && /using Pine;/.test(value.answer) && !/using UI = Pine\.Pine;/.test(value.answer)) return null;
   if (version === '0.2.0' && /Pine\.Pine/.test(value.answer)) return null;
   const documentedApis = new Set(chunks.flatMap(c => [...c.text.matchAll(/\bUI\.(\w+)/g)].map(m => m[1])));
   if ([...value.answer.matchAll(/\bUI\.(\w+)/g)].some(m => !documentedApis.has(m[1]))) return null;

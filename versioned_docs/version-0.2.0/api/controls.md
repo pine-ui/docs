@@ -6,7 +6,7 @@ description: Build buttons, toggles, sliders, text fields, dropdowns, scroll vie
 
 # Complete Unity controls in Pine
 
-Declare each control once in a `a mount builder` method. Pine creates the native control and required graphics, text, handles, viewports or templates. Mutable inputs accept typed literals, `Source<T>`, `Derived<T>`, `ReadOnly<T>`, `Spring<T>` and `Value<T>` getter adapters. `Label`, `Button` text and `Progress` also accept direct getters.
+Declare each control once inside `App.Mount()` or a reusable component. Pine creates the native control and required graphics, text, handles, viewports or templates. Mutable inputs accept typed literals, `Source<T>`, `Derived<T>`, `ReadOnly<T>`, `Spring<T>` and `Value<T>` getter adapters. `Label`, `Button` text and `Progress` also accept direct getters.
 
 ## Control contracts
 
@@ -28,11 +28,25 @@ Declare each control once in a `a mount builder` method. Pine creates the native
 
 A Source overload is two-way because native user input writes the source. A literal, getter, derived value or spring has no setter and supplies one-way state. Native user interaction can still change a one-way control temporarily; the next binding update reapplies its controlling value. Choose a source when edits must become application state.
 
-## A settings screen
+## Run the example
 
-[Download PineControls.cs](/examples/0.2.0/PineControls.cs). Create its owner in code with `new GameObject("Settings").AddComponent<PineControls>()`, or instantiate it with the application's existing owner lifecycle.
+Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineControls()` in its returned tree instead of adding another entry.
 
-```csharp
+<a href="/examples/0.2.0/controls/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/0.2.0/controls/PineControls.cs" download="PineControls.cs" target="_self">Download PineControls.cs</a>. Sources are MIT licensed.
+
+```csharp title="App.cs"
+using UnityEngine;
+
+namespace PineDocs.Examples
+{
+    public static class App
+    {
+        public static Component Mount() => Components.PineControls();
+    }
+}
+```
+
+```csharp title="PineControls.cs"
 using Pine;
 using UnityEngine;
 
@@ -40,81 +54,111 @@ namespace PineDocs.Examples
 {
     public sealed class PineControls : MonoBehaviour
     {
-        public readonly Source<bool> Music = UI.Source(true);
-        public readonly Source<float> Volume = UI.Source(0.5f);
-        public readonly Source<string> PlayerName = UI.Source("");
-        public readonly Source<int> Quality = UI.Source(1);
+        public readonly Source<bool> Music = UI.Source(value: true);
+        public readonly Source<float> Volume = UI.Source(value: 0.5f);
+        public readonly Source<string> PlayerName = UI.Source(value: "");
+        public readonly Source<int> Quality = UI.Source(value: 1);
         public readonly Source<string[]> Qualities = UI.Source(
-            new[] { "Low", "Medium", "High" }
+            value: new[] { "Low", "Medium", "High" }
         );
-        public readonly Source<float> Scroll = UI.Source(0f);
+        public readonly Source<float> Scroll = UI.Source(value: 0f);
         public readonly Source<Sprite> Icon = UI.Source<Sprite>();
         public readonly Source<Texture> Preview = UI.Source<Texture>();
-        public readonly Source<bool> ModalOpen = UI.Source(false);
+        public readonly Source<bool> ModalOpen = UI.Source(value: false);
 
-        private void Start() => UI.Mount(Build);
-
-        private Component Build()
+        public Component Create()
         {
             var modal = UI.Show(
-                () => ModalOpen.Value,
-                () =>
+                condition: () => ModalOpen.Value,
+                build: () =>
                     UI.Column(
-                        UI.Name("Modal"),
-                        UI.Size(360, 96),
+                        UI.Name(name: "Modal"),
+                        UI.Size(width: 360, height: 96),
                         UI.Children(
-                            UI.Label("Saved", UI.Size(360, 40)),
+                            UI.Label(
+                                text: "Saved",
+                                UI.Size(width: 360, height: 40)
+                            ),
                             UI.Button(
-                                "Close",
-                                () => ModalOpen.Value = false,
-                                UI.Size(360, 40)
+                                text: "Close",
+                                click: () => ModalOpen.Value = false,
+                                UI.Size(width: 360, height: 40)
                             )
                         )
                     )
             );
 
             var content = UI.Column(
-                UI.Name("Settings content"),
+                UI.Name(name: "Settings content"),
                 UI.FillWidth(),
                 UI.AutoHeight(),
                 UI.Vertical(12),
                 UI.Children(
-                    UI.Label("Settings", UI.FontSize(32), UI.Size(360, 48)),
-                    UI.Image(UI.Sprite(Icon), UI.Size(48, 48)),
-                    UI.RawImage(UI.Texture(Preview), UI.Size(160, 90)),
-                    UI.Toggle(Music, "Music", UI.Size(360, 40)),
-                    UI.Slider(Volume, 0f, 1f, UI.Size(360, 40)),
                     UI.Label(
-                        () => $"Volume: {Volume.Value:P0}",
-                        UI.Size(360, 32)
+                        text: "Settings",
+                        UI.FontSize(size: 32),
+                        UI.Size(width: 360, height: 48)
                     ),
-                    UI.Progress(Volume, UI.Size(360, 16)),
-                    UI.TextField(
-                        PlayerName,
-                        "Player name",
-                        UI.CharacterLimit(24),
-                        UI.Size(360, 48)
+                    UI.Image(
+                        UI.Sprite(sprite: Icon),
+                        UI.Size(width: 48, height: 48)
                     ),
-                    UI.Dropdown(Quality, Qualities, UI.Size(360, 48)),
-                    UI.Scrollbar(Scroll, UI.Size(360, 24)),
+                    UI.RawImage(
+                        UI.Texture(texture: Preview),
+                        UI.Size(width: 160, height: 90)
+                    ),
                     UI.Toggle(
-                        UI.ReducedMotion,
-                        "Reduced motion",
-                        UI.Size(360, 40)
+                        value: Music,
+                        text: "Music",
+                        UI.Size(width: 360, height: 40)
+                    ),
+                    UI.Slider(
+                        value: Volume,
+                        minimum: 0f,
+                        maximum: 1f,
+                        UI.Size(width: 360, height: 40)
+                    ),
+                    UI.Label(
+                        text: () => $"Volume: {Volume.Value:P0}",
+                        UI.Size(width: 360, height: 32)
+                    ),
+                    UI.Progress(value: Volume, UI.Size(width: 360, height: 16)),
+                    UI.TextField(
+                        value: PlayerName,
+                        placeholder: "Player name",
+                        UI.CharacterLimit(limit: 24),
+                        UI.Size(width: 360, height: 48)
+                    ),
+                    UI.Dropdown(
+                        selected: Quality,
+                        options: Qualities,
+                        UI.Size(width: 360, height: 48)
+                    ),
+                    UI.Scrollbar(
+                        value: Scroll,
+                        UI.Size(width: 360, height: 24)
+                    ),
+                    UI.Toggle(
+                        value: UI.ReducedMotion,
+                        text: "Reduced motion",
+                        UI.Size(width: 360, height: 40)
                     ),
                     UI.Button(
-                        "Save",
-                        () => ModalOpen.Value = true,
-                        UI.Size(360, 48)
+                        text: "Save",
+                        click: () => ModalOpen.Value = true,
+                        UI.Size(width: 360, height: 48)
                     ),
                     UI.Column(
                         UI.AutoHeight(),
                         UI.FillWidth(),
-                        UI.Children(() => modal.Value)
+                        UI.Children(read: () => modal.Value)
                     )
                 )
             );
-            return UI.ScrollView(content, UI.Size(400, 600));
+            return UI.ScrollView(
+                content: content,
+                UI.Size(width: 400, height: 600)
+            );
         }
     }
 }
@@ -127,13 +171,13 @@ namespace PineDocs.Examples
 Wrap a direct getter when an API accepts `Value<T>`:
 
 ```csharp
-UI.Toggle(new Value<bool>(() => settings.Value.Music), "Music");
-UI.Slider(new Value<float>(() => settings.Value.Volume));
+UI.Toggle(value: new Value<bool>(() => settings.Value.Music), text: "Music");
+UI.Slider(value: new Value<float>(() => settings.Value.Volume));
 UI.Grid(
-    new Value<Vector2>(() =>
-        compact.Value ? new Vector2(40, 40) : new Vector2(64, 64)
+    cellSize: new Value<Vector2>(() =>
+        compact.Value ? new Vector2(x: 40, y: 40) : new Vector2(x: 64, y: 64)
     ),
-    columns,
+    columns: columns,
     UI.Children(UI.Image(), UI.Image())
 );
 ```
@@ -142,11 +186,11 @@ Use typed `Configure` for native settings that are not convenience properties:
 
 ```csharp
 UI.TextField(
-    playerName,
-    UI.Configure<TMPro.TMP_InputField>(field =>
+    value: playerName,
+    UI.Configure<TMPro.TMP_InputField>(configure: field =>
         field.contentType = TMPro.TMP_InputField.ContentType.Name
     ),
-    UI.CharacterLimit(24)
+    UI.CharacterLimit(limit: 24)
 );
 ```
 

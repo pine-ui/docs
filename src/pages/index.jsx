@@ -16,18 +16,20 @@ const identity = {
 const example = `using Pine;
 using UnityEngine;
 
-public sealed class Counter : MonoBehaviour
+public static class App
 {
-    private readonly Source<int> _count = UI.Source(0);
-
-    private void Start() => UI.Mount(Build);
-
-    private Component Build()
+    public static RectTransform Mount()
     {
+        var count = UI.Source(value: 0);
+
         return UI.Column(
-            UI.Children(
-                UI.Label(() => $"Count: {_count.Value}"),
-                UI.Button("Increment", () => _count.Value++)
+            gap: 12,
+            UI.Label(text: () => $"Count: {count.Value}"),
+            UI.Button(text: "Increment", click: () => count.Value++),
+            UI.Button(
+                text: "Reset",
+                click: () => count.Value = 0,
+                UI.Enabled(enabled: () => count.Value > 0)
             )
         );
     }
@@ -53,12 +55,12 @@ export default function Home() {
         </section>
         <section className="pine-code-section">
           <div><h2>One source.<br/>A living interface.</h2><p>Read state inside a binding. Change it from a callback. Pine tracks the relationship.</p><Link to="/docs/tutorials/counter">Build the counter →</Link></div>
-          <CodeBlock language="csharp" title="Counter.cs">{example}</CodeBlock>
+          <CodeBlock language="csharp" title="App.cs">{example}</CodeBlock>
         </section>
         <section className="pine-features">
           <div><h3>Typed reactivity</h3><p>Sources, derived values, effects, batching, and contexts. Explicit typed state and scoped bindings.</p></div>
           <div><h3>Native Unity UI</h3><p>Compose uGUI and TextMeshPro components. Create the Canvas and input host from code.</p></div>
-          <div><h3>Owned lifetimes</h3><p>Scopes own bindings, callbacks, branches, and animations. Mount the whole tree once; scene/root destruction ends its scope.</p></div>
+          <div><h3>Owned lifetimes</h3><p>Scopes own bindings, callbacks, branches, and animations. One app entry owns the tree. Destroying its root ends the scope; scene lifetime is optional.</p></div>
         </section>
         <section className="pine-guides">
           <h2>Build something with Pine</h2>

@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Typed reactive values
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `Value`
 
@@ -21,11 +21,11 @@ A typed literal-or-getter adapter for mutable UI inputs. A literal is applied on
 | `T` | Typed value, native result or identity contract; see the summary for its role. |
 
 ```csharp
-var width = UI.Source(240f);
+var width = UI.Source(value: 240f);
 Value<UnityEngine.Vector2> size = new(() =>
-    new UnityEngine.Vector2(width.Value, 48)
+    new UnityEngine.Vector2(x: width.Value, y: 48)
 );
-UI.Frame(UI.Size(size));
+UI.Frame(UI.Size(size: size));
 ```
 
 ```text
@@ -39,11 +39,11 @@ Constructs this value with the supplied typed arguments. A typed literal-or-gett
 | `literal` | The typed literal input (T); literals and supported reactive adapters follow this overload's documented behavior. |
 
 ```csharp
-var width = UI.Source(240f);
+var width = UI.Source(value: 240f);
 Value<UnityEngine.Vector2> size = new(() =>
-    new UnityEngine.Vector2(width.Value, 48)
+    new UnityEngine.Vector2(x: width.Value, y: 48)
 );
-UI.Frame(UI.Size(size));
+UI.Frame(UI.Size(size: size));
 ```
 
 ```text
@@ -57,11 +57,11 @@ Constructs this value with the supplied typed arguments. A typed literal-or-gett
 | `read` | The getter whose source reads establish reactive dependencies; supply a stable native result where required. |
 
 ```csharp
-var width = UI.Source(240f);
+var width = UI.Source(value: 240f);
 Value<UnityEngine.Vector2> size = new(() =>
-    new UnityEngine.Vector2(width.Value, 48)
+    new UnityEngine.Vector2(x: width.Value, y: 48)
 );
-UI.Frame(UI.Size(size));
+UI.Frame(UI.Size(size: size));
 ```
 
 ## `Value.IsDynamic`
@@ -105,7 +105,7 @@ Converts a typed literal, getter or supported reactive value into a literal-or-g
 **Returns:** A typed Value adapter that reads this reactive value when evaluated; the conversion does not write to its source.
 
 ```csharp
-Value<int> value = UI.Source(0);
+Value<int> value = UI.Source(value: 0);
 ```
 
 ```text
@@ -121,7 +121,7 @@ Converts a typed literal, getter or supported reactive value into a literal-or-g
 **Returns:** A typed Value adapter that reads this reactive value when evaluated; the conversion does not write to its source.
 
 ```csharp
-Value<int> value = UI.Source(0);
+Value<int> value = UI.Source(value: 0);
 ```
 
 ```text
@@ -137,7 +137,7 @@ Converts a typed literal, getter or supported reactive value into a literal-or-g
 **Returns:** A typed Value adapter that reads this reactive value when evaluated; the conversion does not write to its source.
 
 ```csharp
-Value<int> value = UI.Source(0);
+Value<int> value = UI.Source(value: 0);
 ```
 
 ```text
@@ -153,7 +153,7 @@ Converts a typed literal, getter or supported reactive value into a literal-or-g
 **Returns:** A typed Value adapter that reads this reactive value when evaluated; the conversion does not write to its source.
 
 ```csharp
-Value<int> value = UI.Source(0);
+Value<int> value = UI.Source(value: 0);
 ```
 
 ```text
@@ -169,7 +169,7 @@ Converts a typed literal, getter or supported reactive value into a literal-or-g
 **Returns:** A typed Value adapter that reads this reactive value when evaluated; the conversion does not write to its source.
 
 ```csharp
-Value<int> value = UI.Source(0);
+Value<int> value = UI.Source(value: 0);
 ```
 
 ```text
@@ -185,7 +185,7 @@ Converts a typed literal, getter or supported reactive value into a literal-or-g
 **Returns:** A typed Value adapter that reads this reactive value when evaluated; the conversion does not write to its source.
 
 ```csharp
-Value<int> value = UI.Source(0);
+Value<int> value = UI.Source(value: 0);
 ```
 
 ## `ReadOnly`
@@ -202,10 +202,10 @@ A framework-owned reactive value that callers can observe without replacing it. 
 
 ```csharp
 var rows = UI.Values(
-    () => new[] { "A" },
-    (value, index) => UI.Label(() => $"{index.Value}: {value}")
+    read: () => new[] { "A" },
+    build: (value, index) => UI.Label(text: () => $"{index.Value}: {value}")
 );
-UI.Column(UI.Children(() => rows.Value));
+UI.Column(UI.Children(read: () => rows.Value));
 ```
 
 ## `ReadOnly.Value`
@@ -217,7 +217,7 @@ T Value
 Reads the framework-owned value with dependency tracking. There is no public setter; update the controlling collection or selector instead.
 
 ```csharp
-UI.Label(() => index.Value.ToString());
+UI.Label(text: () => index.Value.ToString());
 ```
 
 ## `ReadOnly.Peek`
@@ -247,8 +247,8 @@ Mutable typed reactive state. Reading Value inside an observer registers a depen
 | `T` | Typed value, native result or identity contract; see the summary for its role. |
 
 ```csharp
-var count = UI.Source(0);
-UI.Label(() => count.Value.ToString());
+var count = UI.Source(value: 0);
+UI.Label(text: () => count.Value.ToString());
 count.Value++;
 ```
 
@@ -322,9 +322,9 @@ An owned cached pure calculation with dynamically tracked dependencies. Reading 
 | `T` | Typed value, native result or identity contract; see the summary for its role. |
 
 ```csharp
-var count = UI.Source(2);
-var doubled = UI.Derive(() => count.Value * 2);
-UI.Label(() => doubled.Value.ToString());
+var count = UI.Source(value: 2);
+var doubled = UI.Derive(compute: () => count.Value * 2);
+UI.Label(text: () => doubled.Value.ToString());
 ```
 
 ## `Derived.Value`
@@ -336,7 +336,7 @@ T Value
 Returns the current cached pure result and tracks downstream reads. Within a batch it first settles stale upstream derived calculations.
 
 ```csharp
-UI.Label(() => total.Value.ToString());
+UI.Label(text: () => total.Value.ToString());
 ```
 
 ## `Derived.Dispose`
@@ -345,7 +345,7 @@ UI.Label(() => total.Value.ToString());
 public void Dispose()
 ```
 
-Ends this owned lifetime idempotently. Dependencies and native event/clock registrations are released; Scope/Mount cleanup attempts all resources and aggregates failures. Application code disposes a mount when its owner ends.
+Ends this owned lifetime idempotently. Dependencies and native event/clock registrations are released; Scope/Mount cleanup attempts all resources and aggregates failures. Explicit owners may dispose their mount early; automatic applications end when their root is destroyed.
 
 ```csharp
 total.Dispose();

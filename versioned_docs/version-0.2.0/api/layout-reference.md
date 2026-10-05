@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Exact, flexible and content sizing
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `UI.Mount(...)` or `UI.Root(...)` unless they only create state/configuration. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `UI.Size`
 
@@ -25,7 +25,7 @@ Requests exact non-negative finite width and height in both RectTransform and na
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Size(360, 48));
+UI.Frame(UI.Size(width: 360, height: 48));
 ```
 
 ```text
@@ -44,7 +44,7 @@ Requests exact non-negative finite width and height in both RectTransform and na
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Size(360, 48));
+UI.Frame(UI.Size(width: 360, height: 48));
 ```
 
 ```text
@@ -62,7 +62,7 @@ Requests exact non-negative finite width and height in both RectTransform and na
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Size(360, 48));
+UI.Frame(UI.Size(width: 360, height: 48));
 ```
 
 ## `UI.Width`
@@ -82,7 +82,7 @@ Requests one exact non-negative finite axis in both native rect and layout sizin
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Width(360f));
+UI.Frame(UI.Width(width: 360f));
 ```
 
 ```text
@@ -100,7 +100,7 @@ Requests one exact non-negative finite axis in both native rect and layout sizin
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Width(360f));
+UI.Frame(UI.Width(width: 360f));
 ```
 
 ## `UI.Height`
@@ -120,7 +120,7 @@ Requests one exact non-negative finite axis in both native rect and layout sizin
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Height(48f));
+UI.Frame(UI.Height(height: 48f));
 ```
 
 ```text
@@ -138,7 +138,7 @@ Requests one exact non-negative finite axis in both native rect and layout sizin
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Height(48f));
+UI.Frame(UI.Height(height: 48f));
 ```
 
 ## `UI.Fill`
@@ -254,7 +254,7 @@ Sets native LayoutElement preferred dimensions without imposing exact minima. Th
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.PreferredSize(360, 48));
+UI.Frame(UI.PreferredSize(width: 360, height: 48));
 ```
 
 ```text
@@ -273,7 +273,7 @@ Sets native LayoutElement preferred dimensions without imposing exact minima. Th
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.PreferredSize(360, 48));
+UI.Frame(UI.PreferredSize(width: 360, height: 48));
 ```
 
 ```text
@@ -291,7 +291,7 @@ Sets native LayoutElement preferred dimensions without imposing exact minima. Th
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.PreferredSize(360, 48));
+UI.Frame(UI.PreferredSize(width: 360, height: 48));
 ```
 
 ## `UI.Position`
@@ -311,7 +311,7 @@ Binds RectTransform.anchoredPosition. A parent layout group can drive positions;
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Image(UI.Position(20, 30));
+UI.Image(UI.Position(x: 20, y: 30));
 ```
 
 ```text
@@ -330,7 +330,7 @@ Binds RectTransform.anchoredPosition. A parent layout group can drive positions;
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Image(UI.Position(20, 30));
+UI.Image(UI.Position(x: 20, y: 30));
 ```
 
 ```text
@@ -348,7 +348,7 @@ Binds RectTransform.anchoredPosition. A parent layout group can drive positions;
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Image(UI.Position(20, 30));
+UI.Image(UI.Position(x: 20, y: 30));
 ```
 
 ## `UI.Anchors`
@@ -369,7 +369,12 @@ Binds normalized minimum and maximum anchors. Size fixes its configured axes; St
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Anchors(UnityEngine.Vector2.zero, UnityEngine.Vector2.one));
+UI.Frame(
+    UI.Anchors(
+        minimum: UnityEngine.Vector2.zero,
+        maximum: UnityEngine.Vector2.one
+    )
+);
 ```
 
 ## `UI.Pivot`
@@ -389,7 +394,7 @@ Binds the normalized native RectTransform pivot. Literal values apply once; type
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Pivot(new UnityEngine.Vector2(0, 1)));
+UI.Frame(UI.Pivot(pivot: new UnityEngine.Vector2(x: 0, y: 1)));
 ```
 
 ```text
@@ -407,7 +412,7 @@ Binds the normalized native RectTransform pivot. Literal values apply once; type
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Pivot(new UnityEngine.Vector2(0, 1)));
+UI.Frame(UI.Pivot(pivot: new UnityEngine.Vector2(x: 0, y: 1)));
 ```
 
 ## `UI.Stretch`
@@ -443,7 +448,7 @@ Adds or reuses RectMask2D and binds its enabled state. Clipping is opt-in; the o
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Clip(true));
+UI.Frame(UI.Clip(enabled: true));
 ```
 
 ```text
@@ -461,7 +466,7 @@ Adds or reuses RectMask2D and binds its enabled state. Clipping is opt-in; the o
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.Clip(true));
+UI.Frame(UI.Clip(enabled: true));
 ```
 
 ## `UI.Padding`
@@ -481,7 +486,16 @@ Binds native horizontal/vertical layout padding on a frame. It uses an existing 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Column(UI.Padding(new UnityEngine.RectOffset(12, 12, 8, 8)));
+UI.Column(
+    UI.Padding(
+        padding: new UnityEngine.RectOffset(
+            left: 12,
+            right: 12,
+            top: 8,
+            bottom: 8
+        )
+    )
+);
 ```
 
 ```text
@@ -499,7 +513,16 @@ Binds native horizontal/vertical layout padding on a frame. It uses an existing 
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Column(UI.Padding(new UnityEngine.RectOffset(12, 12, 8, 8)));
+UI.Column(
+    UI.Padding(
+        padding: new UnityEngine.RectOffset(
+            left: 12,
+            right: 12,
+            top: 8,
+            bottom: 8
+        )
+    )
+);
 ```
 
 ## `UI.Vertical`
@@ -626,8 +649,8 @@ Creates an owned native uniform GridLayoutGroup with reactive shared cell dimens
 
 ```csharp
 UI.Grid(
-    new UnityEngine.Vector2(48, 48),
-    4,
+    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
+    columns: 4,
     UI.Children(UI.Image(), UI.Image())
 );
 ```
@@ -649,7 +672,11 @@ Binds uniform grid dimensions shared by every cell. Dimensions must be finite an
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Grid(new UnityEngine.Vector2(48, 48), 4, UI.CellSize(cellSize));
+UI.Grid(
+    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
+    columns: 4,
+    UI.CellSize(size: cellSize)
+);
 ```
 
 ```text
@@ -667,7 +694,11 @@ Binds uniform grid dimensions shared by every cell. Dimensions must be finite an
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Grid(new UnityEngine.Vector2(48, 48), 4, UI.CellSize(cellSize));
+UI.Grid(
+    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
+    columns: 4,
+    UI.CellSize(size: cellSize)
+);
 ```
 
 ## `UI.GridSpacing`
@@ -688,9 +719,9 @@ Binds horizontal and vertical native grid spacing. Literal values apply once; ty
 
 ```csharp
 UI.Grid(
-    new UnityEngine.Vector2(48, 48),
-    4,
-    UI.GridSpacing(new UnityEngine.Vector2(4, 4))
+    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
+    columns: 4,
+    UI.GridSpacing(spacing: new UnityEngine.Vector2(x: 4, y: 4))
 );
 ```
 
@@ -710,9 +741,9 @@ Binds horizontal and vertical native grid spacing. Literal values apply once; ty
 
 ```csharp
 UI.Grid(
-    new UnityEngine.Vector2(48, 48),
-    4,
-    UI.GridSpacing(new UnityEngine.Vector2(4, 4))
+    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
+    columns: 4,
+    UI.GridSpacing(spacing: new UnityEngine.Vector2(x: 4, y: 4))
 );
 ```
 
@@ -734,9 +765,16 @@ Binds native uniform-grid padding. Literal values apply once; typed reactive val
 
 ```csharp
 UI.Grid(
-    new UnityEngine.Vector2(48, 48),
-    4,
-    UI.GridPadding(new UnityEngine.RectOffset(8, 8, 8, 8))
+    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
+    columns: 4,
+    UI.GridPadding(
+        padding: new UnityEngine.RectOffset(
+            left: 8,
+            right: 8,
+            top: 8,
+            bottom: 8
+        )
+    )
 );
 ```
 
@@ -757,7 +795,7 @@ Adds or reuses an allocation-free native safe-area follower, with reactive enabl
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.SafeArea(true), UI.Children(UI.Label("Safe")));
+UI.Frame(UI.SafeArea(enabled: true), UI.Children(UI.Label(text: "Safe")));
 ```
 
 ```text
@@ -775,5 +813,5 @@ Adds or reuses an allocation-free native safe-area follower, with reactive enabl
 **Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
 
 ```csharp
-UI.Frame(UI.SafeArea(true), UI.Children(UI.Label("Safe")));
+UI.Frame(UI.SafeArea(enabled: true), UI.Children(UI.Label(text: "Safe")));
 ```

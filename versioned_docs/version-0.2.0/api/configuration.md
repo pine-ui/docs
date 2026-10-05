@@ -8,7 +8,7 @@ description: Configure typed Pine defaults, fonts, input preservation, canvas sc
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| `UI.Version` | `0.2.0` | Pinned API and distribution version of Pine 0.2.0. |
+| `UI.Version` | `0.2.0` | Working API base version; package.json identifies the `0.2.0` distribution. |
 | `UI.Strict` | `true` | Duplicate named-property diagnostics within groups and duplicate child diagnostics. |
 | `UI.Defaults` | `true` | Native text, graphic and selectable defaults during creation. |
 | `UI.DeferNestedProperties` | `true` | Process nested groups after outer declarations within ordering phases. |
@@ -23,11 +23,11 @@ The bundled Liberation Sans SDF includes 567 glyphs, covering accented Latin and
 
 ```csharp
 UI.DefaultFont = applicationFont;
-var locale = UI.Source("en");
+var locale = UI.Source(value: "en");
 UI.Label(
-    () => translations[locale.Value]["welcome"],
-    UI.Font(() => fonts[locale.Value]),
-    UI.FontSize(28)
+    text: () => translations[locale.Value]["welcome"],
+    UI.Font(font: () => fonts[locale.Value]),
+    UI.FontSize(size: 28)
 );
 ```
 
@@ -45,6 +45,4 @@ Actions run first, sorted by numeric priority with stable declaration order for 
 
 ## Canvas options
 
-`CanvasOptions` contains typed reactive Name, ReferenceResolution, SortOrder, RenderMode, Camera, Scale, SafeArea, WorldPosition, WorldRotation and WorldSize inputs. A parentless mount owns and configures its canvas. A supplied parent preserves its existing canvas and external input ownership. The [complete mount reference](mount-reference.md) documents each field and lifetime member.
-
-The version menu preserves the immutable [0.1.0 documentation](/docs/0.1.0/tutorials/installation/) and its matching downloads.
+`CanvasOptions.Persistent` defaults to true and is read once at mounting. Set it false for scene-lived UI through optional `App.Options`. The remaining fields are typed reactive Name, ReferenceResolution, SortOrder, RenderMode, Camera, Scale, SafeArea, WorldPosition, WorldRotation and WorldSize inputs. A parentless mount owns and configures its canvas. A supplied parent preserves its existing canvas and external input ownership. The [complete mount reference](mount-reference.md) documents each field and lifetime member.
