@@ -12,7 +12,7 @@ Data binding keeps an interface synchronized with explicit state. This example b
 
 Complete the [Pine installation steps](../tutorials/installation.md), including TextMeshPro resources and the Input System backend. Save the script with the filename shown, attach it to an empty GameObject, and enter Play Mode. Pine creates the Canvas and child UI from this script.
 
-<a href="pathname:///examples/PineBindings.cs" download="PineBindings.cs" target="_self">Download PineBindings.cs</a>. The source is MIT licensed, like Pine.
+<a href="/examples/PineBindings.cs" download="PineBindings.cs" target="_self">Download PineBindings.cs</a>. The source is MIT licensed, like Pine.
 
 ```csharp title="PineBindings.cs"
 using Pine;

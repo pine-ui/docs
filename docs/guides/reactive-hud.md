@@ -12,7 +12,7 @@ A HUD reflects gameplay state. This example renders health, a health bar, and a 
 
 Complete the [Pine installation steps](../tutorials/installation.md), including TextMeshPro resources and the Input System backend. Save the script with the filename shown, attach it to an empty GameObject, and enter Play Mode. Pine creates the Canvas and child UI from this script.
 
-<a href="pathname:///examples/PineHud.cs" download="PineHud.cs" target="_self">Download PineHud.cs</a>. The source is MIT licensed, like Pine.
+<a href="/examples/PineHud.cs" download="PineHud.cs" target="_self">Download PineHud.cs</a>. The source is MIT licensed, like Pine.
 
 ```csharp title="PineHud.cs"
 using Pine;

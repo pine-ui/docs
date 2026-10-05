@@ -12,7 +12,7 @@ A spring follows a state-derived target. This example moves an image between two
 
 Complete the [Pine installation steps](../tutorials/installation.md), including TextMeshPro resources and the Input System backend. Save the script with the filename shown, attach it to an empty GameObject, and enter Play Mode. Pine creates the Canvas and child UI from this script.
 
-<a href="pathname:///examples/PineSpring.cs" download="PineSpring.cs" target="_self">Download PineSpring.cs</a>. The source is MIT licensed, like Pine.
+<a href="/examples/PineSpring.cs" download="PineSpring.cs" target="_self">Download PineSpring.cs</a>. The source is MIT licensed, like Pine.
 
 ```csharp title="PineSpring.cs"
 using Pine;
