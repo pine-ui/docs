@@ -1,17 +1,23 @@
 # Pine documentation
 
-Docusaurus tutorials and API reference for Pine **0.1.0**.
+Tutorials and API reference for Pine 0.2.0, with historical 0.1.0 documentation and matching examples.
 
-[Live documentation](https://pine-ui.com) · [Package source](https://github.com/pine-ui/package/tree/v0.1.0) · [Docs source](https://github.com/pine-ui/docs/tree/v0.1.0)
+[Documentation](https://pine-ui.com) · [Package](https://github.com/pine-ui/package) · [Docs source](https://github.com/pine-ui/docs)
 
-## License
+## Development
 
-[MIT](LICENSE). Dependency package licenses apply to their files.
+Use Node 22. Run npm ci, npm run test:docs and npm run build. Run npm start for local preview. Publishing main deploys GitHub Pages.
 
-## Static agent toolkit
+Author pages in docs/, then maintain the selected versioned_docs snapshot and sidebar. Only pinned snapshots enter the site and documentation search corpus.
 
-`npm run build` exports the pinned documentation versions as complete Markdown under `/ai/{version}/`, plus per-version `llms.txt`, `llms-full.txt`, `setup.txt` and an `AGENTS.md` instruction snippet. Root llms files select the default pinned version. Pages provide Copy page/Open Markdown actions; installation pages also copy the matching setup prompt.
+The browser assistant searches the selected version's public docs/examples. Set PINE_ASSISTANT_ENDPOINT at build time to use an independently hosted service; without it, the site provides labeled documentation search results. No service credentials belong in the frontend.
 
-`npm run test:agents` verifies Markdown transformation and version isolation. The build checks every exported code example, local link and page metadata. Generated files under `static/ai` and root llms files are rebuilt from Docusaurus metadata and excluded from Git. Keep `agent-tools/releases.json` and the selected version's installation/agent guides consistent when adding a version.
+## Agent toolkit
 
-The optional support link is https://buymeacoffee.com/kbenim. Payments stay on the creator's profile.
+Pages offer Copy page and Open Markdown; installation pages offer a version-aware setup prompt. The build exports Markdown under /ai/{version}/, per-version llms indexes/full bundles, setup prompts and AGENTS snippets. Root llms files select the default pinned version.
+
+Generated exports and the public search corpus are rebuilt and excluded from Git. Keep agent-tools/releases.json and matching installation/agent guides consistent with package versions.
+
+## License and support
+
+[MIT](LICENSE). Dependency licenses apply to their files. Optional support: https://buymeacoffee.com/kbenim.

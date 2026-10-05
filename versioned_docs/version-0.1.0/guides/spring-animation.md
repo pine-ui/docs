@@ -4,6 +4,8 @@ sidebar_label: Reactive spring animation
 description: Animate a Unity UI marker from C# state with Pine springs. Bind position, tune period and damping, and release animation through mount disposal.
 ---
 
+import InteractiveExample from '@site/src/components/InteractiveExample';
+
 # Animate Unity UI with reactive springs
 
 A spring follows a state-derived target. This example moves an image between two positions with a small amount of overshoot.
@@ -12,7 +14,7 @@ A spring follows a state-derived target. This example moves an image between two
 
 Complete the [Pine installation steps](../tutorials/installation.md), including TextMeshPro resources and the Input System backend. Save the script with the filename shown, attach it to an empty GameObject, and enter Play Mode. Pine creates the Canvas and child UI from this script.
 
-<a href="/examples/PineSpring.cs" download="PineSpring.cs" target="_self">Download PineSpring.cs</a>. The source is MIT licensed, like Pine.
+<a href="/examples/0.1.0/PineSpring.cs" download="PineSpring.cs" target="_self">Download PineSpring.cs</a>. The source is MIT licensed, like Pine.
 
 ```csharp title="PineSpring.cs"
 using Pine;
@@ -31,18 +33,42 @@ namespace PineDocs.Examples
         {
             _mount = UI.Mount(() =>
             {
-                var x = UI.Spring(() => OnRight.Value ? 180f : -180f,
-                    period: 0.45, dampingRatio: 0.75);
-                return UI.Column(UI.Name("Spring motion"), UI.Size(520, 320),
-                    UI.Configure<VerticalLayoutGroup>(g => g.padding = new RectOffset(24, 24, 20, 20)),
-                    UI.Label("Spring motion", UI.FontSize(32), UI.PreferredSize(472, 48)),
-                    UI.Frame(UI.Name("Motion track"), UI.PreferredSize(472, 120),
-                        UI.Image(UI.Name("Moving marker"), UI.Size(40, 40),
+                var x = UI.Spring(
+                    () => OnRight.Value ? 180f : -180f,
+                    period: 0.45,
+                    dampingRatio: 0.75
+                );
+                return UI.Column(
+                    UI.Name("Spring motion"),
+                    UI.Size(520, 320),
+                    UI.Configure<VerticalLayoutGroup>(g =>
+                        g.padding = new RectOffset(24, 24, 20, 20)
+                    ),
+                    UI.Label(
+                        "Spring motion",
+                        UI.FontSize(32),
+                        UI.PreferredSize(472, 48)
+                    ),
+                    UI.Frame(
+                        UI.Name("Motion track"),
+                        UI.PreferredSize(472, 120),
+                        UI.Image(
+                            UI.Name("Moving marker"),
+                            UI.Size(40, 40),
                             UI.Position(() => new Vector2(x.Value, 0)),
-                            UI.Tint(new Color(0.28f, 0.74f, 0.53f)))),
-                    UI.Label(() => OnRight.Value ? "Target: right" : "Target: left", UI.PreferredSize(472, 36)),
-                    UI.Button(() => OnRight.Value ? "Move left" : "Move right", Toggle,
-                        UI.PreferredSize(472, 48)));
+                            UI.Tint(new Color(0.28f, 0.74f, 0.53f))
+                        )
+                    ),
+                    UI.Label(
+                        () => OnRight.Value ? "Target: right" : "Target: left",
+                        UI.PreferredSize(472, 36)
+                    ),
+                    UI.Button(
+                        () => OnRight.Value ? "Move left" : "Move right",
+                        Toggle,
+                        UI.PreferredSize(472, 48)
+                    )
+                );
             });
         }
 
@@ -57,9 +83,11 @@ namespace PineDocs.Examples
 }
 ```
 
-## In Unity
+<span id="in-unity"/>
 
-<img src="/img/guides/spring-animation.png" alt="A Pine spring animation example rendered in Unity with a green marker at the right target and a Move left button." width="960" height="720" loading="lazy" decoding="async"/>
+## Interactive browser preview
+
+<InteractiveExample kind="spring" version="0.1.0"/>
 
 ## Change a target, not every frame
 

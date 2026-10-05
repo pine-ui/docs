@@ -30,7 +30,11 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Install dependencies
         run: npm ci
+      - name: Check assistant and interactive examples
+        run: npm run test:docs
       - name: Build documentation
+        env:
+          PINE_ASSISTANT_ENDPOINT: ${{ vars.PINE_ASSISTANT_ENDPOINT }}
         run: npm run build
       - name: Upload site
         uses: actions/upload-pages-artifact@v4

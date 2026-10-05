@@ -23,8 +23,11 @@ using UI = Pine.Pine;
 
 var theme = UI.Context("forest");
 using var scope = UI.Root(() =>
-    theme.Provide("night", () =>
-        UI.Effect(() => UnityEngine.Debug.Log(theme.Value))));
+    theme.Provide(
+        "night",
+        () => UI.Effect(() => UnityEngine.Debug.Log(theme.Value))
+    )
+);
 ```
 
 Observers retain their provider context during later reevaluation. Independent roots start separate context chains. Use `Scope.Run` when entering an existing ownership context explicitly.

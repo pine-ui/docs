@@ -1,7 +1,7 @@
 ---
 title: Install Pine for Unity
 sidebar_label: Installation
-description: Install the Pine 0.2.0 candidate package with bundled Latin text, automatic setup and code-owned native Unity UI.
+description: Install the Pine 0.2.0 package with bundled Latin text, automatic setup and code-owned native Unity UI.
 ---
 
 # Install Pine for Unity
@@ -10,17 +10,22 @@ Pine creates retained native uGUI from typed C# declarations. Import `Pine`, cal
 
 ## Install the matching package
 
-These docs are pinned to the **local, unpublished 0.2.0 candidate**. No `v0.2.0` Git tag or public package release exists yet. In Unity's Package Manager, select **Install package from disk** and choose the matching candidate's `package.json`, or **Install package from tarball** and select [com.kbenim.pine-0.2.0.tgz](/packages/com.kbenim.pine-0.2.0.tgz). Its identifier is `com.kbenim.pine`, distribution and API version `0.2.0`. Verify the artifact using [its SHA256 checksum](/packages/com.kbenim.pine-0.2.0.tgz.sha256).
+In Unity Package Manager, select **Install package from Git URL** and enter:
 
-The manifest targets Unity `6000.3` and declares uGUI `2.0.0` plus Input System `1.20.1`. Unity's package resolution supplies its Editor's compatible uGUI core package. Use matching package/docs versions. The immutable [0.1.0 instructions](/docs/0.1.0/tutorials/installation/) describe that older release's `Pine.Pine` facade and API.
+~~~text
+https://github.com/pine-ui/package.git#v0.2.0
+~~~
+
+Alternatively, select **Install package from tarball** and use [com.kbenim.pine-0.2.0.tgz](/packages/com.kbenim.pine-0.2.0.tgz), checking [its SHA256 checksum](/packages/com.kbenim.pine-0.2.0.tgz.sha256). Package identifier: com.kbenim.pine. Match your installed package to the selected documentation version.
 
 ## Supported versions and prerequisites
 
 | Package / API | Unity Editor | uGUI | Input System | Evidence |
 | --- | --- | --- | --- | --- |
-| Pine 0.2.0 candidate | 6000.3.25f1 (Unity 6.3 LTS) | 2.0.0 | 1.20.1 | macOS Editor checks: native controls, composition, setup and cleanup |
-| Pine 0.2.0 candidate | 6000.6.4f1 (Unity 6.6) | 2.6.0 | 1.20.1 | macOS Editor checks: native controls, composition, setup and cleanup |
+| Pine 0.2.0 | 6000.3.25f1 (Unity 6.3 LTS) | 2.0.0 | 1.20.1 | macOS Editor checks: native controls, composition, setup and cleanup |
+| Pine 0.2.0 | 6000.6.4f1 (Unity 6.6) | 2.6.0 | 1.20.1 | macOS Editor checks: native controls, composition, setup and cleanup |
 
+The package declares **Unity 6000.3 as its minimum**. The rows above are the exact recorded test tuples; they establish support within those checks. A stripped macOS Mono player was also measured on an Apple M4 Pro. See the [compatibility summary](https://pine-ui.com/compatibility/0.2.0.md) for the verified scope.
 
 Before installing:
 

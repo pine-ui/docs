@@ -4,6 +4,8 @@ sidebar_label: Reactive game HUD
 description: Create a Unity health and coin HUD in C# with Pine sources, derived health-bar width, reactive labels, and scoped button callbacks.
 ---
 
+import InteractiveExample from '@site/src/components/InteractiveExample';
+
 # Build a reactive game HUD in Unity
 
 A HUD reflects gameplay state. This example renders health, a health bar, and a coin count. Its two buttons simulate gameplay events.
@@ -12,7 +14,7 @@ A HUD reflects gameplay state. This example renders health, a health bar, and a 
 
 Complete the [Pine installation steps](../tutorials/installation.md), including TextMeshPro resources and the Input System backend. Save the script with the filename shown, attach it to an empty GameObject, and enter Play Mode. Pine creates the Canvas and child UI from this script.
 
-<a href="/examples/PineHud.cs" download="PineHud.cs" target="_self">Download PineHud.cs</a>. The source is MIT licensed, like Pine.
+<a href="/examples/0.1.0/PineHud.cs" download="PineHud.cs" target="_self">Download PineHud.cs</a>. The source is MIT licensed, like Pine.
 
 ```csharp title="PineHud.cs"
 using Pine;
@@ -34,27 +36,58 @@ namespace PineDocs.Examples
             {
                 var ratio = UI.Derive(() => Mathf.Clamp01(Health.Value / 100f));
                 return UI.Column(
-                    UI.Name("Game HUD"), UI.Size(520, 340),
-                    UI.Configure<VerticalLayoutGroup>(g => g.padding = new RectOffset(24, 24, 20, 20)),
-                    UI.Label("Game HUD", UI.FontSize(32), UI.PreferredSize(472, 48)),
-                    UI.Label(() => $"Health: {Health.Value} / 100", UI.PreferredSize(472, 36)),
-                    UI.Frame(UI.PreferredSize(472, 24),
-                        UI.Image(UI.Name("Health fill"),
+                    UI.Name("Game HUD"),
+                    UI.Size(520, 340),
+                    UI.Configure<VerticalLayoutGroup>(g =>
+                        g.padding = new RectOffset(24, 24, 20, 20)
+                    ),
+                    UI.Label(
+                        "Game HUD",
+                        UI.FontSize(32),
+                        UI.PreferredSize(472, 48)
+                    ),
+                    UI.Label(
+                        () => $"Health: {Health.Value} / 100",
+                        UI.PreferredSize(472, 36)
+                    ),
+                    UI.Frame(
+                        UI.PreferredSize(472, 24),
+                        UI.Image(
+                            UI.Name("Health fill"),
                             UI.Configure<RectTransform>(r =>
                             {
-                                r.anchorMin = r.anchorMax = new Vector2(0, 0.5f);
+                                r.anchorMin = r.anchorMax = new Vector2(
+                                    0,
+                                    0.5f
+                                );
                                 r.pivot = new Vector2(0, 0.5f);
                             }),
                             UI.Size(() => new Vector2(472 * ratio.Value, 24)),
-                            UI.Tint(new Color(0.28f, 0.74f, 0.53f)))),
-                    UI.Label(() => $"Coins: {Coins.Value}", UI.PreferredSize(472, 36)),
-                    UI.Button("Take 10 damage", () => Damage(10),
-                        UI.Enabled(() => Health.Value > 0), UI.PreferredSize(472, 48)),
-                    UI.Button("Collect a coin", CollectCoin, UI.PreferredSize(472, 48)));
+                            UI.Tint(new Color(0.28f, 0.74f, 0.53f))
+                        )
+                    ),
+                    UI.Label(
+                        () => $"Coins: {Coins.Value}",
+                        UI.PreferredSize(472, 36)
+                    ),
+                    UI.Button(
+                        "Take 10 damage",
+                        () => Damage(10),
+                        UI.Enabled(() => Health.Value > 0),
+                        UI.PreferredSize(472, 48)
+                    ),
+                    UI.Button(
+                        "Collect a coin",
+                        CollectCoin,
+                        UI.PreferredSize(472, 48)
+                    )
+                );
             });
         }
 
-        public void Damage(int amount) => Health.Value = Mathf.Clamp(Health.Value - amount, 0, 100);
+        public void Damage(int amount) =>
+            Health.Value = Mathf.Clamp(Health.Value - amount, 0, 100);
+
         public void CollectCoin() => Coins.Value++;
 
         private void OnDisable()
@@ -66,9 +99,11 @@ namespace PineDocs.Examples
 }
 ```
 
-## In Unity
+<span id="in-unity"/>
 
-<img src="/img/guides/reactive-hud.png" alt="A Pine HUD rendered in Unity with health at 70 of 100, a green health bar, three coins, and damage and collect buttons." width="960" height="720" loading="lazy" decoding="async"/>
+## Interactive browser preview
+
+<InteractiveExample kind="hud" version="0.1.0"/>
 
 ## Connect the HUD to gameplay
 

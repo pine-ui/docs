@@ -17,7 +17,8 @@ module.exports = {
   organizationName: 'pine-ui',
   projectName: 'docs',
   trailingSlash: true,
-  favicon: 'img/pine-icon.svg',
+  customFields: {assistantEndpoint: process.env.PINE_ASSISTANT_ENDPOINT || ''},
+  favicon: 'img/mascot/pine-icon.png',
   onBrokenLinks: 'throw',
   markdown: {hooks: {onBrokenMarkdownLinks: 'throw'}},
   i18n: {defaultLocale: 'en', locales: ['en']},
@@ -25,9 +26,9 @@ module.exports = {
   presets: [['classic', {
     docs: {
       sidebarPath: require.resolve('./sidebars.js'),
-      lastVersion: '0.1.0',
+      lastVersion: '0.2.0',
       includeCurrentVersion: false,
-      versions: {'0.1.0': {label: '0.1.0', path: ''}},
+      versions: {'0.2.0': {label: '0.2.0', path: ''}, '0.1.0': {label: '0.1.0', path: '0.1.0'}},
       editUrl: 'https://github.com/pine-ui/docs/edit/main/',
       editCurrentVersion: false,
     },
@@ -40,11 +41,11 @@ module.exports = {
     highlightSearchTermsOnTargetPage: true,
   }]],
   themeConfig: {
-    image: 'img/pine-social.png',
+    image: 'img/mascot/pine-wave.png',
     colorMode: {defaultMode: 'dark', respectPrefersColorScheme: true},
     navbar: {
       title: 'pine',
-      logo: {alt: 'Pine tree', src: 'img/pine-icon.svg', width: 27, height: 32},
+      logo: {alt: 'Pine dinosaur mascot', src: 'img/mascot/pine-icon.png', width: 34, height: 34},
       items: [
         {to: '/', label: 'Home', position: 'left'},
         {type: 'docSidebar', sidebarId: 'tutorials', label: 'Tutorials', position: 'left'},

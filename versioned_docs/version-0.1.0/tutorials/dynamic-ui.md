@@ -26,7 +26,8 @@ The selected branch is retained while its identity stays the same. Switching ide
 var names = UI.Source<string[]>(new[] { "Ada", "Grace" });
 var rows = UI.Values<string, TMPro.TextMeshProUGUI>(
     () => names.Value,
-    (name, index) => UI.Label(() => $"{index.Value + 1}. {name}"));
+    (name, index) => UI.Label(() => $"{index.Value + 1}. {name}")
+);
 var list = UI.Column(UI.Children(() => rows.Value));
 ```
 
@@ -37,12 +38,17 @@ Membership/order changes publish new output arrays. Existing row signals can upd
 Advanced constructors receive a presence source and return `Branch<T>`. For a fading branch:
 
 ```csharp
-var fading = UI.Show<UnityEngine.Component>(() => visible.Value, present =>
-{
-    var alpha = UI.Spring(() => present.Value ? 1f : 0f, period: 0.18);
-    return new Branch<UnityEngine.Component>(
-        UI.Label("Hello", UI.Opacity(alpha)), 0.35);
-});
+var fading = UI.Show<UnityEngine.Component>(
+    () => visible.Value,
+    present =>
+    {
+        var alpha = UI.Spring(() => present.Value ? 1f : 0f, period: 0.18);
+        return new Branch<UnityEngine.Component>(
+            UI.Label("Hello", UI.Opacity(alpha)),
+            0.35
+        );
+    }
+);
 var host = UI.Column(UI.Children(() => fading.Value));
 ```
 

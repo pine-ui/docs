@@ -4,6 +4,8 @@ sidebar_label: Dynamic lists
 description: Build a reactive Unity inventory list in C# with Pine keyed rows. Update quantities, reorder items, and remove rows without recreating retained items.
 ---
 
+import InteractiveExample from '@site/src/components/InteractiveExample';
+
 # Create dynamic Unity UI lists with stable IDs
 
 Inventory records need stable identity when their quantity or position changes. This example uses permanent item IDs to retain each UI row.
@@ -12,7 +14,7 @@ Inventory records need stable identity when their quantity or position changes. 
 
 Complete the [Pine installation steps](../tutorials/installation.md), including TextMeshPro resources and the Input System backend. Save the script with the filename shown, attach it to an empty GameObject, and enter Play Mode. Pine creates the Canvas and child UI from this script.
 
-<a href="/examples/PineInventory.cs" download="PineInventory.cs" target="_self">Download PineInventory.cs</a>. The source is MIT licensed, like Pine.
+<a href="/examples/0.1.0/PineInventory.cs" download="PineInventory.cs" target="_self">Download PineInventory.cs</a>. The source is MIT licensed, like Pine.
 
 ```csharp title="PineInventory.cs"
 using System.Collections.Generic;
@@ -32,14 +34,18 @@ namespace PineDocs.Examples
             public int Id { get; }
             public string Name { get; }
             public int Quantity { get; }
+
             public Item(int id, string name, int quantity)
-            { Id = id; Name = name; Quantity = quantity; }
+            {
+                Id = id;
+                Name = name;
+                Quantity = quantity;
+            }
         }
 
-        public readonly Source<Item[]> Items = UI.Source(new[]
-        {
-            new Item(101, "Potion", 3), new Item(102, "Key", 1)
-        });
+        public readonly Source<Item[]> Items = UI.Source(
+            new[] { new Item(101, "Potion", 3), new Item(102, "Key", 1) }
+        );
         private MountHandle _mount;
 
         private void OnEnable()
@@ -47,26 +53,73 @@ namespace PineDocs.Examples
             _mount = UI.Mount(() =>
             {
                 var rows = UI.Indexes<int, Item, TextMeshProUGUI>(
-                    () => Items.Value.Select(item => new KeyValuePair<int, Item>(item.Id, item)),
-                    (id, item, present) => new Branch<TextMeshProUGUI>(
-                        UI.Label(() => $"{item.Value.Name} x{item.Value.Quantity}",
-                            UI.Name($"Item {id}"), UI.PreferredSize(472, 40))));
-                return UI.Column(UI.Name("Inventory"), UI.Size(520, 360),
-                    UI.Configure<VerticalLayoutGroup>(g => g.padding = new RectOffset(24, 24, 20, 20)),
-                    UI.Label("Inventory", UI.FontSize(32), UI.PreferredSize(472, 48)),
-                    UI.Column(UI.Name("Item rows"), UI.PreferredSize(472, 120),
-                        UI.Children(() => rows.Value)),
-                    UI.Button("Add a potion", AddPotion, UI.PreferredSize(472, 48)),
-                    UI.Button("Reverse rows", ReverseRows, UI.PreferredSize(472, 48)),
-                    UI.Button("Remove the key", RemoveKey,
-                        UI.Enabled(() => Items.Value.Any(item => item.Id == 102)), UI.PreferredSize(472, 48)));
+                    () =>
+                        Items.Value.Select(item => new KeyValuePair<int, Item>(
+                            item.Id,
+                            item
+                        )),
+                    (id, item, present) =>
+                        new Branch<TextMeshProUGUI>(
+                            UI.Label(
+                                () =>
+                                    $"{item.Value.Name} x{item.Value.Quantity}",
+                                UI.Name($"Item {id}"),
+                                UI.PreferredSize(472, 40)
+                            )
+                        )
+                );
+                return UI.Column(
+                    UI.Name("Inventory"),
+                    UI.Size(520, 360),
+                    UI.Configure<VerticalLayoutGroup>(g =>
+                        g.padding = new RectOffset(24, 24, 20, 20)
+                    ),
+                    UI.Label(
+                        "Inventory",
+                        UI.FontSize(32),
+                        UI.PreferredSize(472, 48)
+                    ),
+                    UI.Column(
+                        UI.Name("Item rows"),
+                        UI.PreferredSize(472, 120),
+                        UI.Children(() => rows.Value)
+                    ),
+                    UI.Button(
+                        "Add a potion",
+                        AddPotion,
+                        UI.PreferredSize(472, 48)
+                    ),
+                    UI.Button(
+                        "Reverse rows",
+                        ReverseRows,
+                        UI.PreferredSize(472, 48)
+                    ),
+                    UI.Button(
+                        "Remove the key",
+                        RemoveKey,
+                        UI.Enabled(() =>
+                            Items.Value.Any(item => item.Id == 102)
+                        ),
+                        UI.PreferredSize(472, 48)
+                    )
+                );
             });
         }
 
-        public void AddPotion() => Items.Value = Items.Value.Select(item => item.Id == 101
-            ? new Item(item.Id, item.Name, item.Quantity + 1) : item).ToArray();
-        public void ReverseRows() => Items.Value = Items.Value.Reverse().ToArray();
-        public void RemoveKey() => Items.Value = Items.Value.Where(item => item.Id != 102).ToArray();
+        public void AddPotion() =>
+            Items.Value = Items
+                .Value.Select(item =>
+                    item.Id == 101
+                        ? new Item(item.Id, item.Name, item.Quantity + 1)
+                        : item
+                )
+                .ToArray();
+
+        public void ReverseRows() =>
+            Items.Value = Items.Value.Reverse().ToArray();
+
+        public void RemoveKey() =>
+            Items.Value = Items.Value.Where(item => item.Id != 102).ToArray();
 
         private void OnDisable()
         {
@@ -77,9 +130,11 @@ namespace PineDocs.Examples
 }
 ```
 
-## In Unity
+<span id="in-unity"/>
 
-<img src="/img/guides/dynamic-lists.png" alt="A Pine inventory rendered in Unity with Key x1 above Potion x4 and buttons for updating, reversing, and removing items." width="960" height="720" loading="lazy" decoding="async"/>
+## Interactive browser preview
+
+<InteractiveExample kind="inventory" version="0.1.0"/>
 
 ## See retention in action
 

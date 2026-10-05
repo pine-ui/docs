@@ -10,8 +10,8 @@ Sources hold state. A getter binding reads state, and a button callback changes 
 
 ```csharp
 using Pine;
-using UI = Pine.Pine;
 using UnityEngine;
+using UI = Pine.Pine;
 
 public sealed class Counter : MonoBehaviour
 {
@@ -20,18 +20,28 @@ public sealed class Counter : MonoBehaviour
 
     private void OnEnable()
     {
-        _mount = UI.Mount(() => UI.Column(
-            UI.Name("Counter"),
-            UI.Size(360, 180),
-            UI.Vertical(12),
-            UI.Label(() => $"Count: {_count.Value}",
-                UI.PreferredSize(360, 48)),
-            UI.Button("Increment", () => _count.Value++,
-                UI.PreferredSize(360, 48)),
-            UI.Button("Reset", () => _count.Value = 0,
-                UI.Enabled(() => _count.Value > 0),
-                UI.PreferredSize(360, 48))
-        ));
+        _mount = UI.Mount(() =>
+            UI.Column(
+                UI.Name("Counter"),
+                UI.Size(360, 180),
+                UI.Vertical(12),
+                UI.Label(
+                    () => $"Count: {_count.Value}",
+                    UI.PreferredSize(360, 48)
+                ),
+                UI.Button(
+                    "Increment",
+                    () => _count.Value++,
+                    UI.PreferredSize(360, 48)
+                ),
+                UI.Button(
+                    "Reset",
+                    () => _count.Value = 0,
+                    UI.Enabled(() => _count.Value > 0),
+                    UI.PreferredSize(360, 48)
+                )
+            )
+        );
     }
 
     private void OnDisable()

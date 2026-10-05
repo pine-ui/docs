@@ -6,7 +6,7 @@ description: Copy complete Pine 0.2.0 Markdown pages, version-pinned setup promp
 
 # Build with Pine and AI agents
 
-This guide is for **Pine 0.2.0 (local unpublished candidate)**. Select your package version in the menu before copying a page or prompt. The installed package's source and matching API reference determine which methods are available.
+This guide is for **Pine 0.2.0**. Select your package version in the menu before copying a page or prompt. The installed package's source and matching API reference determine which methods are available.
 
 ## Copy documentation
 
@@ -22,13 +22,13 @@ The root [llms.txt](/llms.txt) lists available versions. Root [llms-full.txt](/l
 ## Installation prompt
 
 ```text
-Help me install Pine 0.2.0 (local unpublished candidate) in this Unity project.
+Help me install Pine 0.2.0 in this Unity project.
 Inspect ProjectSettings/ProjectVersion.txt, Packages/manifest.json,
 Packages/packages-lock.json and the installed Pine package.json first.
 Read https://pine-ui.com/ai/0.2.0/tutorials/installation.md
 and https://pine-ui.com/ai/0.2.0/llms.txt
 Use C# 9 and Unity’s default .NET Standard 2.1 API profile. The manifest minimum is Unity 6000.3. Recorded macOS Editor checks cover 6000.3.25f1/uGUI 2.0.0 and 6000.6.4f1/uGUI 2.6.0, both with Input System 1.20.1.
-Install the matching local package.json or candidate tarball from https://pine-ui.com/packages/com.kbenim.pine-0.2.0.tgz and verify its adjacent .sha256. Record its local-candidate status; a v0.2.0 Git tag is not available.
+Install https://github.com/pine-ui/package.git#v0.2.0 through Unity Package Manager, or use https://pine-ui.com/packages/com.kbenim.pine-0.2.0.tgz and verify its adjacent .sha256.
 Import only Pine and call UI.Method(...). Use typed declarations, UI.Children(...) for property-based containers, UI.Group<T>(...) for groups, and exact UI.Size(...). Mount the tree once; ordinary nested component factories return native components. Scene unload/root destruction ends the mount; retain Mount for early disposal.
 Create a small runnable counter using the matching examples. Compile it in
 Unity and inspect the Console, then check its text, input and root cleanup
@@ -38,7 +38,7 @@ in Play Mode. Report the Editor/package tuple and observed checks.
 ## Existing-project prompt
 
 ```text
-Integrate Pine 0.2.0 (local unpublished candidate) into this existing Unity project.
+Integrate Pine 0.2.0 into this existing Unity project.
 Read https://pine-ui.com/ai/0.2.0/tutorials/installation.md
 and https://pine-ui.com/ai/0.2.0/llms.txt
 Inspect current dependencies, assembly definitions, gameplay input calls,
@@ -52,7 +52,7 @@ respond, and record the actual compile/Play Mode results. Import only Pine and c
 ## Reusable-component prompt
 
 ```text
-Build reusable UI components with Pine 0.2.0 (local unpublished candidate).
+Build reusable UI components with Pine 0.2.0.
 Read https://pine-ui.com/ai/0.2.0/tutorials/components.md
 and https://pine-ui.com/ai/0.2.0/api/creation.md
 Use https://pine-ui.com/ai/0.2.0/llms.txt to resolve any other API.
@@ -68,12 +68,12 @@ in Unity and verify two instances, shared state and removal behavior.
 ## Migration prompt
 
 ```text
-Migrate this project's Pine integration TO 0.2.0 (local unpublished candidate).
+Migrate this project's Pine integration TO 0.2.0.
 Inspect the installed version and existing call sites before making a diff.
 Read the source version's pinned docs and https://pine-ui.com/ai/0.2.0/llms.txt
 for the target; resolve both package manifests and dependency requirements.
 Use C# 9 and Unity’s default .NET Standard 2.1 API profile. The manifest minimum is Unity 6000.3. Recorded macOS Editor checks cover 6000.3.25f1/uGUI 2.0.0 and 6000.6.4f1/uGUI 2.6.0, both with Input System 1.20.1.
-Install the matching local package.json or candidate tarball from https://pine-ui.com/packages/com.kbenim.pine-0.2.0.tgz and verify its adjacent .sha256. Record its local-candidate status; a v0.2.0 Git tag is not available.
+Install https://github.com/pine-ui/package.git#v0.2.0 through Unity Package Manager, or use https://pine-ui.com/packages/com.kbenim.pine-0.2.0.tgz and verify its adjacent .sha256.
 Map every used public API against the target reference, including component
 properties, groups/children, sizing, reactive operator result types, input
 setup and mount lifetime. Import only Pine and call UI.Method(...). Use typed declarations, UI.Children(...) for property-based containers, UI.Group<T>(...) for groups, and exact UI.Size(...). Mount the tree once; ordinary nested component factories return native components. Scene unload/root destruction ends the mount; retain Mount for early disposal.

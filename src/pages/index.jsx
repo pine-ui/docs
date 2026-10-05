@@ -8,7 +8,7 @@ import Head from '@docusaurus/Head';
 const identity = {
   '@context': 'https://schema.org',
   '@graph': [
-    {'@type': 'Organization', '@id': 'https://pine-ui.com/#pine', name: 'Pine', url: 'https://pine-ui.com/', logo: 'https://pine-ui.com/img/pine-icon.svg', sameAs: ['https://github.com/pine-ui']},
+    {'@type': 'Organization', '@id': 'https://pine-ui.com/#pine', name: 'Pine', url: 'https://pine-ui.com/', logo: 'https://pine-ui.com/img/mascot/pine-icon.png', sameAs: ['https://github.com/pine-ui']},
     {'@type': 'WebSite', '@id': 'https://pine-ui.com/#website', name: 'Pine', alternateName: 'Pine UI for Unity', url: 'https://pine-ui.com/', publisher: {'@id': 'https://pine-ui.com/#pine'}},
   ],
 };
@@ -41,7 +41,7 @@ export default function Home() {
         <section className="pine-hero">
           <div>
             <div className="pine-hero-title">
-              <img src={useBaseUrl('/img/pine-icon.svg')} alt="" width="40" height="48"/>
+              <img src={useBaseUrl('/img/mascot/pine-icon.png')} alt="" width="48" height="48"/>
               <h1>Reactive Unity UI.<br/><span>Built in C#.</span></h1>
             </div>
             <p>A reactive UI library for Unity. Compose native uGUI components, bind them to typed state, and let Pine handle updates and cleanup.</p>

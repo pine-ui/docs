@@ -7,7 +7,7 @@ const pages = [
   {id: 'api/core', version: '0.2.0', title: 'Core', source: '@site/versioned_docs/version-0.2.0/api/core.md', permalink: '/docs/reference/core/'},
   {id: 'tutorials/start', version: '0.1.0', title: 'Old start', source: '@site/versioned_docs/version-0.1.0/tutorials/start.md', permalink: '/docs/0.1.0/start-here/'},
 ];
-const statuses = {'0.2.0': 'Local unpublished candidate', '0.1.0': 'Historical release'};
+const statuses = {'0.2.0': 'Released', '0.1.0': 'Historical release'};
 const source = `---\ntitle: Start\n---\n
 import InteractiveExample from '@site/example';
 
@@ -29,7 +29,7 @@ More documentation.
 
 test('export preserves code and rewrites actual metadata slugs without leaking MDX', () => {
   const text = exportPage({page: pages[0], source, pages, origin: 'https://pine-ui.com', status: statuses['0.2.0']});
-  assert.match(text, /Pine 0\.2\.0.*Local unpublished candidate/);
+  assert.match(text, /Pine 0\.2\.0.*Released/);
   assert.match(text, /https:\/\/pine-ui.com\/docs\/reference\/core\/#source/);
   assert.match(text, /\[Root.cs\]\(https:\/\/pine-ui.com\/examples\/0.2.0\/Root.cs\)/);
   assert.match(text, /var state = UI.Source<int>\(0\);\n\/\/ \[This is code\]\(\.\.\/api\/core.md\), <Frame>, import untouched/);

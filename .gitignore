@@ -5,6 +5,10 @@ build/
 .env
 .env.*
 .idea/
+.wrangler/
+assistant/generated/
+static/assistant/
+assistant/worker-configuration.d.ts
 
 # Generated static agent exports
 static/ai/
