@@ -12,7 +12,7 @@ Inventory records need stable identity when their quantity or position changes. 
 
 Complete the [Pine installation steps](../tutorials/installation.md), including TextMeshPro resources and the Input System backend. Save the script with the filename shown, attach it to an empty GameObject, and enter Play Mode. Pine creates the Canvas and child UI from this script.
 
-[Download PineInventory.cs](/examples/PineInventory.cs). The source is MIT licensed, like Pine.
+<a href="pathname:///examples/PineInventory.cs" download="PineInventory.cs" target="_self">Download PineInventory.cs</a>. The source is MIT licensed, like Pine.
 
 ```csharp title="PineInventory.cs"
 using System.Collections.Generic;
