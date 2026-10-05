@@ -40,7 +40,7 @@ module.exports = {
     highlightSearchTermsOnTargetPage: true,
   }]],
   themeConfig: {
-    image: 'img/mascot/pine-wave.png',
+    image: 'img/mascot/pine-wave.webp',
     colorMode: {defaultMode: 'dark', respectPrefersColorScheme: true},
     navbar: {
       title: 'pine',
