@@ -186,31 +186,8 @@
   text-decoration: none;
 }
 
-:root {
-  --pine-api-state: #0962b8;
-  --pine-api-lifetime: #783cb5;
-  --pine-api-layout: #8b5700;
-  --pine-api-controls: #167849;
-}
-[data-theme="dark"] {
-  --pine-api-state: #76b8ff;
-  --pine-api-lifetime: #c5a0ff;
-  --pine-api-layout: #edc16d;
-  --pine-api-controls: #59ce96;
-}
-[data-pine-api="state"] {
-  color: var(--pine-api-state);
-}
-[data-pine-api="lifetime"] {
-  color: var(--pine-api-lifetime);
-}
-[data-pine-api="layout"] {
-  color: var(--pine-api-layout);
-}
-[data-pine-api="controls"] {
-  color: var(--pine-api-controls);
-}
-.theme-doc-markdown code[data-pine-api] {
+:not(pre) > code {
+  color: var(--ifm-color-primary);
   border-color: transparent;
   font-weight: 500;
 }

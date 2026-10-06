@@ -43,19 +43,6 @@ export default function DocContent(props) {
           loading="lazy"
         />
       </div>
-      <details className={styles.colorKey}>
-        <summary>API color key</summary>
-        <div>
-          <span data-pine-api="state">Blue · reactive state</span>
-          <span data-pine-api="lifetime">Purple · lifetime and ownership</span>
-          <span data-pine-api="layout">Amber · layout and sizing</span>
-          <span data-pine-api="controls">Green · controls and appearance</span>
-        </div>
-        <p>
-          Inline API names use these colors. Code blocks use syntax
-          highlighting.
-        </p>
-      </details>
       <Content {...props} />
     </>
   );
