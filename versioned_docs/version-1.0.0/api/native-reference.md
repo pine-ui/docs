@@ -91,7 +91,8 @@ Registers a callback, disposable or Unity object with the active scope.
 ## `P.Create`
 
 ```text
-public static T Create<T>(params IProperty<T>[] properties) where T : Component
+public static T Create<T>(params IProperty<T>[] properties)
+    where T : Component
 ```
 
 Creates and owns a GameObject, RectTransform and the native component T, then applies compatible typed properties.
@@ -99,7 +100,8 @@ Creates and owns a GameObject, RectTransform and the native component T, then ap
 ## `P.Clone`
 
 ```text
-public static T Clone<T>(T template, params IProperty<T>[] properties) where T : Component
+public static T Clone<T>(T template, params IProperty<T>[] properties)
+    where T : Component
 ```
 
 Owns a native clone of the supplied component's GameObject, preserves its serialized native configuration, and applies compatible properties.
@@ -107,7 +109,8 @@ Owns a native clone of the supplied component's GameObject, preserves its serial
 ## `P.Apply`
 
 ```text
-public static T Apply<T>(T target, params IProperty<T>[] properties) where T : Component
+public static T Apply<T>(T target, params IProperty<T>[] properties)
+    where T : Component
 ```
 
 Applies compatible declarations to an existing native component in the active scope.
@@ -115,7 +118,8 @@ Applies compatible declarations to an existing native component in the active sc
 ## `P.Group`
 
 ```text
-public static IProperty<T> Group<T>(params IProperty<T>[] properties) where T : Component
+public static IProperty<T> Group<T>(params IProperty<T>[] properties)
+    where T : Component
 ```
 
 Composes reusable properties for one explicit native target type.
@@ -123,7 +127,8 @@ Composes reusable properties for one explicit native target type.
 ## `P.Action`
 
 ```text
-public static IProperty<T> Action<T>(Action<T> action, int priority = 1) where T : Component
+public static IProperty<T> Action<T>(Action<T> action, int priority = 1)
+    where T : Component
 ```
 
 Runs a one-time typed action before ordinary properties and parenting.
@@ -131,7 +136,8 @@ Runs a one-time typed action before ordinary properties and parenting.
 ## `P.Configure`
 
 ```text
-public static IProperty<T> Configure<T>(Action<T> configure) where T : Component
+public static IProperty<T> Configure<T>(Action<T> configure)
+    where T : Component
 ```
 
 Runs a one-time typed native configuration in the ordinary-property phase.
@@ -139,13 +145,19 @@ Runs a one-time typed native configuration in the ordinary-property phase.
 ## `P.Set`
 
 ```text
-public static IProperty<T> Set<T, TValue>(string name, Action<T, TValue> set, Value<TValue> value) where T : Component
+public static IProperty<T> Set<T, TValue>(
+    string name,
+    Action<T, TValue> set,
+    Value<TValue> value
+)
+    where T : Component
 ```
 
 Declares a named typed native assignment.
 
 ```text
-public static IProperty<T> Set<T, TValue>(string name, Action<T, TValue> set, Func<TValue> read) where T : Component
+public static IProperty<T> Set<T, TValue>(string name, Action<T, TValue> set, Func<TValue> read)
+    where T : Component
 ```
 
 Declares a named typed native assignment.
@@ -153,7 +165,8 @@ Declares a named typed native assignment.
 ## `P.Bind`
 
 ```text
-public static T Bind<T, TValue>(this T component, Func<TValue> read, Action<T, TValue> apply) where T : Component
+public static T Bind<T, TValue>(this T component, Func<TValue> read, Action<T, TValue> apply)
+    where T : Component
 ```
 
 Adds an owned reactive getter/setter binding to a saved native component and returns the same component.
@@ -223,13 +236,18 @@ Composes native child components explicitly.
 ## `P.On`
 
 ```text
-public static IProperty<T> On<T>(Func<T, UnityEvent> select, Action action) where T : Component
+public static IProperty<T> On<T>(Func<T, UnityEvent> select, Action action)
+    where T : Component
 ```
 
 Registers a native UnityEvent handler for the compatible target type and removes it when the scope ends.
 
 ```text
-public static IProperty<T> On<T, TValue>(Func<T, UnityEvent<TValue>> select, Action<TValue> action) where T : Component
+public static IProperty<T> On<T, TValue>(
+    Func<T, UnityEvent<TValue>> select,
+    Action<TValue> action
+)
+    where T : Component
 ```
 
 Registers a native UnityEvent handler for the compatible target type and removes it when the scope ends.
@@ -245,7 +263,13 @@ Registers an owned Button click handler.
 ## `P.Changed`
 
 ```text
-public static IProperty<T> Changed<T, TValue>(Func<T, TValue> read, Action<TValue> changed, Func<T, UnityEvent<TValue>> events = null, IEqualityComparer<TValue> comparer = null) where T : Component
+public static IProperty<T> Changed<T, TValue>(
+    Func<T, TValue> read,
+    Action<TValue> changed,
+    Func<T, UnityEvent<TValue>> events = null,
+    IEqualityComparer<TValue> comparer = null
+)
+    where T : Component
 ```
 
 Observes a native value, calls the callback initially, and reports distinct changes under the supplied comparer.

@@ -14,9 +14,7 @@ return P.Vertical().With(() => content.Value);
 
 ```csharp
 var items = P.Source<IReadOnlyList<string>>(new[] { "A", "B" });
-var rows = P.Values(() => items.Value, (item, index) =>
-    P.Text(() => $"{index.Value}: {item}")
-);
+var rows = P.Values(() => items.Value, (item, index) => P.Text(() => $"{index.Value}: {item}"));
 return P.Vertical().With(() => rows.Value);
 ```
 

@@ -32,6 +32,8 @@ jobs:
         run: npm ci
       - name: Check assistant and interactive examples
         run: npm run test:docs
+      - name: Check source formatting
+        run: npm run format:check
       - name: Build documentation
         env:
           PINE_ASSISTANT_ENDPOINT: ${{ vars.PINE_ASSISTANT_ENDPOINT }}

@@ -14,19 +14,42 @@ namespace PineDocs.Examples
             var enabled = P.Source(true);
             var selected = P.Source(0);
             var options = new List<TMP_Dropdown.OptionData> { new("One"), new("Two") };
-            return P.Vertical(spacing: 8, childControlWidth: true, childControlHeight: true,
-                childForceExpandHeight: false, sizeDelta: new Vector2(500, 480)).With(
-                P.Text(() => $"{text.Value}: {volume.Value:F2}").With(P.LayoutElement(preferredHeight: 40)),
-                P.Button("Reset", onClick: () => P.Batch(() => { text.Value = "Player"; volume.Value = .5f; })).With(P.LayoutElement(preferredHeight: 40)),
-                P.InputField(text: text, characterLimit: 24).With(P.LayoutElement(preferredHeight: 40)),
-                P.Toggle("Enabled", isOn: enabled).With(P.LayoutElement(preferredHeight: 40)),
-                P.Slider(value: volume, minValue: 0, maxValue: 1).With(P.LayoutElement(preferredHeight: 40)),
-                P.Dropdown(value: selected, options: options).With(P.LayoutElement(preferredHeight: 40)),
-                P.Scrollbar(value: volume, size: .2f).With(P.LayoutElement(preferredHeight: 24)),
-                P.Button("Outlined", interactable: enabled).With(
-                    P.Self(P.Image(color: Color.gray)), P.Outline(effectColor: Color.black),
-                    P.LayoutElement(preferredHeight: 40))
-            );
+            return P.Vertical(
+                    spacing: 8,
+                    childControlWidth: true,
+                    childControlHeight: true,
+                    childForceExpandHeight: false,
+                    sizeDelta: new Vector2(500, 480)
+                )
+                .With(
+                    P.Text(() => $"{text.Value}: {volume.Value:F2}")
+                        .With(P.LayoutElement(preferredHeight: 40)),
+                    P.Button(
+                            "Reset",
+                            onClick: () =>
+                                P.Batch(() =>
+                                {
+                                    text.Value = "Player";
+                                    volume.Value = .5f;
+                                })
+                        )
+                        .With(P.LayoutElement(preferredHeight: 40)),
+                    P.InputField(text: text, characterLimit: 24)
+                        .With(P.LayoutElement(preferredHeight: 40)),
+                    P.Toggle("Enabled", isOn: enabled).With(P.LayoutElement(preferredHeight: 40)),
+                    P.Slider(value: volume, minValue: 0, maxValue: 1)
+                        .With(P.LayoutElement(preferredHeight: 40)),
+                    P.Dropdown(value: selected, options: options)
+                        .With(P.LayoutElement(preferredHeight: 40)),
+                    P.Scrollbar(value: volume, size: .2f)
+                        .With(P.LayoutElement(preferredHeight: 24)),
+                    P.Button("Outlined", interactable: enabled)
+                        .With(
+                            P.Self(P.Image(color: Color.gray)),
+                            P.Outline(effectColor: Color.black),
+                            P.LayoutElement(preferredHeight: 40)
+                        )
+                );
         }
     }
 }

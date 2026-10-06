@@ -75,7 +75,12 @@ Built-in fixed-lane mapping for Array.
 ## `P.Spring`
 
 ```text
-public static Spring<T> Spring<T>(Func<T> target, Value<double>? period = null, Value<double>? dampingRatio = null, SpringSpace<T> space = null)
+public static Spring<T> Spring<T>(
+    Func<T> target,
+    Value<double>? period = null,
+    Value<double>? dampingRatio = null,
+    SpringSpace<T> space = null
+)
 ```
 
 An owned reactive analytic spring whose output moves toward a tracked target.
@@ -99,7 +104,11 @@ Reads reactive spring output.
 ## `Spring.Control`
 
 ```text
-public void Control(Value<T>? position = null, Value<T>? velocity = null, Value<T>? impulse = null)
+public void Control(
+    Value<T>? position = null,
+    Value<T>? velocity = null,
+    Value<T>? impulse = null
+)
 ```
 
 Sets position and/or velocity and adds an impulse using the spring's fixed typed space.

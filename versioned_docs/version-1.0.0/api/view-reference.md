@@ -41,7 +41,13 @@ Places a visual declaration's component on its containing GameObject.
 ## `P.Declare`
 
 ```text
-public static View Declare<T>(Action<T> configure = null, Action<T> reference = null,             bool modifier = false, Value<bool>? active = null) where T : Component
+public static View Declare<T>(
+    Action<T> configure = null,
+    Action<T> reference = null,
+    bool modifier = false,
+    Value<bool>? active = null
+)
+    where T : Component
 ```
 
 Declares a custom native component using the same ownership and composition rules as built-in factories.
@@ -49,7 +55,11 @@ Declares a custom native component using the same ownership and composition rule
 ## `P.Mount`
 
 ```text
-public static Mount Mount(Func<View> component, Transform parent = null, CanvasOptions options = null)
+public static Mount Mount(
+    Func<View> component,
+    Transform parent = null,
+    CanvasOptions options = null
+)
 ```
 
 Builds and mounts a deferred view once.

@@ -115,13 +115,21 @@ Configures Pine's code-supplied default TMP font for subsequent text constructio
 ## `P.Mount`
 
 ```text
-public static Mount Mount(Func<Component> component, Transform parent = null, CanvasOptions options = null)
+public static Mount Mount(
+    Func<Component> component,
+    Transform parent = null,
+    CanvasOptions options = null
+)
 ```
 
 An explicit mounted interface lifetime.
 
 ```text
-public static Mount Mount(Func<GameObject> component, Transform parent = null, CanvasOptions options = null)
+public static Mount Mount(
+    Func<GameObject> component,
+    Transform parent = null,
+    CanvasOptions options = null
+)
 ```
 
 An explicit mounted interface lifetime.

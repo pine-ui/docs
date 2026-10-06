@@ -340,9 +340,12 @@ public static class App
     public static View Mount()
     {
         var sound = P.Source(false);
-        return P.Toggle("Sound", isOn: sound,
+        return P.Toggle(
+            "Sound",
+            isOn: sound,
             toggleTransition: UnityEngine.UI.Toggle.ToggleTransition.None,
-            onValueChanged: value => Debug.Log($"Sound: {value}"));
+            onValueChanged: value => Debug.Log($"Sound: {value}")
+        );
     }
 }
 ```

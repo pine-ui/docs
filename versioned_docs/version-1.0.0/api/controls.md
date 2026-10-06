@@ -64,17 +64,19 @@ var colors = UnityEngine.UI.ColorBlock.defaultColorBlock;
 colors.normalColor = Color.gray;
 colors.highlightedColor = Color.white;
 colors.fadeDuration = .15f;
-var navigation = new UnityEngine.UI.Navigation
-{
-    mode = UnityEngine.UI.Navigation.Mode.Automatic
-};
-return P.Button("Save", colors: colors, navigation: navigation,
-    transition: UnityEngine.UI.Selectable.Transition.ColorTint,
-    onClick: Save).With(
-    P.Self(P.Image(sprite: background, type: UnityEngine.UI.Image.Type.Sliced)),
-    P.LayoutElement(preferredWidth: 200, preferredHeight: 48),
-    P.Outline(effectColor: Color.black, effectDistance: new Vector2(2, -2))
-);
+var navigation = new UnityEngine.UI.Navigation { mode = UnityEngine.UI.Navigation.Mode.Automatic };
+return P.Button(
+        "Save",
+        colors: colors,
+        navigation: navigation,
+        transition: UnityEngine.UI.Selectable.Transition.ColorTint,
+        onClick: Save
+    )
+    .With(
+        P.Self(P.Image(sprite: background, type: UnityEngine.UI.Image.Type.Sliced)),
+        P.LayoutElement(preferredWidth: 200, preferredHeight: 48),
+        P.Outline(effectColor: Color.black, effectDistance: new Vector2(2, -2))
+    );
 ```
 
 This fragment assumes `Save` and a `Sprite background` are supplied by the containing renderer. Omitted structs are not replaced by Pine presets. For options/event entries and other native lists, assign a new list to a Source or call its `Notify`; in-place list mutation alone is not observable. Input range/content settings apply before editable values. Native setters remain responsible for validation and clamping.

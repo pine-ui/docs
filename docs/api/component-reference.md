@@ -11,13 +11,16 @@ This reference documents every current public declaration in this part of Pine. 
 ## `P.Component`
 
 ```text
-public static View Component<TBehaviour>(Func<TBehaviour, View> render) where TBehaviour : MonoBehaviour
+public static View Component<TBehaviour>(Func<TBehaviour, View> render)
+    where TBehaviour : MonoBehaviour
 ```
 
 Declares an owned Unity behaviour and its deferred UI.
 
 ```text
-public static TView Component<TBehaviour, TView>(Func<TBehaviour, TView> render)             where TBehaviour : MonoBehaviour             where TView : Component
+public static TView Component<TBehaviour, TView>(Func<TBehaviour, TView> render)
+    where TBehaviour : MonoBehaviour
+    where TView : Component
 ```
 
 Creates an owned Unity behaviour and renders its native UI in a child reactive scope.

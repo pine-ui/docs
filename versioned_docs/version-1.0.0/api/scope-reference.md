@@ -41,7 +41,8 @@ Temporarily enters this live scope, preserving ownership and scoped context, and
 ## `Scope.Own`
 
 ```text
-public T Own<T>(T resource) where T : IDisposable
+public T Own<T>(T resource)
+    where T : IDisposable
 ```
 
 Registers an IDisposable for reverse-order cleanup and returns the same resource.

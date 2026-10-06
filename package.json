@@ -12,7 +12,9 @@
     "prebuild": "npm run assistant:corpus",
     "test:assistant": "node --test assistant/*.test.mjs",
     "postbuild": "node assistant/check-links.mjs",
-    "test:docs": "node --test assistant/*.test.mjs src/components/InteractiveExample/model.test.mjs"
+    "test:docs": "node --test assistant/*.test.mjs src/components/InteractiveExample/model.test.mjs",
+    "format": "prettier --write \"src/**/*.{js,jsx,mjs,css}\" \"assistant/*.mjs\" \"*.js\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,mjs,css}\" \"assistant/*.mjs\" \"*.js\""
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",
@@ -28,5 +30,8 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
   }
 }
