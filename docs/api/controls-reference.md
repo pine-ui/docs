@@ -326,6 +326,29 @@ Native `UnityEngine.UI.Toggle`; placement: **child**.
 | `isStatic` | `bool` | `baseline` |
 | `isOn` | `bool` | `baseline` |
 
+
+### Native callback example
+
+`P.Toggle(...)` is a factory returning `View`. Pass Inspector settings and callbacks as named arguments. `UnityEngine.UI.Toggle` is the native component type; `P.Toggle` is never a type or a container for property methods.
+
+```csharp
+using Pine;
+using UnityEngine;
+
+public static class App
+{
+    public static View Mount()
+    {
+        var sound = P.Source(false);
+        return P.Toggle("Sound", isOn: sound,
+            toggleTransition: UnityEngine.UI.Toggle.ToggleTransition.None,
+            onValueChanged: value => Debug.Log($"Sound: {value}"));
+    }
+}
+```
+
+`isOn: sound` writes native edits back to the Source; `onValueChanged` also receives the native event. Both owned handlers detach when the view is disposed.
+
 ## P.Slider
 
 Native `UnityEngine.UI.Slider`; placement: **child**.

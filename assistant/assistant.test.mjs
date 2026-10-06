@@ -59,3 +59,11 @@ test('named slider questions retrieve its documented API; native P signatures ar
   for (const text of ['Use UI.Slider(value);', 'Use P.Slider(value, P.Min(0f));'])
     assert.equal(validateModelAnswer(JSON.stringify({...answer, answer: text}), chunks, '1.0.0'), null);
 });
+
+test('factory methods cannot be used as component types or member containers', () => {
+  const chunks = retrieve(corpus, 'Toggle onValueChanged', '1.0.0');
+  const answer = {status: 'answered', answer: 'Use P.Toggle(onValueChanged: value => UnityEngine.Debug.Log(value));', citations: [chunks[0].id]};
+  assert.equal(validateModelAnswer(JSON.stringify(answer), chunks, '1.0.0').status, 'answered');
+  for (const text of ['Use P.Create<P.Toggle>();', 'Use P.Toggle.onValueChanged(callback);'])
+    assert.equal(validateModelAnswer(JSON.stringify({...answer, answer: text}), chunks, '1.0.0'), null);
+});

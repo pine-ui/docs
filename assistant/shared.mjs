@@ -104,6 +104,12 @@ export function validateModelAnswer(raw, chunks, version) {
   if (/(?<!\.)\bUI\.\w+/.test(value.answer)) return null;
   const documentedApis = new Set(chunks.flatMap(c => [...(c.section + "\n" + c.text).matchAll(/\bP\.(\w+)/g)].map(m => m[1])));
   if ([...value.answer.matchAll(/\bP\.(\w+)/g)].some(m => !documentedApis.has(m[1]))) return null;
+  const methods = new Set(chunks.flatMap(c => [
+    ...(c.document === 'api/controls-reference' ? [c.section.replace(/^P\./, '')] : []),
+    ...[...c.text.matchAll(/\bP\.(\w+)(?:<[^()]*>)?\s*\(/g)].map(m => m[1]),
+  ]));
+  if ([...value.answer.matchAll(/\bP\.(\w+)\s*\./g)].some(m => methods.has(m[1]))) return null;
+  if (/\bP\.\w+\s*<\s*P\.\w+/.test(value.answer)) return null;
   const allowed = new Set(value.citations);
   if ([...value.answer.matchAll(/\[([a-f0-9]{14})\]/g)].some(m => !allowed.has(m[1]))) return null;
   return {status: 'answered', answer: value.answer.replace(/\[([a-f0-9]{14})\]/g, ''), sources: sourceCards([...new Map(chosen.map(c => [c.id, c])).values()]), mode: 'assistant'};
