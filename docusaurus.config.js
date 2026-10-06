@@ -1,25 +1,32 @@
 const { themes } = require("prism-react-renderer");
-const highlightTypes = [
-  "keyword",
-  "class-name",
-  "function",
-  "namespace",
-  "builtin",
-];
 const lightTheme = {
   ...themes.github,
-  plain: { ...themes.github.plain, color: "#24292e" },
   styles: [
-    { types: highlightTypes, style: { color: "#167849" } },
-    { types: ["comment"], style: { opacity: 0.65 } },
-  ],
-};
-const darkTheme = {
-  ...themes.vsDark,
-  plain: { ...themes.vsDark.plain, color: "#d4d4d4" },
-  styles: [
-    { types: highlightTypes, style: { color: "#59ce96" } },
-    { types: ["comment"], style: { opacity: 0.65 } },
+    ...themes.github.styles,
+    { types: ["namespace"], style: { opacity: 1 } },
+    { types: ["function"], style: { color: "#a11f2b" } },
+    { types: ["string", "interpolation-string"], style: { color: "#b10e50" } },
+    {
+      types: [
+        "entity",
+        "url",
+        "symbol",
+        "number",
+        "boolean",
+        "variable",
+        "constant",
+        "property",
+        "regex",
+        "inserted",
+      ],
+      style: { color: "#087876" },
+    },
+    {
+      types: ["comment", "prolog", "doctype", "cdata"],
+      style: { color: "#657164" },
+    },
+    { types: ["attr-value"], style: { color: "#b10e50" } },
+    { types: ["atrule", "attr-name"], style: { color: "#006789" } },
   ],
 };
 
@@ -121,7 +128,7 @@ module.exports = {
     },
     prism: {
       theme: lightTheme,
-      darkTheme: darkTheme,
+      darkTheme: themes.vsDark,
       additionalLanguages: ["csharp", "json", "bash"],
     },
   },
