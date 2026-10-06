@@ -1,9 +1,8 @@
-using UnityEngine;
-
+using Pine;
 namespace PineDocs.Examples
 {
     public static class App
     {
-        public static Component Mount() => Components.PineControls();
+        public static View Mount() => PineControls.Create();
     }
 }

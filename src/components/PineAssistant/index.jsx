@@ -10,7 +10,7 @@ import {VERSIONS, suggestions, questionsForVersion, LATEST_VERSION, resolveVersi
 import {readAssistantStream} from '../../../assistant/stream.mjs';
 import styles from './styles.module.css';
 
-const SESSION = 'pine-docs-chat-v2';
+const SESSION = 'pine-docs-chat-native-1.0.0';
 const safeUrl = url => typeof url === 'string' && /^\/docs\/(?:[a-z0-9.-]+\/)+(?:#[a-z0-9_-]+)?$/.test(url);
 const statusImages = {idle: 'welcome', retrieving: 'thinking', generating: 'ai-assistant', answered: 'success', 'outside-scope': 'troubleshooting', stopped: 'cleanup', unavailable: 'docs', 'no-evidence': 'docs', 'rate-limited': 'docs'};
 const stageText = {retrieving: 'Searching this version’s documentation…', generating: 'Writing and checking a sourced answer…'};
@@ -44,7 +44,7 @@ export default function PineAssistant() {
 
   useEffect(() => {
     try {
-      const saved = JSON.parse(sessionStorage.getItem(SESSION) || sessionStorage.getItem('pine-docs-chat-v1'));
+      const saved = JSON.parse(sessionStorage.getItem(SESSION));
       if (saved && Array.isArray(saved.messages)) {
         setMessages(saved.messages.map(m => ({...m, version: m.version === 'current' ? LATEST_VERSION : m.version})).filter(m => ['user', 'assistant'].includes(m.role) && typeof m.content === 'string' && VERSIONS.some(v => v.id === m.version)).slice(-40));
         setStage(saved.messages.at(-1)?.status || 'idle');
@@ -121,7 +121,7 @@ export default function PineAssistant() {
 
   async function loadCorpus(signal) {
     if (!corpus.current) {
-      const response = await fetch('/assistant/corpus.json', {signal});
+      const response = await fetch('/assistant/corpus.json', {signal, cache: 'no-cache'});
       if (!response.ok) throw new Error('Documentation index unavailable');
       corpus.current = await response.json();
     }

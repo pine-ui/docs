@@ -51,9 +51,11 @@ test('answers must cite real same-version sources; code indexing and generic C# 
   assert.equal(validateModelAnswer('{invalid json', chunks, '1.0.0'), null);
 });
 
-test('named slider questions retrieve its documented API; fabricated UI methods are rejected', () => {
+test('named slider questions retrieve its documented API; native P signatures are accepted; obsolete and fabricated methods are rejected', () => {
   const chunks = retrieve(corpus, 'How do I bind a slider to state?', '1.0.0');
-  assert.ok(chunks.some(c => c.section === 'UI.Slider'));
-  const answer = {status: 'answered', answer: 'Use UI.Slider(value, UI.Min(0f), UI.Max(1f));', citations: [chunks[0].id]};
-  assert.equal(validateModelAnswer(JSON.stringify(answer), chunks, '1.0.0'), null);
+  assert.ok(chunks.some(c => c.section === 'P.Slider'));
+  const answer = {status: 'answered', answer: 'Use P.Slider(value: volume, minValue: 0f, maxValue: 1f);', citations: [chunks[0].id]};
+  assert.equal(validateModelAnswer(JSON.stringify(answer), chunks, '1.0.0').status, 'answered');
+  for (const text of ['Use UI.Slider(value);', 'Use P.Slider(value, P.Min(0f));'])
+    assert.equal(validateModelAnswer(JSON.stringify({...answer, answer: text}), chunks, '1.0.0'), null);
 });

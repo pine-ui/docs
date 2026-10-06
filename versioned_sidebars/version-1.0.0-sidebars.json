@@ -39,7 +39,9 @@
         "api/layout-reference",
         "api/controls-reference",
         "api/mount-reference",
-        "api/component-reference"
+        "api/component-reference",
+        "api/view-reference",
+        "api/startup-reference"
       ]
     }
   ]

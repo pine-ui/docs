@@ -1,9 +1,9 @@
-using UnityEngine;
+using Pine;
 
 namespace PineDocs.Examples
 {
     public static class App
     {
-        public static Component Mount() => Components.PineHud();
+        public static View Mount() => PineHud.Create();
     }
 }

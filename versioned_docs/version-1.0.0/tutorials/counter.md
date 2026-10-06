@@ -1,43 +1,33 @@
 ---
-title: Build your first reactive Unity UI
-sidebar_label: Your first counter
-description: Build a typed reactive counter in App.cs with automatic startup, named inputs and retained bindings.
+title: Counter
 ---
 
-# Build your first reactive Unity UI
+# Counter
 
-Create **App.cs**. This is the entire application: the source holds state, labels read it, and buttons change it.
+Pine 1.0.0 provides native uGUI declarations. Import `using Pine;` and use `P` directly. `View` is a declaration; `UnityEngine.Component` is the native object built from it. `App.Mount()` runs once. Sources update retained native components through tracked getters.
 
-```csharp title="App.cs"
+```csharp
 using Pine;
 using UnityEngine;
 
 public static class App
 {
-    public static RectTransform Mount()
+    public static View Mount()
     {
-        var count = UI.Source(value: 0);
-
-        return UI.Column(
-            gap: 12,
-            UI.Label(text: () => $"Count: {count.Value}"),
-            UI.Button(text: "Increment", click: () => count.Value++),
-            UI.Button(
-                text: "Reset",
-                click: () => count.Value = 0,
-                UI.Enabled(enabled: () => count.Value > 0)
-            )
+        var count = P.Source(0);
+        return P.Vertical(spacing: 12, childControlWidth: true, childControlHeight: true,
+            childForceExpandHeight: false, sizeDelta: new Vector2(240, 160)).With(
+            P.Text(() => $"Count: {count.Value}", fontSize: 24).With(P.LayoutElement(preferredHeight: 40)),
+            P.Button("Increment", onClick: () => count.Value++).With(P.LayoutElement(preferredHeight: 40)),
+            P.Button("Reset", onClick: () => count.Value = 0,
+                interactable: new Value<bool>(() => count.Value > 0)).With(P.LayoutElement(preferredHeight: 40))
         );
     }
 }
 ```
 
-Pine calls `App.Mount()` once and mounts its returned native tree automatically. `count` is local to this application construction and remains captured by the bindings and button callbacks. Assigning `count.Value` updates the existing text and reset button; it does not rerun `Mount()` or recreate the controls.
+`P.Button` creates a real `UnityEngine.UI.Button` and wires its background `Image`. Supplying text adds a TMP caption. Layout sizing uses native `LayoutElement` settings. Omitted props retain native component defaults, so this example explicitly enables layout child sizing.
 
-`using Pine;` exposes `UI`, reactive types and canvas configuration. Named parameters show what each value means. `gap: 12` selects the compact column overload; children stay in their argument order. Use `UI.Children(...)` with the property overload when you need explicit styling or reactive membership.
+## Run the example
 
-The default canvas persists across scenes. Destroying its root ends the tree's bindings and handlers. An optional `App.Options` property returning `new CanvasOptions { Persistent = false }` makes it scene-lived. You need a `Mount` variable only for explicit early disposal, not ordinary startup.
-
-Use `UI.Size(width: 360, height: 48)` for exact dimensions, `UI.FillWidth()` for available width, and `UI.AutoHeight()` for content height. Exact children may overflow a small parent; clipping and scrolling are explicit.
-
-Continue with [reactivity](reactivity.md) and [reusable components](components.md).
+[Download App.cs](/examples/1.0.0/Counter/App.cs). Keep one `App.cs` entry in a project.

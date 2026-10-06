@@ -1,12 +1,3 @@
----
-title: Counter
----
-
-# Counter
-
-Pine 1.0.0 provides native uGUI declarations. Import `using Pine;` and use `P` directly. `View` is a declaration; `UnityEngine.Component` is the native object built from it. `App.Mount()` runs once. Sources update retained native components through tracked getters.
-
-```csharp
 using Pine;
 using UnityEngine;
 
@@ -24,10 +15,3 @@ public static class App
         );
     }
 }
-```
-
-`P.Button` creates a real `UnityEngine.UI.Button` and wires its background `Image`. Supplying text adds a TMP caption. Layout sizing uses native `LayoutElement` settings. Omitted props retain native component defaults, so this example explicitly enables layout child sizing.
-
-## Run the example
-
-[Download App.cs](/examples/1.0.0/Counter/App.cs). Keep one `App.cs` entry in a project.

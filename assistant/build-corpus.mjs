@@ -17,10 +17,10 @@ export async function buildCorpus() {
   for (const {id: version, prefix} of VERSIONS) {
     const directory = `versioned_docs/version-${version}`;
     for (const file of await files(path.join(root, directory))) {
-      const source = await readFile(file, 'utf8');
+      const source = (await readFile(file, 'utf8')).replace(/\r\n?/g, '\n');
       const front = source.match(/^---\n([\s\S]*?)\n---\n/);
       const text = source.slice(front?.[0].length ?? 0).replace(/^import .+;\s*$/gm, '').replace(/<InteractiveExample\b[^>]*\/>/g, '').replace(/<span id="in-unity"\s*\/>/g, '');
-      const id = path.relative(path.join(root, directory), file).replace(/\.md$/, '');
+      const id = path.relative(path.join(root, directory), file).split(path.sep).join('/').replace(/\.md$/, '');
       const title = front?.[1].match(/^title:\s*(.+)$/m)?.[1].replace(/^['"]|['"]$/g, '') ?? id;
       const url = `${prefix}${id}/`;
       documents.push({id, version, title, url});
@@ -36,7 +36,7 @@ export async function buildCorpus() {
         chunks.push({id: chunkId, document: id, version, title, section, url: url + (anchor ? `#${anchor}` : ''), text: body, terms, length: list.length});
       }
       for (const line of text.split('\n')) {
-        if (/^```/.test(line)) fenced = !fenced;
+        if (/^(?:```|~~~)/.test(line)) fenced = !fenced;
         const heading = !fenced && line.match(/^(#{1,6})\s+(.+)$/);
         if (heading) {
           flush(); section = heading[2].replace(/[`*_]/g, '');
@@ -49,7 +49,7 @@ export async function buildCorpus() {
       }
       flush();
       // Matching downloads enrich retrieval while citing their owning public guide.
-      for (const match of text.matchAll(/href="(\/examples\/[^"?#]+\.cs)"/g)) {
+      for (const match of text.matchAll(/(?:href="|\]\()(\/examples\/[^"?#)]+\.cs)(?:"|\))/g)) {
         const download = match[1];
         if (!new RegExp(`^/examples/${version.replaceAll('.', '\\.')}/(?:[a-zA-Z0-9_-]+/)*[a-zA-Z0-9_-]+\\.cs$`).test(download)) throw new Error(`Example version mismatch or outside public whitelist: ${file}`);
         const body = await readFile(path.join(root, 'static', download), 'utf8');

@@ -6,7 +6,7 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Springs and custom value spaces
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `P.Root(...)` unless they only create state/configuration. Explicit `P.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
 ## `SpringSpace`
 
@@ -14,19 +14,7 @@ This reference documents every current public declaration in this part of Pine. 
 SpringSpace<T>
 ```
 
-A typed mapping between a custom value and a fixed number of finite double lanes. Pack and Unpack must agree on component order and lane count; the lane count cannot change during a spring lifetime. Pass an explicit space for a custom struct rather than relying on reflection.
-
-| Type parameter | Meaning |
-| --- | --- |
-| `T` | Typed value, native result or identity contract; see the summary for its role. |
-
-```csharp
-var space = new SpringSpace<float>(
-    v => new[] { (double)v },
-    lanes => (float)lanes[0]
-);
-UI.Spring(() => 10f, space: space);
-```
+A typed mapping between a custom value and a fixed number of finite double lanes.
 
 ## `SpringSpace.Pack`
 
@@ -34,11 +22,7 @@ UI.Spring(() => 10f, space: space);
 Func<T, double[]> Pack
 ```
 
-Maps the typed value into a fixed number of finite double lanes. Lane order must agree with Unpack.
-
-```csharp
-double[] lanes = space.Pack(10f);
-```
+Maps the typed value into a fixed number of finite double lanes.
 
 ## `SpringSpace.Unpack`
 
@@ -48,30 +32,13 @@ Func<double[], T> Unpack
 
 Reconstructs the typed value from the fixed lane order produced by Pack.
 
-```csharp
-float value = space.Unpack(new[] { 10d });
-```
-
 ## `SpringSpace.SpringSpace`
 
 ```text
 public SpringSpace(Func<T, double[]> pack, Func<double[], T> unpack)
 ```
 
-Constructs this value with the supplied typed arguments. A typed mapping between a custom value and a fixed number of finite double lanes. Pack and Unpack must agree on component order and lane count; the lane count cannot change during a spring lifetime. Pass an explicit space for a custom struct rather than relying on reflection.
-
-| Parameter | Meaning |
-| --- | --- |
-| `pack` | Mapping to a fixed number of finite double lanes. |
-| `unpack` | Mapping from those same ordered lanes back to the typed value. |
-
-```csharp
-var space = new SpringSpace<float>(
-    v => new[] { (double)v },
-    lanes => (float)lanes[0]
-);
-UI.Spring(() => 10f, space: space);
-```
+Constructs this value with the supplied typed arguments.
 
 ## `SpringSpaces`
 
@@ -79,11 +46,7 @@ UI.Spring(() => 10f, space: space);
 SpringSpaces
 ```
 
-Built-in lane mappings for scalar floats, doubles and fixed-length double arrays. Arrays are copied when packed/unpacked to protect solver storage. Use UnitySpringSpaces for Unity vector, color, rectangle, rotation and pose values.
-
-```csharp
-UI.Spring(() => 1f, space: SpringSpaces.Float);
-```
+Built-in lane mappings for scalar floats, doubles and fixed-length double arrays.
 
 ## `SpringSpaces.Float`
 
@@ -91,11 +54,7 @@ UI.Spring(() => 1f, space: SpringSpaces.Float);
 SpringSpace<float> Float
 ```
 
-Built-in fixed-lane mapping for Float. Use the matching space when declaring a spring; Unity mappings normalize rotations and clamp color output as documented.
-
-```csharp
-UI.Spring(() => target.Value, space: SpringSpaces.Float);
-```
+Built-in fixed-lane mapping for Float.
 
 ## `SpringSpaces.Double`
 
@@ -103,11 +62,7 @@ UI.Spring(() => target.Value, space: SpringSpaces.Float);
 SpringSpace<double> Double
 ```
 
-Built-in fixed-lane mapping for Double. Use the matching space when declaring a spring; Unity mappings normalize rotations and clamp color output as documented.
-
-```csharp
-UI.Spring(() => target.Value, space: SpringSpaces.Double);
-```
+Built-in fixed-lane mapping for Double.
 
 ## `SpringSpaces.Array`
 
@@ -115,46 +70,15 @@ UI.Spring(() => target.Value, space: SpringSpaces.Double);
 SpringSpace<double[]> Array
 ```
 
-Built-in fixed-lane mapping for Array. Use the matching space when declaring a spring; Unity mappings normalize rotations and clamp color output as documented.
+Built-in fixed-lane mapping for Array.
 
-```csharp
-UI.Spring(() => target.Value, space: SpringSpaces.Array);
-```
-
-## `UI.Spring`
+## `P.Spring`
 
 ```text
 public static Spring<T> Spring<T>(Func<T> target, Value<double>? period = null, Value<double>? dampingRatio = null, SpringSpace<T> space = null)
 ```
 
-An owned reactive analytic spring whose output moves toward a tracked target. Period and damping accept typed reactive inputs. Automatic runtime updates use unscaled time; UI.Step selects explicit manual clock advancement. ReducedMotion snaps changing targets without animated travel. Dispose releases its watch and clock listener.
-
-| Type parameter | Meaning |
-| --- | --- |
-| `T` | Typed value, native result or identity contract; see the summary for its role. |
-
-| Parameter | Meaning |
-| --- | --- |
-| `target` | The existing native component or tracked target getter, as specified by this overload. |
-| `period` | Reactive positive finite spring period in seconds; null uses the default. |
-| `dampingRatio` | Reactive finite non-negative damping; null uses the default. |
-| `space` | Optional fixed-lane mapping for the spring value type. |
-
-**Returns:** An owned animated value in the selected fixed-lane space; its output tracks reactive reads.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-var target = UI.Source(value: 0f);
-var motion = UI.Spring(
-    target: () => target.Value,
-    period: 0.4,
-    dampingRatio: 0.8
-);
-UI.Image(
-    UI.Position(position: () => new UnityEngine.Vector2(x: motion.Value, y: 0))
-);
-```
+An owned reactive analytic spring whose output moves toward a tracked target.
 
 ## `Spring`
 
@@ -162,23 +86,7 @@ UI.Image(
 Spring<T>
 ```
 
-An owned reactive analytic spring whose output moves toward a tracked target. Period and damping accept typed reactive inputs. Automatic runtime updates use unscaled time; UI.Step selects explicit manual clock advancement. ReducedMotion snaps changing targets without animated travel. Dispose releases its watch and clock listener.
-
-| Type parameter | Meaning |
-| --- | --- |
-| `T` | Typed value, native result or identity contract; see the summary for its role. |
-
-```csharp
-var target = UI.Source(value: 0f);
-var motion = UI.Spring(
-    target: () => target.Value,
-    period: 0.4,
-    dampingRatio: 0.8
-);
-UI.Image(
-    UI.Position(position: () => new UnityEngine.Vector2(x: motion.Value, y: 0))
-);
-```
+An owned reactive analytic spring whose output moves toward a tracked target.
 
 ## `Spring.Value`
 
@@ -186,11 +94,7 @@ UI.Image(
 T Value
 ```
 
-Reads reactive spring output. Assigning sets an immediate position and clears velocity; subsequent target changes can resume motion. Access after disposal throws.
-
-```csharp
-motion.Value = 20f;
-```
+Reads reactive spring output.
 
 ## `Spring.Control`
 
@@ -198,17 +102,7 @@ motion.Value = 20f;
 public void Control(Value<T>? position = null, Value<T>? velocity = null, Value<T>? impulse = null)
 ```
 
-Sets position and/or velocity and adds an impulse using the spring's fixed typed space. Lane counts must agree and values must be finite. Reduced motion applies explicit positions without velocity animation.
-
-| Parameter | Meaning |
-| --- | --- |
-| `position` | Typed immediate position or reactive native position, as specified by this overload. |
-| `velocity` | Optional finite velocity input expressed through the same fixed spring space. |
-| `impulse` | Optional finite velocity increment expressed through the same fixed spring space. |
-
-```csharp
-motion.Control(impulse: new Value<float>(10f));
-```
+Sets position and/or velocity and adds an impulse using the spring's fixed typed space.
 
 ## `Spring.Dispose`
 
@@ -216,8 +110,4 @@ motion.Control(impulse: new Value<float>(10f));
 public void Dispose()
 ```
 
-Ends this owned lifetime idempotently. Dependencies and native event/clock registrations are released; Scope/Mount cleanup attempts all resources and aggregates failures. Explicit owners may dispose their mount early; automatic applications end when their root is destroyed.
-
-```csharp
-motion.Dispose();
-```
+Ends this owned lifetime idempotently.

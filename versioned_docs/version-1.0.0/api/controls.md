@@ -1,205 +1,82 @@
 ---
-title: Complete Unity controls in Pine
-sidebar_label: Standard controls
-description: Build buttons, toggles, sliders, text fields, dropdowns, scroll views and progress in typed C# without native component wiring.
+title: Native component catalog
 ---
 
-# Complete Unity controls in Pine
+# Native component catalog
 
-Declare each control once inside `App.Mount()` or a reusable component. Pine creates the native control and required graphics, text, handles, viewports or templates. Mutable inputs accept typed literals, `Source<T>`, `Derived<T>`, `ReadOnly<T>`, `Spring<T>` and `Value<T>` getter adapters. `Label`, `Button` text and `Progress` also accept direct getters.
+The catalog covers authorable uGUI/TMP components, layout/masking/effects and event/raycast infrastructure. TMP Text/InputField/Dropdown are the defaults; `LegacyText`, `LegacyInputField` and `LegacyDropdown` explicitly select Unity legacy text. Generated TMP submeshes/carets/animators are owned implementation companions, not separate declaration factories. Removed obsolete TouchInputModule is outside this catalog; use a supported native input module.
 
-## Control contracts
+| Factory | Native component | Placement | Availability |
+| --- | --- | --- | --- |
+| `P.Frame` | `UnityEngine.RectTransform` | child | `baseline` |
+| `P.Text` | `TMPro.TextMeshProUGUI` | child | `baseline` |
+| `P.Image` | `UnityEngine.UI.Image` | child | `baseline` |
+| `P.RawImage` | `UnityEngine.UI.RawImage` | child | `baseline` |
+| `P.Button` | `UnityEngine.UI.Button` | child | `baseline` |
+| `P.Selectable` | `UnityEngine.UI.Selectable` | child | `baseline` |
+| `P.Toggle` | `UnityEngine.UI.Toggle` | child | `baseline` |
+| `P.Slider` | `UnityEngine.UI.Slider` | child | `baseline` |
+| `P.Scrollbar` | `UnityEngine.UI.Scrollbar` | child | `baseline` |
+| `P.InputField` | `TMPro.TMP_InputField` | child | `baseline` |
+| `P.Dropdown` | `TMPro.TMP_Dropdown` | child | `baseline` |
+| `P.LegacyText` | `UnityEngine.UI.Text` | child | `baseline` |
+| `P.LegacyInputField` | `UnityEngine.UI.InputField` | child | `baseline` |
+| `P.LegacyDropdown` | `UnityEngine.UI.Dropdown` | child | `baseline` |
+| `P.ScrollRect` | `UnityEngine.UI.ScrollRect` | child | `baseline` |
+| `P.Vertical` | `UnityEngine.UI.VerticalLayoutGroup` | child | `baseline` |
+| `P.Horizontal` | `UnityEngine.UI.HorizontalLayoutGroup` | child | `baseline` |
+| `P.Grid` | `UnityEngine.UI.GridLayoutGroup` | child | `baseline` |
+| `P.Canvas` | `UnityEngine.Canvas` | child | `baseline` |
+| `P.CanvasGroup` | `UnityEngine.CanvasGroup` | component | `baseline` |
+| `P.CanvasScaler` | `UnityEngine.UI.CanvasScaler` | component | `baseline` |
+| `P.GraphicRaycaster` | `UnityEngine.UI.GraphicRaycaster` | component | `baseline` |
+| `P.LayoutElement` | `UnityEngine.UI.LayoutElement` | component | `baseline` |
+| `P.ContentSizeFitter` | `UnityEngine.UI.ContentSizeFitter` | component | `baseline` |
+| `P.AspectRatioFitter` | `UnityEngine.UI.AspectRatioFitter` | component | `baseline` |
+| `P.Mask` | `UnityEngine.UI.Mask` | component | `baseline` |
+| `P.RectMask2D` | `UnityEngine.UI.RectMask2D` | component | `baseline` |
+| `P.Shadow` | `UnityEngine.UI.Shadow` | component | `baseline` |
+| `P.Outline` | `UnityEngine.UI.Outline` | component | `baseline` |
+| `P.PositionAsUV1` | `UnityEngine.UI.PositionAsUV1` | component | `baseline` |
+| `P.ToggleGroup` | `UnityEngine.UI.ToggleGroup` | component | `baseline` |
+| `P.CanvasRenderer` | `UnityEngine.CanvasRenderer` | component | `baseline` |
+| `P.EventTrigger` | `UnityEngine.EventSystems.EventTrigger` | component | `baseline` |
+| `P.EventSystem` | `UnityEngine.EventSystems.EventSystem` | child | `baseline` |
+| `P.BaseInput` | `UnityEngine.EventSystems.BaseInput` | component | `baseline` |
+| `P.StandaloneInputModule` | `UnityEngine.EventSystems.StandaloneInputModule` | component | `ENABLE_LEGACY_INPUT_MANAGER` |
+| `P.InputSystemUIInputModule` | `UnityEngine.InputSystem.UI.InputSystemUIInputModule` | component | `ENABLE_INPUT_SYSTEM` |
+| `P.PhysicsRaycaster` | `UnityEngine.EventSystems.PhysicsRaycaster` | component | `baseline` |
+| `P.Physics2DRaycaster` | `UnityEngine.EventSystems.Physics2DRaycaster` | component | `baseline` |
+| `P.RaycastReceiver` | `UnityEngine.UI.RaycastReceiver` | child | `PINE_UGUI_2_5_OR_NEWER` |
+| `P.SafeArea` | `UnityEngine.UI.SafeArea` | component | `PINE_UGUI_2_6_OR_NEWER` |
 
-| Declaration | Native result | Input behavior |
-| --- | --- | --- |
-| `Frame(...)`, `Row(...)`, `Column(...)` | `RectTransform` | Plain, horizontal or vertical composition. |
-| `Grid(cellSize, columns, ...)` | `GridLayoutGroup` | Reactive uniform cell size and positive column count. |
-| `Label(text, ...)` | `TextMeshProUGUI` | One-way text/font/graphic bindings. |
-| `Image(...)` | `Image` | Typed sprite and color bindings. |
-| `RawImage(...)` | `RawImage` | Typed texture/RenderTexture bindings. |
-| `Button(text, click, ...)` | `Button` | Native click and navigation submit; reactive caption. |
-| `Toggle(value, text, ...)` | `Toggle` | A boolean source binds two ways; a Value binds one way. |
-| `Slider(value, min, max, ...)` | `Slider` | A float source binds two ways and normalizes to native clamping/rounding. Default range is 0–1. |
-| `Scrollbar(value, size, ...)` | `Scrollbar` | Normalized float source binds two ways; default handle size is 0.2. |
-| `TextField(value, placeholder, ...)` | `TMP_InputField` | String source binds two ways; native caret, selection and keyboard behavior. |
-| `Dropdown(selected, options, ...)` | `TMP_Dropdown` | Reactive options; source selection binds two ways and stays normalized. |
-| `ScrollView(content, ...)` | `ScrollRect` | Native scrolling with an explicit clipped viewport. Vertical by default. |
-| `Progress(value, ...)` | `Image` | Filled horizontal image, clamped to 0–1. |
 
-A Source overload is two-way because native user input writes the source. A literal, getter, derived value or spring has no setter and supplies one-way state. Native user interaction can still change a one-way control temporarily; the next binding update reapplies its controlling value. Choose a source when edits must become application state.
+Omitted settings use native component defaults. Pine wires required references: Selectable graphics, optional button/toggle captions, toggle marks, slider/scrollbar handles, input viewports/text/placeholders, dropdown templates and scroll content/viewport. It does not install a color theme or overwrite Navigation/ColorBlock structs. `Canvas` wires CanvasScaler and GraphicRaycaster. Input System modules receive default actions unless explicit props replace them.
 
-## Run the example
+RectTransform and GameObject settings are named props on every factory. UnityEvent settings accept typed callbacks with owned cleanup. Native grouped settings use native Unity types (`ColorBlock`, `Navigation`, `SpriteState`, `RectOffset`, vectors and enums). [Every named prop](controls-reference.md).
 
-Save the component and **App.cs** under Assets, then press Play. Pine starts the app and constructs the component automatically. If your project already has App.cs, put `Components.PineControls()` in its returned tree instead of adding another entry.
+## Native structs and settings
 
-<a href="/examples/1.0.0/controls/App.cs" download="App.cs" target="_self">Download App.cs</a> · <a href="/examples/1.0.0/controls/PineControls.cs" download="PineControls.cs" target="_self">Download PineControls.cs</a>. Sources are MIT licensed.
-
-```csharp title="App.cs"
-using UnityEngine;
-
-namespace PineDocs.Examples
-{
-    public static class App
-    {
-        public static Component Mount() => Components.PineControls();
-    }
-}
-```
-
-```csharp title="PineControls.cs"
-using Pine;
-using UnityEngine;
-
-namespace PineDocs.Examples
-{
-    public sealed class PineControls : MonoBehaviour
-    {
-        public readonly Source<bool> Music = UI.Source(value: true);
-        public readonly Source<float> Volume = UI.Source(value: 0.5f);
-        public readonly Source<string> PlayerName = UI.Source(value: "");
-        public readonly Source<int> Quality = UI.Source(value: 1);
-        public readonly Source<string[]> Qualities = UI.Source(
-            value: new[] { "Low", "Medium", "High" }
-        );
-        public readonly Source<float> Scroll = UI.Source(value: 0f);
-        public readonly Source<Sprite> Icon = UI.Source<Sprite>();
-        public readonly Source<Texture> Preview = UI.Source<Texture>();
-        public readonly Source<bool> ModalOpen = UI.Source(value: false);
-
-        public Component Create()
-        {
-            var modal = UI.Show(
-                condition: () => ModalOpen.Value,
-                build: () =>
-                    UI.Column(
-                        UI.Name(name: "Modal"),
-                        UI.Size(width: 360, height: 96),
-                        UI.Children(
-                            UI.Label(
-                                text: "Saved",
-                                UI.Size(width: 360, height: 40)
-                            ),
-                            UI.Button(
-                                text: "Close",
-                                click: () => ModalOpen.Value = false,
-                                UI.Size(width: 360, height: 40)
-                            )
-                        )
-                    )
-            );
-
-            var content = UI.Column(
-                UI.Name(name: "Settings content"),
-                UI.FillWidth(),
-                UI.AutoHeight(),
-                UI.Vertical(12),
-                UI.Children(
-                    UI.Label(
-                        text: "Settings",
-                        UI.FontSize(size: 32),
-                        UI.Size(width: 360, height: 48)
-                    ),
-                    UI.Image(
-                        UI.Sprite(sprite: Icon),
-                        UI.Size(width: 48, height: 48)
-                    ),
-                    UI.RawImage(
-                        UI.Texture(texture: Preview),
-                        UI.Size(width: 160, height: 90)
-                    ),
-                    UI.Toggle(
-                        value: Music,
-                        text: "Music",
-                        UI.Size(width: 360, height: 40)
-                    ),
-                    UI.Slider(
-                        value: Volume,
-                        minimum: 0f,
-                        maximum: 1f,
-                        UI.Size(width: 360, height: 40)
-                    ),
-                    UI.Label(
-                        text: () => $"Volume: {Volume.Value:P0}",
-                        UI.Size(width: 360, height: 32)
-                    ),
-                    UI.Progress(value: Volume, UI.Size(width: 360, height: 16)),
-                    UI.TextField(
-                        value: PlayerName,
-                        placeholder: "Player name",
-                        UI.CharacterLimit(limit: 24),
-                        UI.Size(width: 360, height: 48)
-                    ),
-                    UI.Dropdown(
-                        selected: Quality,
-                        options: Qualities,
-                        UI.Size(width: 360, height: 48)
-                    ),
-                    UI.Scrollbar(
-                        value: Scroll,
-                        UI.Size(width: 360, height: 24)
-                    ),
-                    UI.Toggle(
-                        value: UI.ReducedMotion,
-                        text: "Reduced motion",
-                        UI.Size(width: 360, height: 40)
-                    ),
-                    UI.Button(
-                        text: "Save",
-                        click: () => ModalOpen.Value = true,
-                        UI.Size(width: 360, height: 48)
-                    ),
-                    UI.Column(
-                        UI.AutoHeight(),
-                        UI.FillWidth(),
-                        UI.Children(read: () => modal.Value)
-                    )
-                )
-            );
-            return UI.ScrollView(
-                content: content,
-                UI.Size(width: 400, height: 600)
-            );
-        }
-    }
-}
-```
-
-`Icon` and `Preview` can be assigned native assets loaded by application code; no Inspector field is needed. The surrounding ScrollView supplies its viewport and drag surface. The modal is a composed Column controlled by `Show`; opening it constructs one branch, and closing it removes its owned bindings and objects.
-
-## Reactive values and native extensions
-
-Wrap a direct getter when an API accepts `Value<T>`:
+Grouped Inspector settings use Unity's own structs. Properties that reference other components accept their native references. Plain getters use `new Value<T>(() => ...)`; `reference` captures a built native object, and `configure` runs once after its props/children are applied.
 
 ```csharp
-UI.Toggle(value: new Value<bool>(() => settings.Value.Music), text: "Music");
-UI.Slider(value: new Value<float>(() => settings.Value.Volume));
-UI.Grid(
-    cellSize: new Value<Vector2>(() =>
-        compact.Value ? new Vector2(x: 40, y: 40) : new Vector2(x: 64, y: 64)
-    ),
-    columns: columns,
-    UI.Children(UI.Image(), UI.Image())
+var colors = UnityEngine.UI.ColorBlock.defaultColorBlock;
+colors.normalColor = Color.gray;
+colors.highlightedColor = Color.white;
+colors.fadeDuration = .15f;
+var navigation = new UnityEngine.UI.Navigation
+{
+    mode = UnityEngine.UI.Navigation.Mode.Automatic
+};
+return P.Button("Save", colors: colors, navigation: navigation,
+    transition: UnityEngine.UI.Selectable.Transition.ColorTint,
+    onClick: Save).With(
+    P.Self(P.Image(sprite: background, type: UnityEngine.UI.Image.Type.Sliced)),
+    P.LayoutElement(preferredWidth: 200, preferredHeight: 48),
+    P.Outline(effectColor: Color.black, effectDistance: new Vector2(2, -2))
 );
 ```
 
-Use typed `Configure` for native settings that are not convenience properties:
+This fragment assumes `Save` and a `Sprite background` are supplied by the containing renderer. Omitted structs are not replaced by Pine presets. For options/event entries and other native lists, assign a new list to a Source or call its `Notify`; in-place list mutation alone is not observable. Input range/content settings apply before editable values. Native setters remain responsible for validation and clamping.
 
-```csharp
-UI.TextField(
-    value: playerName,
-    UI.Configure<TMPro.TMP_InputField>(configure: field =>
-        field.contentType = TMPro.TMP_InputField.ContentType.Name
-    ),
-    UI.CharacterLimit(limit: 24)
-);
-```
-
-Use `Set<T,TValue>` to keep custom native settings reactive. Use `On<T>`/`On<T,TValue>` for native events beyond the standard callbacks. Handlers are removed with their scope and retain construction context.
-
-## Navigation and motion
-
-Pine supplies automatic native navigation and visible focus colors. Use `UI.Navigation(...)` for explicit directional links, `UI.Focus()` for initial selection, and `UI.Enabled(...)` to control interaction. Mouse, touch, keyboard and gamepad are delivered by the compatible native input module.
-
-`UI.ReducedMotion.Value = true` snaps spring targets and removes native selectable/dropdown fades. Scaling and safe-area behavior are configured through [mount options](mount-reference.md). World-space and camera-space UI receive their camera reference in code.
-
-Every overload and control-specific property is listed in the [complete controls reference](controls-reference.md).
+A `configure` callback is intended for APIs that are methods rather than properties, for example native focus/selection in an appropriate Unity lifecycle callback. Ordinary initialization properties should use named props. Set native component references explicitly when supplying custom templates, graphics or navigation neighbors; automatic wiring supplies a working default when those references are absent.

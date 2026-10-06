@@ -6,142 +6,57 @@ description: Complete typed reference with overloads, parameters, ownership and 
 
 # Exact, flexible and content sizing
 
-This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `UI.Root(...)` unless they only create state/configuration. Explicit `UI.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
+This reference documents every current public declaration in this part of Pine. Examples run inside `App.Mount()`, a component factory, or an explicit `P.Root(...)` unless they only create state/configuration. Explicit `P.Mount(...)` remains available for advanced ownership. Variable names such as `count`, `items` and `label` refer to the typed values described by each example. All APIs run on Unity’s main thread.
 
-## `UI.Size`
+## `P.Size`
 
 ```text
 public static IProperty<Component> Size(Value<Vector2> size)
 ```
 
-Requests exact non-negative finite width and height in both RectTransform and native LayoutElement. Rows and columns preserve this minimum and preferred size even when the parent is smaller; overflow remains visible until Clip or ScrollView is declared. Uniform grids reject conflicting exact dimensions. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `size` | The typed size input (Value&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Size(width: 360, height: 48));
-```
+Requests exact non-negative finite width and height in both RectTransform and native LayoutElement.
 
 ```text
 public static IProperty<Component> Size(float width, float height)
 ```
 
-Requests exact non-negative finite width and height in both RectTransform and native LayoutElement. Rows and columns preserve this minimum and preferred size even when the parent is smaller; overflow remains visible until Clip or ScrollView is declared. Uniform grids reject conflicting exact dimensions. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `width` | Finite non-negative exact width in canvas units. |
-| `height` | Finite non-negative exact height in canvas units. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Size(width: 360, height: 48));
-```
+Requests exact non-negative finite width and height in both RectTransform and native LayoutElement.
 
 ```text
 public static IProperty<Component> Size(Func<Vector2> size)
 ```
 
-Requests exact non-negative finite width and height in both RectTransform and native LayoutElement. Rows and columns preserve this minimum and preferred size even when the parent is smaller; overflow remains visible until Clip or ScrollView is declared. Uniform grids reject conflicting exact dimensions. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Requests exact non-negative finite width and height in both RectTransform and native LayoutElement.
 
-| Parameter | Meaning |
-| --- | --- |
-| `size` | The typed size input (Func&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Size(width: 360, height: 48));
-```
-
-## `UI.Width`
+## `P.Width`
 
 ```text
 public static IProperty<Component> Width(Value<float> width)
 ```
 
-Requests one exact non-negative finite axis in both native rect and layout sizing. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `width` | Finite non-negative exact width in canvas units. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Width(width: 360f));
-```
+Requests one exact non-negative finite axis in both native rect and layout sizing.
 
 ```text
 public static IProperty<Component> Width(Func<float> width)
 ```
 
-Requests one exact non-negative finite axis in both native rect and layout sizing. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Requests one exact non-negative finite axis in both native rect and layout sizing.
 
-| Parameter | Meaning |
-| --- | --- |
-| `width` | Finite non-negative exact width in canvas units. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Width(width: 360f));
-```
-
-## `UI.Height`
+## `P.Height`
 
 ```text
 public static IProperty<Component> Height(Value<float> height)
 ```
 
-Requests one exact non-negative finite axis in both native rect and layout sizing. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `height` | Finite non-negative exact height in canvas units. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Height(height: 48f));
-```
+Requests one exact non-negative finite axis in both native rect and layout sizing.
 
 ```text
 public static IProperty<Component> Height(Func<float> height)
 ```
 
-Requests one exact non-negative finite axis in both native rect and layout sizing. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Requests one exact non-negative finite axis in both native rect and layout sizing.
 
-| Parameter | Meaning |
-| --- | --- |
-| `height` | Finite non-negative exact height in canvas units. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Height(height: 48f));
-```
-
-## `UI.Fill`
+## `P.Fill`
 
 ```text
 public static IProperty<Component> Fill()
@@ -149,15 +64,7 @@ public static IProperty<Component> Fill()
 
 Explicitly fills available space on both axes, using layout flexibility under a layout group and stretching under a plain parent.
 
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Fill());
-```
-
-## `UI.FillWidth`
+## `P.FillWidth`
 
 ```text
 public static IProperty<Component> FillWidth()
@@ -165,15 +72,7 @@ public static IProperty<Component> FillWidth()
 
 Fills available width, using native layout flexibility or parent stretching.
 
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.FillWidth());
-```
-
-## `UI.FillHeight`
+## `P.FillHeight`
 
 ```text
 public static IProperty<Component> FillHeight()
@@ -181,15 +80,7 @@ public static IProperty<Component> FillHeight()
 
 Fills available height, using native layout flexibility or parent stretching.
 
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.FillHeight());
-```
-
-## `UI.Auto`
+## `P.Auto`
 
 ```text
 public static IProperty<Component> Auto()
@@ -197,15 +88,7 @@ public static IProperty<Component> Auto()
 
 Sizes both axes from native content preference rather than specifying exact dimensions.
 
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Auto());
-```
-
-## `UI.AutoWidth`
+## `P.AutoWidth`
 
 ```text
 public static IProperty<Component> AutoWidth()
@@ -213,15 +96,7 @@ public static IProperty<Component> AutoWidth()
 
 Sizes width from native content preference.
 
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.AutoWidth());
-```
-
-## `UI.AutoHeight`
+## `P.AutoHeight`
 
 ```text
 public static IProperty<Component> AutoHeight()
@@ -229,589 +104,190 @@ public static IProperty<Component> AutoHeight()
 
 Sizes height from native content preference.
 
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.AutoHeight());
-```
-
-## `UI.PreferredSize`
+## `P.PreferredSize`
 
 ```text
 public static IProperty<Component> PreferredSize(Value<Vector2> size)
 ```
 
-Sets native LayoutElement preferred dimensions without imposing exact minima. This is an advanced native layout operation; ordinary fixed declarations use Size. Fill and Auto express flexible and content-derived sizing explicitly. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `size` | The typed size input (Value&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.PreferredSize(width: 360, height: 48));
-```
+Sets native LayoutElement preferred dimensions without imposing exact minima.
 
 ```text
 public static IProperty<Component> PreferredSize(float width, float height)
 ```
 
-Sets native LayoutElement preferred dimensions without imposing exact minima. This is an advanced native layout operation; ordinary fixed declarations use Size. Fill and Auto express flexible and content-derived sizing explicitly. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `width` | Finite non-negative exact width in canvas units. |
-| `height` | Finite non-negative exact height in canvas units. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.PreferredSize(width: 360, height: 48));
-```
+Sets native LayoutElement preferred dimensions without imposing exact minima.
 
 ```text
 public static IProperty<Component> PreferredSize(Func<Vector2> size)
 ```
 
-Sets native LayoutElement preferred dimensions without imposing exact minima. This is an advanced native layout operation; ordinary fixed declarations use Size. Fill and Auto express flexible and content-derived sizing explicitly. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Sets native LayoutElement preferred dimensions without imposing exact minima.
 
-| Parameter | Meaning |
-| --- | --- |
-| `size` | The typed size input (Func&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.PreferredSize(width: 360, height: 48));
-```
-
-## `UI.Position`
+## `P.Position`
 
 ```text
 public static IProperty<Component> Position(Value<Vector2> position)
 ```
 
-Binds RectTransform.anchoredPosition. A parent layout group can drive positions; use a plain frame for freely positioned children. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `position` | Typed immediate position or reactive native position, as specified by this overload. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Image(UI.Position(x: 20, y: 30));
-```
+Binds RectTransform.anchoredPosition.
 
 ```text
 public static IProperty<Component> Position(float x, float y)
 ```
 
-Binds RectTransform.anchoredPosition. A parent layout group can drive positions; use a plain frame for freely positioned children. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `x` | The typed x input (float); literals and supported reactive adapters follow this overload's documented behavior. |
-| `y` | The typed y input (float); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Image(UI.Position(x: 20, y: 30));
-```
+Binds RectTransform.anchoredPosition.
 
 ```text
 public static IProperty<Component> Position(Func<Vector2> position)
 ```
 
-Binds RectTransform.anchoredPosition. A parent layout group can drive positions; use a plain frame for freely positioned children. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Binds RectTransform.anchoredPosition.
 
-| Parameter | Meaning |
-| --- | --- |
-| `position` | Typed immediate position or reactive native position, as specified by this overload. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Image(UI.Position(x: 20, y: 30));
-```
-
-## `UI.Anchors`
+## `P.Anchors`
 
 ```text
 public static IProperty<Component> Anchors(Value<Vector2> minimum, Value<Vector2> maximum)
 ```
 
-Binds normalized minimum and maximum anchors. Size fixes its configured axes; Stretch/Fill and custom anchors explicitly control parent-relative geometry. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Binds normalized minimum and maximum anchors.
 
-| Parameter | Meaning |
-| --- | --- |
-| `minimum` | Reactive finite lower bound; negative values are supported. |
-| `maximum` | Reactive finite upper bound, at least the lower bound. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(
-    UI.Anchors(
-        minimum: UnityEngine.Vector2.zero,
-        maximum: UnityEngine.Vector2.one
-    )
-);
-```
-
-## `UI.Pivot`
+## `P.Pivot`
 
 ```text
 public static IProperty<Component> Pivot(Value<Vector2> pivot)
 ```
 
-Binds the normalized native RectTransform pivot. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `pivot` | The typed pivot input (Value&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Pivot(pivot: new UnityEngine.Vector2(x: 0, y: 1)));
-```
+Binds the normalized native RectTransform pivot.
 
 ```text
 public static IProperty<Component> Pivot(Func<Vector2> pivot)
 ```
 
-Binds the normalized native RectTransform pivot. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Binds the normalized native RectTransform pivot.
 
-| Parameter | Meaning |
-| --- | --- |
-| `pivot` | The typed pivot input (Func&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Pivot(pivot: new UnityEngine.Vector2(x: 0, y: 1)));
-```
-
-## `UI.Stretch`
+## `P.Stretch`
 
 ```text
 public static IProperty<Component> Stretch()
 ```
 
-Sets anchors to zero/one and offsets to zero once. Parent-relative dimensions follow the parent rect.
+Sets anchors to zero/one and offsets to zero once.
 
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Stretch());
-```
-
-## `UI.Clip`
+## `P.Clip`
 
 ```text
 public static IProperty<Component> Clip(Value<bool> enabled)
 ```
 
-Adds or reuses RectMask2D and binds its enabled state. Clipping is opt-in; the ordinary frame keeps overflow visible. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `enabled` | The typed enabled input (Value&lt;bool&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Clip(enabled: true));
-```
+Adds or reuses RectMask2D and binds its enabled state.
 
 ```text
 public static IProperty<Component> Clip(Func<bool> enabled)
 ```
 
-Adds or reuses RectMask2D and binds its enabled state. Clipping is opt-in; the ordinary frame keeps overflow visible. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Adds or reuses RectMask2D and binds its enabled state.
 
-| Parameter | Meaning |
-| --- | --- |
-| `enabled` | The typed enabled input (Func&lt;bool&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.Clip(enabled: true));
-```
-
-## `UI.Padding`
+## `P.Padding`
 
 ```text
 public static IProperty<RectTransform> Padding(Value<RectOffset> padding)
 ```
 
-Binds native horizontal/vertical layout padding on a frame. It uses an existing compatible layout group, or adds a vertical group when absent. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `padding` | The typed padding input (Value&lt;RectOffset&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Column(
-    UI.Padding(
-        padding: new UnityEngine.RectOffset(
-            left: 12,
-            right: 12,
-            top: 8,
-            bottom: 8
-        )
-    )
-);
-```
+Binds native horizontal/vertical layout padding on a frame.
 
 ```text
 public static IProperty<RectTransform> Padding(Func<RectOffset> padding)
 ```
 
-Binds native horizontal/vertical layout padding on a frame. It uses an existing compatible layout group, or adds a vertical group when absent. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Binds native horizontal/vertical layout padding on a frame.
 
-| Parameter | Meaning |
-| --- | --- |
-| `padding` | The typed padding input (Func&lt;RectOffset&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Column(
-    UI.Padding(
-        padding: new UnityEngine.RectOffset(
-            left: 12,
-            right: 12,
-            top: 8,
-            bottom: 8
-        )
-    )
-);
-```
-
-## `UI.Vertical`
+## `P.VerticalProperty`
 
 ```text
-public static IProperty<RectTransform> Vertical()
+public static IProperty<RectTransform> VerticalProperty()
 ```
 
-Adds or reuses a vertical native layout group with controlled child sizing and explicit flexible expansion. Spacing is reactive; no-argument spacing is eight units. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Column(UI.Vertical(12));
-```
+Adds or reuses a vertical native layout group with controlled child sizing and explicit flexible expansion.
 
 ```text
-public static IProperty<RectTransform> Vertical(Value<float> spacing)
+public static IProperty<RectTransform> VerticalProperty(Value<float> spacing)
 ```
 
-Adds or reuses a vertical native layout group with controlled child sizing and explicit flexible expansion. Spacing is reactive; no-argument spacing is eight units. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `spacing` | The typed spacing input (Value&lt;float&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Column(UI.Vertical(12));
-```
+Adds or reuses a vertical native layout group with controlled child sizing and explicit flexible expansion.
 
 ```text
-public static IProperty<RectTransform> Vertical(Func<float> spacing)
+public static IProperty<RectTransform> VerticalProperty(Func<float> spacing)
 ```
 
-Adds or reuses a vertical native layout group with controlled child sizing and explicit flexible expansion. Spacing is reactive; no-argument spacing is eight units. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Adds or reuses a vertical native layout group with controlled child sizing and explicit flexible expansion.
 
-| Parameter | Meaning |
-| --- | --- |
-| `spacing` | The typed spacing input (Func&lt;float&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Column(UI.Vertical(12));
-```
-
-## `UI.Horizontal`
+## `P.HorizontalProperty`
 
 ```text
-public static IProperty<RectTransform> Horizontal()
+public static IProperty<RectTransform> HorizontalProperty()
 ```
 
-Adds or reuses a horizontal native layout group with controlled child sizing and explicit flexible expansion. Spacing is reactive; no-argument spacing is eight units. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Row(UI.Horizontal(12));
-```
+Adds or reuses a horizontal native layout group with controlled child sizing and explicit flexible expansion.
 
 ```text
-public static IProperty<RectTransform> Horizontal(Value<float> spacing)
+public static IProperty<RectTransform> HorizontalProperty(Value<float> spacing)
 ```
 
-Adds or reuses a horizontal native layout group with controlled child sizing and explicit flexible expansion. Spacing is reactive; no-argument spacing is eight units. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `spacing` | The typed spacing input (Value&lt;float&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Row(UI.Horizontal(12));
-```
+Adds or reuses a horizontal native layout group with controlled child sizing and explicit flexible expansion.
 
 ```text
-public static IProperty<RectTransform> Horizontal(Func<float> spacing)
+public static IProperty<RectTransform> HorizontalProperty(Func<float> spacing)
 ```
 
-Adds or reuses a horizontal native layout group with controlled child sizing and explicit flexible expansion. Spacing is reactive; no-argument spacing is eight units. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Adds or reuses a horizontal native layout group with controlled child sizing and explicit flexible expansion.
 
-| Parameter | Meaning |
-| --- | --- |
-| `spacing` | The typed spacing input (Func&lt;float&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Row(UI.Horizontal(12));
-```
-
-## `UI.Grid`
-
-```text
-public static GridLayoutGroup Grid(Value<Vector2> cellSize, Value<int> columns, params IProperty<GridLayoutGroup>[] properties)
-```
-
-Creates an owned native uniform GridLayoutGroup with reactive shared cell dimensions and column count. The native result allows grid-specific properties to reject plain frames at compilation. Columns must be positive, and conflicting exact child sizes report an error.
-
-| Parameter | Meaning |
-| --- | --- |
-| `cellSize` | Reactive non-negative finite shared grid cell dimensions. |
-| `columns` | Reactive positive native grid column count. |
-| `properties` | Compatible typed declarations to apply; incompatible component/property combinations are rejected at compilation. |
-
-**Returns:** The live native component, owned by the active scope. Retain it for direct native access or typed UI.Apply; reactive bindings update this same instance.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Grid(
-    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
-    columns: 4,
-    UI.Children(UI.Image(), UI.Image())
-);
-```
-
-## `UI.CellSize`
+## `P.CellSize`
 
 ```text
 public static IProperty<GridLayoutGroup> CellSize(Value<Vector2> size)
 ```
 
-Binds uniform grid dimensions shared by every cell. Dimensions must be finite and non-negative; children with a contradictory exact Size are rejected rather than silently overridden. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `size` | The typed size input (Value&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Grid(
-    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
-    columns: 4,
-    UI.CellSize(size: cellSize)
-);
-```
+Binds uniform grid dimensions shared by every cell.
 
 ```text
 public static IProperty<GridLayoutGroup> CellSize(Func<Vector2> size)
 ```
 
-Binds uniform grid dimensions shared by every cell. Dimensions must be finite and non-negative; children with a contradictory exact Size are rejected rather than silently overridden. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Binds uniform grid dimensions shared by every cell.
 
-| Parameter | Meaning |
-| --- | --- |
-| `size` | The typed size input (Func&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Grid(
-    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
-    columns: 4,
-    UI.CellSize(size: cellSize)
-);
-```
-
-## `UI.GridSpacing`
+## `P.GridSpacing`
 
 ```text
 public static IProperty<GridLayoutGroup> GridSpacing(Value<Vector2> spacing)
 ```
 
-Binds horizontal and vertical native grid spacing. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `spacing` | The typed spacing input (Value&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Grid(
-    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
-    columns: 4,
-    UI.GridSpacing(spacing: new UnityEngine.Vector2(x: 4, y: 4))
-);
-```
+Binds horizontal and vertical native grid spacing.
 
 ```text
 public static IProperty<GridLayoutGroup> GridSpacing(Func<Vector2> spacing)
 ```
 
-Binds horizontal and vertical native grid spacing. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Binds horizontal and vertical native grid spacing.
 
-| Parameter | Meaning |
-| --- | --- |
-| `spacing` | The typed spacing input (Func&lt;Vector2&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Grid(
-    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
-    columns: 4,
-    UI.GridSpacing(spacing: new UnityEngine.Vector2(x: 4, y: 4))
-);
-```
-
-## `UI.GridPadding`
+## `P.GridPadding`
 
 ```text
 public static IProperty<GridLayoutGroup> GridPadding(Value<RectOffset> padding)
 ```
 
-Binds native uniform-grid padding. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
+Binds native uniform-grid padding.
 
-| Parameter | Meaning |
-| --- | --- |
-| `padding` | The typed padding input (Value&lt;RectOffset&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Grid(
-    cellSize: new UnityEngine.Vector2(x: 48, y: 48),
-    columns: 4,
-    UI.GridPadding(
-        padding: new UnityEngine.RectOffset(
-            left: 8,
-            right: 8,
-            top: 8,
-            bottom: 8
-        )
-    )
-);
-```
-
-## `UI.SafeArea`
+## `P.SafeAreaProperty`
 
 ```text
-public static IProperty<Component> SafeArea(Value<bool> enabled)
+public static IProperty<Component> SafeAreaProperty(Value<bool> enabled)
 ```
 
-Adds or reuses an allocation-free native safe-area follower, with reactive enablement. It refreshes anchors when the screen dimensions or safe area change; mount defaults apply this to non-world canvases. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `enabled` | The typed enabled input (Value&lt;bool&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.SafeArea(enabled: true), UI.Children(UI.Label(text: "Safe")));
-```
+Adds or reuses an allocation-free native safe-area follower, with reactive enablement.
 
 ```text
-public static IProperty<Component> SafeArea(Func<bool> enabled)
+public static IProperty<Component> SafeAreaProperty(Func<bool> enabled)
 ```
 
-Adds or reuses an allocation-free native safe-area follower, with reactive enablement. It refreshes anchors when the screen dimensions or safe area change; mount defaults apply this to non-world canvases. Literal values apply once; typed reactive values and Value-wrapped getters stay bound for the active ownership scope.
-
-| Parameter | Meaning |
-| --- | --- |
-| `enabled` | The typed enabled input (Func&lt;bool&gt;); literals and supported reactive adapters follow this overload's documented behavior. |
-
-**Returns:** A compatible property operation to apply within a live ownership scope.
-
-**Ownership:** Construct and apply declarations on Unity's main thread within UI.Mount, UI.Root or a live Scope.Run. Literal assignments occur once; reactive observers and handlers end with their owning scope.
-
-```csharp
-UI.Frame(UI.SafeArea(enabled: true), UI.Children(UI.Label(text: "Safe")));
-```
+Adds or reuses an allocation-free native safe-area follower, with reactive enablement.
