@@ -10,6 +10,7 @@ import {
   validateModelAnswer,
   resolveVersion,
   LATEST_VERSION,
+  VERSIONS,
   versionForPath,
 } from "./shared.mjs";
 
@@ -30,7 +31,8 @@ test("corpus contains only public docs and examples, for the current version and
   assert.ok(corpus.documents.length >= 28);
   assert.ok(
     corpus.chunks.every(
-      (c) => c.url.startsWith("/docs/") && c.version === LATEST_VERSION,
+      (c) =>
+        c.url.startsWith("/docs/") && VERSIONS.some((v) => c.version === v.id),
     ),
   );
   assert.ok(
@@ -41,7 +43,7 @@ test("corpus contains only public docs and examples, for the current version and
       (c) => c.section === "PineHud.cs" && c.version === "1.0.0",
     ),
   );
-  for (const version of [LATEST_VERSION]) {
+  for (const version of VERSIONS.map((v) => v.id)) {
     const found = retrieve(corpus, input.question, version);
     assert.ok(found.length);
     assert.ok(found.every((c) => c.version === version));
@@ -70,6 +72,7 @@ test("latest pinned version is the default regardless of the viewed docs; explic
   assert.equal(
     resolveVersion("How do I install Pine?").version,
     LATEST_VERSION,
+    VERSIONS,
   );
   const oldTopic = [
     {
@@ -81,10 +84,11 @@ test("latest pinned version is the default regardless of the viewed docs; explic
   assert.equal(
     resolveVersion("What about its damping?", oldTopic).version,
     LATEST_VERSION,
+    VERSIONS,
   );
   assert.equal(
     resolveVersion("How do I install Pine?", oldTopic).version,
-    "1.0.0",
+    LATEST_VERSION,
   );
   assert.equal(
     resolveVersion("Use Pine 1.0.0 instead", oldTopic).version,
@@ -92,7 +96,7 @@ test("latest pinned version is the default regardless of the viewed docs; explic
   );
   assert.equal(
     resolveVersion("I use Unity 6000.3.25; how do I install Pine?").version,
-    "1.0.0",
+    LATEST_VERSION,
   );
   assert.ok(resolveVersion("How do I install Pine 9.0.0?").error);
   assert.ok(resolveVersion("Compare Pine 9.0.0 and 1.0.0").error);

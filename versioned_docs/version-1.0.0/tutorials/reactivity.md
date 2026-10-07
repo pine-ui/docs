@@ -1,5 +1,7 @@
 ---
-title: Reactive props
+title: Reactive Unity UI props and state
+sidebar_label: Reactive props
+description: Bind Unity UI props to Pine sources, derived values and tracked getters. Learn one-way bindings, editable source write-back, batching and scope ownership.
 ---
 
 # Reactive props

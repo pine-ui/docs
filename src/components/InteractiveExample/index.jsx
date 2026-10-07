@@ -65,7 +65,7 @@ export default function InteractiveExample({ kind, version }) {
     inventory: "PineInventory",
     spring: "PineSpring",
   }[kind];
-  if (!source || !["1.0.0"].includes(version))
+  if (!source || !["1.0.0", "1.1.0"].includes(version))
     throw new Error(
       "Interactive example needs a pinned version and known kind",
     );

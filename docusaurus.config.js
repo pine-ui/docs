@@ -51,9 +51,12 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          lastVersion: "1.0.0",
+          lastVersion: "1.1.0",
           includeCurrentVersion: false,
-          versions: { "1.0.0": { label: "1.0.0", path: "" } },
+          versions: {
+            "1.1.0": { label: "1.1.0", path: "" },
+            "1.0.0": { label: "1.0.0", path: "1.0.0" },
+          },
           editUrl: "https://github.com/pine-ui/docs/edit/main/",
           editCurrentVersion: false,
         },
@@ -117,6 +120,8 @@ module.exports = {
           title: "Pine",
           items: [
             { label: "Support Pine", to: "/support" },
+            { label: "Data use", to: "/data-use" },
+            { label: "Licenses", to: "/licenses" },
             {
               label: "Buy me a coffee",
               href: "https://buymeacoffee.com/kbenim",
@@ -124,7 +129,8 @@ module.exports = {
           ],
         },
       ],
-      copyright: "Released under the MIT License. Built with Docusaurus.",
+      copyright:
+        "Pine source and documentation: MIT. Third-party licenses apply. Built with Docusaurus.",
     },
     prism: {
       theme: lightTheme,

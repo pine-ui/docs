@@ -1,5 +1,7 @@
 ---
-title: Spring animation
+title: Spring animations for Unity UI
+sidebar_label: Spring animation
+description: Animate Unity UI with Pine typed springs and reactive target sources. Try the browser preview and download a native C# spring-animation example.
 ---
 
 import InteractiveExample from '@site/src/components/InteractiveExample';

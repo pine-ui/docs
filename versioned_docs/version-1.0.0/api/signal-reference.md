@@ -1,7 +1,7 @@
 ---
 title: Pine typed reactive values API
 sidebar_label: Typed reactive values
-description: Complete typed reference with overloads, parameters, ownership and examples for Pine typed reactive values.
+description: Reference Pine typed sources, read-only values and reactive calculations. Check signatures, update behavior and scoped C# examples.
 ---
 
 # Typed reactive values

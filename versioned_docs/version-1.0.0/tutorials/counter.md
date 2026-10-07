@@ -1,5 +1,7 @@
 ---
-title: Counter
+title: Build a reactive Unity UI counter
+sidebar_label: Counter
+description: Build a working Unity uGUI counter in C# with Pine sources, reactive text, native buttons and automatic startup. Download the complete App.cs example.
 ---
 
 # Counter

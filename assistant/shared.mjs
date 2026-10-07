@@ -1,6 +1,9 @@
 export const REFUSAL =
   "I can help with Pine and its Unity UI documentation. I can’t answer questions outside that scope.";
-export const VERSIONS = [{ id: "1.0.0", label: "1.0.0", prefix: "/docs/" }];
+export const VERSIONS = [
+  { id: "1.1.0", label: "1.1.0", prefix: "/docs/" },
+  { id: "1.0.0", label: "1.0.0", prefix: "/docs/1.0.0/" },
+];
 export const LATEST_VERSION = VERSIONS[0].id;
 export const QUESTIONS = [
   "How do I install Pine in Unity?",
@@ -261,7 +264,7 @@ export function validateModelAnswer(raw, chunks, version) {
     );
   const evidenceUrls = new Set(chunks.flatMap((c) => urls(c.text)));
   if (urls(value.answer).some((url) => !evidenceUrls.has(url))) return null;
-  if (version === "1.0.0" && /Pine\.Pine/.test(value.answer)) return null;
+  if (/Pine\.Pine/.test(value.answer)) return null;
   if (/(?<!\.)\bUI\.\w+/.test(value.answer)) return null;
   const documentedApis = new Set(
     chunks.flatMap((c) =>

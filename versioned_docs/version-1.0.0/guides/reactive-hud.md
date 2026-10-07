@@ -1,5 +1,7 @@
 ---
-title: Reactive HUD
+title: Build a reactive Unity game HUD
+sidebar_label: Reactive HUD
+description: Create a Unity game HUD with Pine sources, reactive text and native UI controls. Preview state changes and download the complete C# example.
 ---
 
 import InteractiveExample from '@site/src/components/InteractiveExample';

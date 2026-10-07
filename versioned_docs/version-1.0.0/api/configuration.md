@@ -1,5 +1,7 @@
 ---
-title: Native defaults and configuration
+title: Unity UI defaults and configuration
+sidebar_label: Native defaults and configuration
+description: Configure Pine native UI defaults, TMP fonts, CanvasOptions and explicit layout sizing. Learn deferred wiring and advanced imperative property settings.
 ---
 
 # Native defaults and configuration

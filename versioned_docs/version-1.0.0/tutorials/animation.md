@@ -1,5 +1,7 @@
 ---
-title: Native props and springs
+title: Animate native Unity UI props with springs
+sidebar_label: Native props and springs
+description: Animate Unity UI positions and other native props with Pine springs. Bind target sources, configure period and damping, and support reduced motion.
 ---
 
 # Native props and springs

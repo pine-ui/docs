@@ -41,6 +41,8 @@ module.exports = {
         "api/mount-reference",
         "api/component-reference",
         "api/view-reference",
+        "api/ref-reference",
+        "api/part-reference",
         "api/startup-reference",
       ],
     },

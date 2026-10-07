@@ -20,7 +20,7 @@ import {
 import { readAssistantStream } from "../../../assistant/stream.mjs";
 import styles from "./styles.module.css";
 
-const SESSION = "pine-docs-chat-native-1.0.0";
+const SESSION = "pine-docs-chat-native-1.1.0";
 const safeUrl = (url) =>
   typeof url === "string" &&
   /^\/docs\/(?:[a-z0-9.-]+\/)+(?:#[a-z0-9_-]+)?$/.test(url);
@@ -155,7 +155,7 @@ export default function PineAssistant() {
     return () => media.removeEventListener("change", update);
   }, []);
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || (!open && !messages.length)) return;
     try {
       sessionStorage.setItem(
         SESSION,
@@ -615,6 +615,36 @@ export default function PineAssistant() {
             </button>
           </div>
           <footer className={styles.footer}>
+            <p className={styles.notice}>
+              {endpoint
+                ? "AI assistant · Messages and recent conversation are sent to Cloudflare. Answers can be wrong."
+                : "Local documentation search · Questions stay in this browser."}{" "}
+              Do not share personal data or secrets.{" "}
+              <Link to="/data-use" onClick={navigateSource}>
+                Data use
+              </Link>
+              {messages.length > 0 && (
+                <>
+                  {" · "}
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => {
+                      setMessages([]);
+                      setDraft("");
+                      setStage("idle");
+                      try {
+                        sessionStorage.removeItem(SESSION);
+                      } catch {
+                        /* In-memory conversation is cleared even without storage. */
+                      }
+                    }}
+                  >
+                    Clear conversation
+                  </button>
+                </>
+              )}
+            </p>
             {!busy && !messages.length && (
               <div className={styles.suggestions}>
                 {starters.slice(0, 3).map((q) => (
