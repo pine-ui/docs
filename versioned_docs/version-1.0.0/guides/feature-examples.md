@@ -1,5 +1,7 @@
 ---
-title: Runnable examples
+title: Pine Unity UI examples and downloads
+sidebar_label: Runnable examples
+description: Download Pine 1.0.0 C# examples for counters, reusable MonoBehaviour components and editable controls. Learn which files to import together in Unity.
 ---
 
 # Runnable examples

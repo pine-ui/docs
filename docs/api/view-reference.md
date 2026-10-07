@@ -1,7 +1,7 @@
 ---
 title: Pine views and composition API
 sidebar_label: Views and composition
-description: Complete typed reference with overloads, parameters, ownership and examples for Pine views and composition.
+description: Reference Pine View declarations and composition, including immutable With entries, tracked children, native placement and scoped construction.
 ---
 
 # Views and composition

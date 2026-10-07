@@ -1,5 +1,7 @@
 ---
-title: Native component catalog
+title: Unity uGUI and TextMeshPro component catalog
+sidebar_label: Native component catalog
+description: Browse Pine factories for Unity uGUI, TextMeshPro, layout, masking and event components, including native placement rules and version-gated availability.
 ---
 
 # Native component catalog

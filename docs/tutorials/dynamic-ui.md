@@ -1,5 +1,7 @@
 ---
-title: Tracked children
+title: Reactive Unity UI children and lists
+sidebar_label: Tracked children
+description: Show, switch and reorder Unity UI children with Pine tracked collections. Retain native objects by declaration identity and dispose removed bindings.
 ---
 
 # Tracked children

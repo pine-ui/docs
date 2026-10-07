@@ -1,5 +1,7 @@
 ---
-title: Animation
+title: Unity UI spring animation API
+sidebar_label: Animation
+description: Use P.Spring to animate scalar values and Unity structs. Configure period and damping, advance springs manually and snap targets for reduced motion.
 ---
 
 # Animation

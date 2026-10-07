@@ -61,6 +61,17 @@
   letter-spacing: -0.6px;
   margin: 0;
 }
+.notice {
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.notice button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+}
 .panel button {
   font: inherit;
   cursor: pointer;

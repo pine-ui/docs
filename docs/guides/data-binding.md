@@ -1,5 +1,7 @@
 ---
-title: Editable native controls
+title: Two-way data binding for Unity UI
+sidebar_label: Editable native controls
+description: Connect Unity input fields, sliders and toggles to typed C# state with Pine. Explore a browser preview and download the native Unity example.
 ---
 
 import InteractiveExample from '@site/src/components/InteractiveExample';

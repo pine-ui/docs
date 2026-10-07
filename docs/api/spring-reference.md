@@ -1,7 +1,7 @@
 ---
 title: Pine springs and custom value spaces API
 sidebar_label: Springs and custom value spaces
-description: Complete typed reference with overloads, parameters, ownership and examples for Pine springs and custom value spaces.
+description: Reference Pine typed springs and custom spring value spaces. Check animation parameters, value operations and scope ownership.
 ---
 
 # Springs and custom value spaces

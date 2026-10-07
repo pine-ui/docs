@@ -1,5 +1,7 @@
 ---
-title: Installation
+title: Install Pine in Unity
+sidebar_label: Installation
+description: Install Pine 1.0.0 with Unity Package Manager, a Git URL or a UPM archive. Check Unity, uGUI and Input System requirements and set up App.cs.
 ---
 
 # Installation

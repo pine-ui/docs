@@ -1,5 +1,7 @@
 ---
-title: All native named props
+title: Unity UI component props reference
+sidebar_label: All native named props
+description: Look up Pine named props, native types, callbacks and version gates for Unity uGUI and TMP components. Includes RectTransform settings and editable source wiring.
 ---
 
 # All native named props

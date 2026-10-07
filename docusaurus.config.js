@@ -117,6 +117,8 @@ module.exports = {
           title: "Pine",
           items: [
             { label: "Support Pine", to: "/support" },
+            { label: "Data use", to: "/data-use" },
+            { label: "Licenses", to: "/licenses" },
             {
               label: "Buy me a coffee",
               href: "https://buymeacoffee.com/kbenim",
@@ -124,7 +126,8 @@ module.exports = {
           ],
         },
       ],
-      copyright: "Released under the MIT License. Built with Docusaurus.",
+      copyright:
+        "Pine source and documentation: MIT. Third-party licenses apply. Built with Docusaurus.",
     },
     prism: {
       theme: lightTheme,

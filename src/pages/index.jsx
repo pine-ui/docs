@@ -23,6 +23,22 @@ const identity = {
       alternateName: "Pine UI for Unity",
       url: "https://pine-ui.com/",
       publisher: { "@id": "https://pine-ui.com/#pine" },
+      inLanguage: "en",
+      about: { "@id": "https://pine-ui.com/#source" },
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://pine-ui.com/#source",
+      name: "Pine",
+      description:
+        "A reactive C# UI library for Unity uGUI with typed state, native components, dynamic lists and spring animations.",
+      url: "https://pine-ui.com/",
+      codeRepository: "https://github.com/pine-ui/package",
+      programmingLanguage: "C#",
+      runtimePlatform: "Unity with uGUI",
+      version: "1.0.0",
+      license: "https://github.com/pine-ui/package/blob/main/LICENSE",
+      isAccessibleForFree: true,
     },
   ],
 };
@@ -141,6 +157,24 @@ export default function Home() {
               lifetime is optional.
             </p>
           </div>
+        </section>
+        <section className="pine-guides">
+          <h2>Install Pine for Unity</h2>
+          <p>
+            Pine is free and open source under the MIT license. Install version
+            1.0.0 through Unity Package Manager using its Git URL or download
+            the UPM archive. The declared baseline is Unity 6000.3, uGUI 2.0.0
+            and Input System 1.20.1; newer native features have version gates.
+          </p>
+          <p>
+            <Link to="/docs/tutorials/installation">
+              Installation and requirements
+            </Link>
+            {" · "}
+            <Link to="/docs/tutorials/components">
+              Compose reusable C# components
+            </Link>
+          </p>
         </section>
         <section className="pine-guides">
           <h2>Build something with Pine</h2>

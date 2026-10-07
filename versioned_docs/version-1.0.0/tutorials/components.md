@@ -1,5 +1,7 @@
 ---
-title: Composition and attachments
+title: Compose Unity UI components in C#
+sidebar_label: Composition and attachments
+description: Compose reusable Pine View declarations with C# functions and With. Learn child placement, same-object Self entries, native modifiers and TMP outlines.
 ---
 
 # Composition and attachments

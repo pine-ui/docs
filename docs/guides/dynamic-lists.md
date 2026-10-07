@@ -1,5 +1,7 @@
 ---
-title: Dynamic lists
+title: Build dynamic Unity UI lists
+sidebar_label: Dynamic lists
+description: Build a reactive Unity inventory with Pine keyed lists. Retain row identity through reordering, dispose removed rows and download the C# example.
 ---
 
 import InteractiveExample from '@site/src/components/InteractiveExample';

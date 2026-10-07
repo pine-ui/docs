@@ -1,5 +1,7 @@
 ---
-title: State and ownership
+title: Reactive state and scope ownership
+sidebar_label: State and ownership
+description: Use Pine sources, derived values, effects, batching and untracked reads. Learn which reactive operations require scopes and how disposal owns Unity UI bindings.
 ---
 
 # State and ownership

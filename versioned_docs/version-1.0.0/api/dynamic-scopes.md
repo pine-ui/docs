@@ -1,5 +1,7 @@
 ---
-title: Retained branches and lists
+title: Retained UI branches and lists
+sidebar_label: Retained branches and lists
+description: Retain Unity UI branch and row state with P.Show, P.Switch, P.Indexes and P.Values. Learn stable identity, tracked children and branch exit lifetimes.
 ---
 
 # Retained branches and lists

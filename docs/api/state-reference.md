@@ -1,7 +1,7 @@
 ---
 title: Pine state and configuration API
 sidebar_label: State and configuration
-description: Complete typed reference with overloads, parameters, ownership and examples for Pine state and configuration.
+description: Reference Pine reactive state and configuration APIs, including typed declarations, parameters, scope ownership and C# usage examples.
 ---
 
 # State and configuration

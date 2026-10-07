@@ -1,5 +1,7 @@
 ---
-title: Declarations and native access
+title: Unity UI declarations and native access
+sidebar_label: Declarations and native access
+description: Create Pine View declarations, compose children with With, place components with Self and capture native Unity components using reference and configure.
 ---
 
 # Declarations and native access

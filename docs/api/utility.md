@@ -1,5 +1,7 @@
 ---
-title: Native integration
+title: Native Unity UI integration API
+sidebar_label: Native integration
+description: Integrate Pine with native Unity components using reference, configure, Bind, Set, Apply and On. Declare custom components inside the owning reactive scope.
 ---
 
 # Native integration
