@@ -101,7 +101,17 @@ No new analytics tracker is needed to establish indexing; Search Console and Ana
 - Extended the existing postbuild check to verify homepage reachability of sitemap pages, main headings in initial HTML, crawl rules, date shape, and file targets without trailing slashes. Its live mode also checks page noindex metadata and downloadable HTTP responses.
 - Passed the production-configured local build, all 16 existing documentation/assistant tests, formatting, 272 citation targets across 30 documentation pages, all 34 sitemap pages, and 21 file targets. Browser inspection confirmed the new setup/troubleshooting content is rendered. This is documentation/build verification, not a new Unity runtime validation or a Google rich-result test.
 
-Production deployment, refreshed sitemap submission and any requests made after this local verification are reported with their actual results in the implementation response. The six indexed statuses above were observed before this new deployment and must not be attributed to changes that had not yet shipped. Google SEO guidance does not establish complete legal compliance; the separate legal audit's unresolved factual questions remain unresolved by SEO changes.
+### Production and Search Console execution
+
+The implementation was deployed as commit `a0e0e2be9e2f12e38e5665a1d4c4fe6d2565a142`; [GitHub Pages deployment 37608721197](https://github.com/pine-ui/docs/actions/runs/37608721197) completed successfully. Production verification passed all 34 canonical page responses and metadata, all eleven expanded page sections, all 21 download targets, and an exact comparison of the live sitemap with the committed-source build.
+
+The redirect example is `http://pine-ui.com/`, which correctly redirects to the indexed HTTPS homepage. The six indexed statuses above were observed before this new deployment and must not be attributed to changes that had not yet shipped.
+
+An additional important URL, [the state and ownership API entry](https://pine-ui.com/docs/api/core/), had an individual status of **unknown to Google, not indexed**, with no recorded crawl. Its genuine Google live test after deployment reported a successful smartphone Inspection Tool fetch, crawling and indexing allowed, and the correct declared canonical at the displayed time 2026-10-07 12:40:13. Search Console accepted one indexing request and confirmed that the URL was added to the priority crawl list. **Accepted request and live eligibility do not mean this API page is already indexed.**
+
+Search Console also accepted resubmission of `https://pine-ui.com/sitemap.xml` on October 7. The submission date updated, while its last-read date and discovery count still displayed October 5 and 17; the deployed sitemap itself contains 34 URLs. Processing of that refreshed inventory is pending. No repeated request was made for the already indexed homepage merely to clear the historical aggregate report.
+
+Google SEO guidance does not establish complete legal compliance; the separate legal audit's unresolved factual questions remain unresolved by SEO changes.
 
 ## Exact documentation inventory
 
