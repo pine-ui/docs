@@ -37,6 +37,7 @@ export async function buildCorpus() {
       const front = source.match(/^---\n([\s\S]*?)\n---\n/);
       const text = source
         .slice(front?.[0].length ?? 0)
+        .replace(/\]\(pathname:\/\//g, "](")
         .replace(/^import .+;\s*$/gm, "")
         .replace(/<InteractiveExample\b[^>]*\/>/g, "")
         .replace(/<span id="in-unity"\s*\/>/g, "");

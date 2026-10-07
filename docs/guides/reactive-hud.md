@@ -20,6 +20,14 @@ return P.Horizontal(
 
 Use native layout props for sizing. [Counter source](../tutorials/counter.md).
 
+## Keep display state separate from editable state
+
+The complete HUD below starts with 100 health and zero coins. Take 10 damage decreases health without going below zero; that button disables when health reaches zero. Collect a coin changes the coin source independently. These controls make it possible to check each state update without connecting a game system first.
+
+The health slider is display-only: it receives a getter through `Value<float>` and has `interactable: false`. A writable source passed directly to an editable native prop would allow user changes to write back. Use that distinction when connecting a HUD to gameplay state. See [editable native controls](data-binding.md) for two-way wiring.
+
+Keep reads inside tracked getters so labels and the slider update the existing native components. When adapting this example, write sources from your gameplay events on the Unity main thread and retain their scope ownership. The [state and ownership API](../api/core.md) explains what stops when the mounted root is destroyed. The browser preview models these state changes; use the downloaded C# files for the Unity interface.
+
 <InteractiveExample kind="hud" version="1.0.0" />
 
 ## Run the example

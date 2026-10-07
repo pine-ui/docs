@@ -28,6 +28,14 @@ const sitemap = await readFile(path.join(root, "build/sitemap.xml"), "utf8");
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 assert(urls.includes(origin + "/"), "Homepage missing from sitemap");
 assert.equal(new Set(urls).size, urls.length, "Duplicate sitemap URLs");
+const links = new Map();
+const downloads = new Set();
+const noindex =
+  /<meta\b[^>]*(?:name|property)="robots"[^>]*content="[^"]*noindex/i;
+for (const match of sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)) {
+  assert(/^\d{4}-\d{2}-\d{2}$/.test(match[1]), "Invalid sitemap date");
+  assert(new Date(match[1]).getTime() <= Date.now(), "Future sitemap date");
+}
 const titles = new Set(),
   descriptions = new Set();
 for (const url of urls) {
@@ -44,11 +52,27 @@ for (const url of urls) {
   const canonicals = html.match(/<link\b[^>]*rel="canonical"[^>]*>/g) || [];
   assert.equal(canonicals.length, 1, `Canonical count: ${url}`);
   assert(canonicals[0].includes(`href="${url}"`), `Canonical mismatch: ${url}`);
+  assert(!noindex.test(html), `Noindex in sitemap: ${url}`);
   assert(
-    !/<meta\b[^>]*(?:name|property)="robots"[^>]*content="[^"]*noindex/.test(
-      html,
-    ),
-    `Noindex in sitemap: ${url}`,
+    /<main\b[^>]*>[\s\S]*?<h1\b/.test(html),
+    `Main content missing from initial HTML: ${url}`,
+  );
+  links.set(
+    url,
+    // ponytail: inspect generated Docusaurus HTML; use a DOM parser if its output changes.
+    [...html.matchAll(/<a\b[^>]*href="([^"]+)"/g)]
+      .map((match) => {
+        const target = new URL(match[1].replaceAll("&amp;", "&"), url);
+        target.hash = "";
+        target.search = "";
+        if (
+          target.origin === origin &&
+          /\.(?:cs|tgz|sha256)\/?$/.test(target.pathname)
+        )
+          downloads.add(target.href);
+        return target.href;
+      })
+      .filter((target) => urls.includes(target)),
   );
   assert.equal(
     (html.match(/<h1\b/g) || []).length,
@@ -78,6 +102,7 @@ for (const url of urls) {
       `Live noindex header: ${url}`,
     );
     const liveHtml = await response.text();
+    assert(!noindex.test(liveHtml), `Live noindex meta: ${url}`);
     assert(
       liveHtml.includes(`<title data-rh="true">${title}</title>`),
       `Live title differs from build: ${url}`,
@@ -92,6 +117,31 @@ for (const url of urls) {
     );
   }
 }
+const reachable = new Set([origin + "/"]);
+for (const url of reachable)
+  for (const target of links.get(url) || []) reachable.add(target);
+assert.equal(
+  reachable.size,
+  urls.length,
+  "Sitemap pages orphaned from homepage",
+);
+const robots = await readFile(path.join(root, "build/robots.txt"), "utf8");
+assert(
+  robots.includes(`Sitemap: ${origin}/sitemap.xml`),
+  "Robots sitemap missing",
+);
+assert(!/^Disallow:\s*\/\s*$/im.test(robots), "Robots blocks the entire site");
+for (const url of downloads) {
+  const pathname = new URL(url).pathname;
+  assert(!pathname.endsWith("/"), `File download has a trailing slash: ${url}`);
+  await readFile(path.join(root, "build", pathname));
+  if (process.argv.includes("--live")) {
+    const response = await fetch(url, { redirect: "manual" });
+    assert.equal(response.status, 200, `Live download status: ${url}`);
+    await response.arrayBuffer();
+  }
+}
+console.log(`Verified ${downloads.size} file download targets.`);
 const search = await readFile(
   path.join(root, "build/search/index.html"),
   "utf8",
