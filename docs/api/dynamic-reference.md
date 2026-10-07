@@ -1,7 +1,7 @@
 ---
 title: "Pine dynamic branches and lists API (Pine 1.1.0)"
 sidebar_label: Dynamic branches and lists
-description: "Complete typed reference with overloads, parameters, ownership and examples for Pine dynamic branches and lists. Pine 1.1.0 documentation."
+description: "Reference Pine Show, Switch, Indexes and Values operators for retained UI branches and lists, with overloads, identity rules and branch lifetimes. Pine 1.1.0 documentation."
 ---
 
 # Dynamic branches and lists

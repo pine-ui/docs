@@ -1,7 +1,7 @@
 ---
 title: "Pine native declarations and bindings API (Pine 1.1.0)"
 sidebar_label: Native declarations and bindings
-description: "Complete typed reference with overloads, parameters, ownership and examples for Pine native declarations and bindings. Pine 1.1.0 documentation."
+description: "Reference Pine native declarations, bindings, property application and Unity event integration, with typed signatures and scope ownership rules. Pine 1.1.0 documentation."
 ---
 
 # Native declarations and bindings

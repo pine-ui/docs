@@ -43,6 +43,12 @@ test("corpus contains only public docs and examples, for the current version and
       (c) => c.section === "PineHud.cs" && c.version === "1.0.0",
     ),
   );
+  assert.ok(
+    corpus.chunks.some(
+      (c) => c.document === "tutorials/counter" && c.section === "App.cs",
+    ),
+    "Counter download must remain available to assistant retrieval",
+  );
   for (const version of VERSIONS.map((v) => v.id)) {
     const found = retrieve(corpus, input.question, version);
     assert.ok(found.length);

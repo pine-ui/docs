@@ -10,6 +10,14 @@ import InteractiveExample from '@site/src/components/InteractiveExample';
 
 Bind a spring directly to `anchoredPosition`, `color`, `sizeDelta` or other native settings of its matching type. Put spring creation in an owned renderer and update its target source. [Runnable counter](../tutorials/counter.md). [Motion example](../tutorials/animation.md).
 
+## Follow the target and animated value
+
+In the example below, `onRight` selects a target of -180 or 180 on the horizontal axis. `target` derives that position, and `position` follows it through the spring. Clicking Move right or Move left changes the target immediately; the image's position approaches it over time without rebuilding the image.
+
+The example uses a period of 0.45 and a damping ratio of 0.75. Bind `position` directly to `anchoredPosition` so the native image follows the spring. Replacing that binding with a literal target moves immediately, while capturing the spring's value into a literal only uses one instant.
+
+For an application's reduced-motion setting, `P.ReducedMotion.Value = true` snaps spring targets. Disposing the owning scope stops its animation observers. Use the [spring reference](../api/spring-reference.md) when animating a custom value type or advancing springs manually. The browser preview demonstrates the motion model; the downloaded files build the native Unity interface.
+
 <InteractiveExample kind="spring" version="1.1.0" />
 
 ## Run the example

@@ -1,7 +1,7 @@
 ---
 title: "Pine unity behaviour composition API (Pine 1.1.0)"
 sidebar_label: Unity behaviour composition
-description: "Complete typed reference with overloads, parameters, ownership and examples for Pine unity behaviour composition. Pine 1.1.0 documentation."
+description: "Reference Pine MonoBehaviour composition with P.Component. Check generic signatures, renderer ownership and native component integration. Pine 1.1.0 documentation."
 ---
 
 # Unity behaviour composition

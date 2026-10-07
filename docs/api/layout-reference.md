@@ -1,7 +1,7 @@
 ---
 title: "Pine exact, flexible and content sizing API (Pine 1.1.0)"
 sidebar_label: Exact, flexible and content sizing
-description: "Complete typed reference with overloads, parameters, ownership and examples for Pine exact, flexible and content sizing. Pine 1.1.0 documentation."
+description: "Reference Pine exact, flexible and content sizing APIs for Unity UI. Check typed parameters, native layout behavior and scoped examples. Pine 1.1.0 documentation."
 ---
 
 # Exact, flexible and content sizing

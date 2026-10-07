@@ -1,7 +1,7 @@
 ---
 title: "Pine mounts and canvas options API (Pine 1.1.0)"
 sidebar_label: Mounts and canvas options
-description: "Complete typed reference with overloads, parameters, ownership and examples for Pine mounts and canvas options. Pine 1.1.0 documentation."
+description: "Reference Pine mounts and CanvasOptions, including native root ownership, canvas setup, lifecycle disposal and advanced explicit mounting. Pine 1.1.0 documentation."
 ---
 
 # Mounts and canvas options

@@ -51,4 +51,14 @@ public static class App
 
 ## Run the example
 
-[Download App.cs](/examples/1.1.0/Counter/App.cs). Keep one `App.cs` entry in a project.
+[Download App.cs](pathname:///examples/1.1.0/Counter/App.cs). Keep one `App.cs` entry in a project.
+
+After [installing Pine](installation.md), save the script in your project and enter Play mode. The label starts at `Count: 0`; Reset starts disabled. Click Increment twice to see `Count: 2`, then Reset to return to zero and disable Reset again.
+
+## How the counter updates
+
+`count` is writable state. The text getter reads `count.Value`, so Pine tracks that dependency and updates the existing TMP component when a button changes the source. The Reset binding reads the same source to update the native button's `interactable` property. The event handlers write the source; they do not rebuild the view tree or search the scene for labels.
+
+Keep the getter in `P.Text(() => $"Count: {count.Value}")`. Passing a completed string such as `P.Text($"Count: {count.Value}")` supplies a literal snapshot, which will not follow later changes. The [reactive props tutorial](reactivity.md) explains literals, getters and editable source write-back.
+
+The mounted root owns the text and button bindings. Destroying that root ends its scope and removes the owned bindings and handlers. See [state and ownership](../api/core.md) before moving calculations into a service or a custom component.

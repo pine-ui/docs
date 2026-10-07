@@ -23,6 +23,14 @@ return P.Vertical(
 
 Native edits update the source. Source updates use non-notifying native setters and preserve Unity's validation/clamping. A derived value or getter is one-way. Native event callbacks such as `onValueChanged` remain available alongside source wiring. [Native props](../api/controls-reference.md).
 
+## Choose one-way or two-way binding
+
+Use a writable source for an editable value when user input should update the same application state. In the fragment above, typing edits `playerName`, moving the slider edits `volume`, and changing the toggle edits `enabled`. Keep each source's type matched to the native prop.
+
+Use a getter or derived value for display-only output. The complete example below demonstrates this path: score determines the rank label and its color, while buttons change the underlying sources. Its browser preview models those score and level changes; it does not run Unity input fields.
+
+Click Gain 10 points three times to reach Explorer at 30 points. Advance level increments the level and resets score together using `P.Batch`; Reset restores level one and score zero. If a label stops following state, check whether you passed a literal snapshot instead of a tracked getter. See [reactive props](../tutorials/reactivity.md) for binding and write-back rules.
+
 <InteractiveExample kind="binding" version="1.1.0" />
 
 ## Run the example

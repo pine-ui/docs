@@ -1,7 +1,7 @@
 ---
 title: "Pine generated startup support API (Pine 1.1.0)"
 sidebar_label: Generated startup support
-description: "Complete typed reference with overloads, parameters, ownership and examples for Pine generated startup support. Pine 1.1.0 documentation."
+description: "Reference Pine generated startup support for Unity applications. Check public declarations used to initialize and own the native UI root. Pine 1.1.0 documentation."
 ---
 
 # Generated startup support

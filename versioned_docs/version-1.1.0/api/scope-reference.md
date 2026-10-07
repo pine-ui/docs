@@ -1,7 +1,7 @@
 ---
 title: "Pine scopes and context API (Pine 1.1.0)"
 sidebar_label: Scopes and context
-description: "Complete typed reference with overloads, parameters, ownership and examples for Pine scopes and context. Pine 1.1.0 documentation."
+description: "Reference Pine reactive scopes, cleanup, roots and context APIs. Check ownership rules and typed signatures for scoped Unity UI work. Pine 1.1.0 documentation."
 ---
 
 # Scopes and context

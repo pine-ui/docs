@@ -61,7 +61,12 @@ module.exports = {
           editCurrentVersion: false,
         },
         blog: false,
-        sitemap: { ignorePatterns: ["/search", "/search/**"] },
+        sitemap: {
+          ignorePatterns: ["/search", "/search/**"],
+          lastmod: "date",
+          changefreq: null,
+          priority: null,
+        },
         theme: { customCss: require.resolve("./src/css/custom.css") },
       },
     ],
@@ -90,6 +95,7 @@ module.exports = {
       },
       items: [
         { to: "/", label: "Home", position: "left" },
+        { type: "docsVersionDropdown", position: "right" },
         {
           type: "docSidebar",
           sidebarId: "tutorials",

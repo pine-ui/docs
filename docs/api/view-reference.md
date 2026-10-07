@@ -1,7 +1,7 @@
 ---
 title: "Pine views and composition API (Pine 1.1.0)"
 sidebar_label: Views and composition
-description: "Complete typed reference with overloads, parameters, ownership and examples for Pine views and composition. Pine 1.1.0 documentation."
+description: "Reference Pine View declarations and composition, including immutable factory children, tracked children, native placement and scoped construction. Pine 1.1.0 documentation."
 ---
 
 # Views and composition
