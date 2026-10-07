@@ -1,4 +1,4 @@
-// Buffer network bursts and reveal about 120 characters per second.
+// Buffer network bursts and reveal about 150 characters per second.
 export function pacedDraft(
   onText,
   { schedule = setInterval, unschedule = clearInterval } = {},
@@ -21,7 +21,7 @@ export function pacedDraft(
         done?.();
         done = undefined;
       }
-    }, 50);
+    }, 40);
   };
   return {
     append(delta) {

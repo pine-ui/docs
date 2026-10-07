@@ -5,6 +5,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Markdown from "react-markdown";
 import CodeBlock from "@theme/CodeBlock";
 import { pacedDraft } from "../../../assistant/paced-draft.mjs";
+import { fadeWords } from "../../../assistant/fade-words.mjs";
 import remarkGfm from "remark-gfm";
 import {
   VERSIONS,
@@ -56,6 +57,7 @@ const markdownComponents = {
   img: () => null,
   a: ({ children }) => <span>{children}</span>,
 };
+const markdownPlugins = [remarkGfm, [fadeWords, { className: styles.word }]];
 function Sources({ sources, onNavigate }) {
   if (!Array.isArray(sources) || !sources.length) return null;
   return (
@@ -448,6 +450,39 @@ export default function PineAssistant() {
             <div>
               <h2>Ask Pine</h2>
             </div>
+            {messages.length > 0 && (
+              <button
+                type="button"
+                className={styles.icon}
+                disabled={busy}
+                aria-label="Clear conversation"
+                title="Clear conversation"
+                onClick={() => {
+                  setMessages([]);
+                  setDraft("");
+                  setStage("idle");
+                  try {
+                    sessionStorage.removeItem(SESSION);
+                  } catch {
+                    /* In-memory conversation is cleared even without storage. */
+                  }
+                }}
+              >
+                <svg
+                  aria-hidden="true"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M3 6h18M9 6V4h6v2M5 6l1 14h12l1-14M10 10v6m4-6v6" />
+                </svg>
+              </button>
+            )}
             <button
               type="button"
               className={styles.icon}
@@ -495,7 +530,12 @@ export default function PineAssistant() {
                     )}
                   </div>
                 )}
-                {messages.map((message, i) => (
+                {[
+                  ...messages,
+                  ...(busy && draft
+                    ? [{ role: "assistant", content: draft, streaming: true }]
+                    : []),
+                ].map((message, i) => (
                   <article
                     key={i}
                     className={
@@ -507,16 +547,8 @@ export default function PineAssistant() {
                         : "Pine response"
                     }
                   >
-                    {message.role === "assistant" && (
+                    {message.role === "assistant" && !message.streaming && (
                       <div className={styles.messageLabel}>
-                        <img
-                          className={styles.avatar}
-                          src={`/img/mascot/pine-${statusImages[message.status] || "welcome"}.webp`}
-                          alt=""
-                          width="32"
-                          height="35"
-                        />
-                        Pine
                         <span>
                           {
                             VERSIONS.find((v) => v.id === message.version)
@@ -533,7 +565,7 @@ export default function PineAssistant() {
                     ) : (
                       <>
                         <Markdown
-                          remarkPlugins={[remarkGfm]}
+                          remarkPlugins={markdownPlugins}
                           skipHtml
                           components={markdownComponents}
                         >
@@ -547,27 +579,6 @@ export default function PineAssistant() {
                     )}
                   </article>
                 ))}
-                {busy && draft && (
-                  <article className={styles.answer} aria-label="Pine response">
-                    <div className={styles.messageLabel}>
-                      <img
-                        className={styles.avatar}
-                        src="/img/mascot/pine-ai-assistant.webp"
-                        alt=""
-                        width="32"
-                        height="35"
-                      />
-                      Pine
-                    </div>
-                    <Markdown
-                      remarkPlugins={[remarkGfm]}
-                      skipHtml
-                      components={markdownComponents}
-                    >
-                      {draft}
-                    </Markdown>
-                  </article>
-                )}
                 {busy && !draft && (
                   <div className={styles.activity} role="status">
                     <img
@@ -615,36 +626,6 @@ export default function PineAssistant() {
             </button>
           </div>
           <footer className={styles.footer}>
-            <p className={styles.notice}>
-              {endpoint
-                ? "AI assistant · Messages and recent conversation are sent to Cloudflare. Answers can be wrong."
-                : "Local documentation search · Questions stay in this browser."}{" "}
-              Do not share personal data or secrets.{" "}
-              <Link to="/data-use" onClick={navigateSource}>
-                Data use
-              </Link>
-              {messages.length > 0 && (
-                <>
-                  {" · "}
-                  <button
-                    type="button"
-                    disabled={busy}
-                    onClick={() => {
-                      setMessages([]);
-                      setDraft("");
-                      setStage("idle");
-                      try {
-                        sessionStorage.removeItem(SESSION);
-                      } catch {
-                        /* In-memory conversation is cleared even without storage. */
-                      }
-                    }}
-                  >
-                    Clear conversation
-                  </button>
-                </>
-              )}
-            </p>
             {!busy && !messages.length && (
               <div className={styles.suggestions}>
                 {starters.slice(0, 3).map((q) => (

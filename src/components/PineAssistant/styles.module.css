@@ -61,16 +61,8 @@
   letter-spacing: -0.6px;
   margin: 0;
 }
-.notice {
-  margin: 0 0 10px;
-  font-size: 12px;
-  line-height: 1.5;
-}
-.notice button {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  text-decoration: underline;
+.header > div {
+  flex: 1;
 }
 .panel button {
   font: inherit;
@@ -168,6 +160,17 @@
   margin-bottom: 25px;
   overflow-wrap: anywhere;
 }
+.word {
+  animation: wordFade 220ms ease-out both;
+}
+@keyframes wordFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .answer h1,
 .answer h2,
 .answer h3 {
@@ -223,6 +226,9 @@
   border-color: var(--ifm-color-primary);
 }
 @media (prefers-reduced-motion: reduce) {
+  .word {
+    animation: none;
+  }
   .jump,
   .launcher {
     transition: none;
@@ -399,10 +405,6 @@
   }
 }
 
-.avatar {
-  object-fit: contain;
-  flex-shrink: 0;
-}
 .form:focus-within {
   border-color: var(--ifm-color-primary);
   box-shadow: 0 0 0 1px var(--ifm-color-primary);

@@ -8,7 +8,7 @@ test("network bursts stay paced through completion and preserve Unicode", async 
   const output = [];
   const draft = pacedDraft((text) => output.push(text), {
     schedule(callback, interval) {
-      assert.equal(interval, 50);
+      assert.equal(interval, 40);
       tick = callback;
       return 1;
     },
