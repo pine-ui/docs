@@ -26,6 +26,8 @@ public static View Self(View view)
 
 ## `P.Declare`
 
+The `properties` parameter below is an unreleased addition to the current source. It accepts Pine's existing typed properties for custom components. Arrays are copied; reactive bindings belong to the mounted scope. Properties apply before the optional `configure` callback and native activation. Composed part compatibility and hierarchy/lifetime rules remain runtime checks.
+
 ```text
 public static View Declare<T>(
     Action<T> configure = null,
@@ -33,7 +35,8 @@ public static View Declare<T>(
     bool modifier = false,
     Value<bool>? active = null,
     View[] children = null,
-    View[] components = null
+    View[] components = null,
+    IProperty<T>[] properties = null
 )
     where T : Component
 ```
@@ -46,7 +49,8 @@ public static View Declare<T>(
     Action<T> configure = null,
     Action<T> reference = null,
     Value<bool>? active = null,
-    View[] components = null
+    View[] components = null,
+    IProperty<T>[] properties = null
 )
     where T : Component
 ```
