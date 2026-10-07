@@ -1,6 +1,7 @@
 module.exports = {
   tutorials: [
     "tutorials/installation",
+    "guides/ui-toolkit",
     "tutorials/counter",
     "tutorials/reactivity",
     "tutorials/components",
@@ -20,6 +21,7 @@ module.exports = {
   ],
   api: [
     "api/core",
+    "api/ui-toolkit-reference",
     "api/utility",
     "api/creation",
     "api/controls",

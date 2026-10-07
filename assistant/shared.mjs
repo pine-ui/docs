@@ -1,7 +1,8 @@
 export const REFUSAL =
   "I can help with Pine and its Unity UI documentation. I can’t answer questions outside that scope.";
 export const VERSIONS = [
-  { id: "1.1.0", label: "1.1.0", prefix: "/docs/" },
+  { id: "1.2.0", label: "1.2.0", prefix: "/docs/" },
+  { id: "1.1.0", label: "1.1.0", prefix: "/docs/1.1.0/" },
   { id: "1.0.0", label: "1.0.0", prefix: "/docs/1.0.0/" },
 ];
 export const LATEST_VERSION = VERSIONS[0].id;

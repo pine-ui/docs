@@ -1,6 +1,6 @@
 # Pine documentation
 
-Tutorials and API reference for Pine 1.0.0.
+Tutorials and API reference for Pine 1.2.0, with archived 1.1.0 and 1.0.0 documentation.
 
 [Documentation](https://pine-ui.com) · [Package](https://github.com/pine-ui/package) · [Docs source](https://github.com/pine-ui/docs)
 

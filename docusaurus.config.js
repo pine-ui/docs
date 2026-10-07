@@ -51,10 +51,11 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          lastVersion: "1.1.0",
+          lastVersion: "1.2.0",
           includeCurrentVersion: false,
           versions: {
-            "1.1.0": { label: "1.1.0", path: "" },
+            "1.2.0": { label: "1.2.0", path: "" },
+            "1.1.0": { label: "1.1.0", path: "1.1.0" },
             "1.0.0": { label: "1.0.0", path: "1.0.0" },
           },
           editUrl: "https://github.com/pine-ui/docs/edit/main/",

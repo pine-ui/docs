@@ -31,12 +31,12 @@ const identity = {
       "@id": "https://pine-ui.com/#source",
       name: "Pine",
       description:
-        "A reactive C# UI library for Unity uGUI with typed state, native components, dynamic lists and spring animations.",
+        "A reactive C# UI library for Unity uGUI and UI Toolkit with typed state, native components, dynamic lists and spring animations.",
       url: "https://pine-ui.com/",
       codeRepository: "https://github.com/pine-ui/package",
       programmingLanguage: "C#",
-      runtimePlatform: "Unity with uGUI",
-      version: "1.1.0",
+      runtimePlatform: "Unity with uGUI and UI Toolkit",
+      version: "1.2.0",
       license: "https://github.com/pine-ui/package/blob/main/LICENSE",
       isAccessibleForFree: true,
     },
@@ -44,6 +44,7 @@ const identity = {
 };
 
 const example = `using Pine;
+using Pine.uGUI;
 using UnityEngine;
 
 public static class App
@@ -152,8 +153,8 @@ export default function Home() {
           <div>
             <h3>Native Unity UI</h3>
             <p>
-              Compose uGUI and TextMeshPro components. Create the Canvas and
-              input host from code.
+              Compose uGUI, TextMeshPro and UI Toolkit controls. Create the
+              Canvas or UIDocument host from code.
             </p>
           </div>
           <div>
@@ -169,7 +170,7 @@ export default function Home() {
           <h2>Install Pine for Unity</h2>
           <p>
             Pine is free and open source under the MIT license. Install version
-            1.1.0 through Unity Package Manager using its Git URL or download
+            1.2.0 through Unity Package Manager using its Git URL or download
             the UPM archive. The declared baseline is Unity 6000.3, uGUI 2.0.0
             and Input System 1.20.1; newer native features have version gates.
           </p>
